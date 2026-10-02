@@ -30,6 +30,21 @@ if (!data.competition || typeof data.competition !== "object") {
   data.competition = {};
 }
 
+if (!data.memberInfo || typeof data.memberInfo !== "object") {
+  data.memberInfo = {};
+}
+
+data.members.forEach(function(name) {
+  if (!data.memberInfo[name]) {
+    data.memberInfo[name] = {
+      dob: "",
+      father: "",
+      mother: "",
+      phone: ""
+    };
+  }
+});
+
 const now = new Date();
 
 let competitionMonth =
@@ -439,22 +454,75 @@ document
    THÀNH VIÊN
 ========================= */
 
+function getMemberInfo(name) {
+  if (!data.memberInfo[name]) {
+    data.memberInfo[name] = {
+      dob: "",
+      father: "",
+      mother: "",
+      phone: ""
+    };
+  }
+
+  return data.memberInfo[name];
+}
+
+
 function renderMembers() {
   const box =
     document.getElementById("memberList");
 
   if (!box) return;
 
+  if (!data.members.length) {
+    box.innerHTML =
+      "<p>Chưa có thành viên.</p>";
+    return;
+  }
+
   box.innerHTML =
-    data.members.length
-      ? data.members.map((name, index) => `
+    data.members.map((name, index) => {
+      const info = getMemberInfo(name);
+
+      return `
         <div class="row">
 
-          <span class="member-name">
-            ${index + 1}. ${escapeHtml(name)}
-          </span>
+          <div style="flex:1">
+
+            <div class="member-name">
+              ${index + 1}. ${escapeHtml(name)}
+            </div>
+
+            <div
+              class="small"
+              style="margin-top:8px;line-height:1.8"
+            >
+              🎂 Ngày sinh:
+              ${escapeHtml(info.dob || "Chưa nhập")}
+              <br>
+
+              👨 Bố:
+              ${escapeHtml(info.father || "Chưa nhập")}
+              <br>
+
+              👩 Mẹ:
+              ${escapeHtml(info.mother || "Chưa nhập")}
+              <br>
+
+              📞 SĐT:
+              ${escapeHtml(info.phone || "Chưa nhập")}
+            </div>
+
+          </div>
 
           <div class="actions">
+
+            <button
+              class="btn"
+              onclick="editMemberInfo(${index})"
+            >
+              📝 Thông tin
+            </button>
 
             <button
               class="btn gray"
@@ -471,9 +539,68 @@ function renderMembers() {
             </button>
 
           </div>
+
         </div>
-      `).join("")
-      : "<p>Chưa có thành viên.</p>";
+      `;
+    }).join("");
+}
+
+
+function editMemberInfo(index) {
+  const name =
+    data.members[index];
+
+  if (!name) return;
+
+  const info =
+    getMemberInfo(name);
+
+  const dob =
+    prompt(
+      "Ngày tháng năm sinh (DD/MM/YYYY):",
+      info.dob || ""
+    );
+
+  if (dob === null) return;
+
+  const father =
+    prompt(
+      "Họ và tên bố:",
+      info.father || ""
+    );
+
+  if (father === null) return;
+
+  const mother =
+    prompt(
+      "Họ và tên mẹ:",
+      info.mother || ""
+    );
+
+  if (mother === null) return;
+
+  const phone =
+    prompt(
+      "Số điện thoại phụ huynh:",
+      info.phone || ""
+    );
+
+  if (phone === null) return;
+
+  info.dob =
+    dob.trim();
+
+  info.father =
+    father.trim();
+
+  info.mother =
+    mother.trim();
+
+  info.phone =
+    phone.trim();
+
+  save();
+  renderMembers();
 }
 
 
@@ -491,7 +618,9 @@ function addMember() {
 
   if (
     data.members.some(
-      n => n.toLowerCase() === name.toLowerCase()
+      n =>
+        n.toLowerCase() ===
+        name.toLowerCase()
     )
   ) {
     alert("Tên này đã có trong danh sách.");
@@ -499,6 +628,13 @@ function addMember() {
   }
 
   data.members.push(name);
+
+  data.memberInfo[name] = {
+    dob: "",
+    father: "",
+    mother: "",
+    phone: ""
+  };
 
   data.sessions.forEach(session => {
     session.attendance.push(false);
@@ -535,14 +671,23 @@ function renameMember(index) {
     data.members.some(
       (n, i) =>
         i !== index &&
-        n.toLowerCase() === clean.toLowerCase()
+        n.toLowerCase() ===
+        clean.toLowerCase()
     )
   ) {
     alert("Tên này đã có trong danh sách.");
     return;
   }
 
-  data.members[index] = clean;
+  data.members[index] =
+    clean;
+
+  if (data.memberInfo[oldName]) {
+    data.memberInfo[clean] =
+      data.memberInfo[oldName];
+
+    delete data.memberInfo[oldName];
+  }
 
   save();
   render();
@@ -550,18 +695,31 @@ function renameMember(index) {
 
 
 function deleteMember(index) {
+  const name =
+    data.members[index];
+
   const ok =
     confirm(
-      `Xóa "${data.members[index]}" khỏi danh sách?`
+      `Xóa "${name}" khỏi danh sách?`
     );
 
   if (!ok) return;
 
-  data.members.splice(index, 1);
+  delete data.memberInfo[name];
 
-  data.sessions.forEach(session => {
-    session.attendance.splice(index, 1);
-  });
+  data.members.splice(
+    index,
+    1
+  );
+
+  data.sessions.forEach(
+    session => {
+      session.attendance.splice(
+        index,
+        1
+      );
+    }
+  );
 
   save();
   render();
@@ -587,7 +745,8 @@ function getScores(key) {
 
   data.members.forEach(name => {
     if (
-      typeof data.competition[key][name] !== "number"
+      typeof data.competition[key][name] !==
+      "number"
     ) {
       data.competition[key][name] = 0;
     }
@@ -725,11 +884,13 @@ function renderCompetition() {
     data.members
       .map(name => ({
         name: name,
-        score: scores[name] || 0
+        score:
+          scores[name] || 0
       }))
       .sort((a, b) => {
         return (
-          b.score - a.score ||
+          b.score -
+            a.score ||
           a.name.localeCompare(
             b.name,
             "vi"
@@ -751,123 +912,133 @@ function renderCompetition() {
     return;
   }
 
-
   box.innerHTML =
-    ranked.map((item, index) => {
+    ranked
+      .map((item, index) => {
 
-      const rank =
-        index + 1;
+        const rank =
+          index + 1;
 
-      const width =
-        Math.min(
-          100,
-          Math.max(
-            0,
-            item.score /
-            maxScore *
-            100
-          )
-        );
+        const width =
+          Math.min(
+            100,
+            Math.max(
+              0,
+              item.score /
+                maxScore *
+                100
+            )
+          );
 
-      const prize =
-        getPrize(
-          rank,
-          ranked.length
-        );
+        const prize =
+          getPrize(
+            rank,
+            ranked.length
+          );
 
-      let medal;
+        let medal;
 
-      if (rank === 1) {
-        medal = "🥇";
-      } else if (rank === 2) {
-        medal = "🥈";
-      } else if (rank === 3) {
-        medal = "🥉";
-      } else {
-        medal = `#${rank}`;
-      }
+        if (rank === 1) {
+          medal = "🥇";
+        } else if (rank === 2) {
+          medal = "🥈";
+        } else if (rank === 3) {
+          medal = "🥉";
+        } else {
+          medal = `#${rank}`;
+        }
 
+        return `
+          <div class="rank-card">
 
-      return `
-        <div class="rank-card">
+            <div class="rank-head">
 
-          <div class="rank-head">
+              <div>
 
-            <div>
+                <span class="rank-medal">
+                  ${medal}
+                </span>
 
-              <span class="rank-medal">
-                ${medal}
-              </span>
+                <span class="rank-name">
+                  ${escapeHtml(item.name)}
+                </span>
 
-              <span class="rank-name">
-                ${escapeHtml(item.name)}
-              </span>
+                ${
+                  prize
+                    ? `
+                      <div class="prize">
+                        ${prize}
+                      </div>
+                    `
+                    : ""
+                }
 
-              ${
-                prize
-                  ? `
-                    <div class="prize">
-                      ${prize}
-                    </div>
-                  `
-                  : ""
-              }
+              </div>
+
+              <div class="rank-score">
+                ${item.score} điểm
+              </div>
 
             </div>
 
-            <div class="rank-score">
-              ${item.score} điểm
+            <div class="rank-bar">
+
+              <div
+                class="rank-fill"
+                style="width:${width}%"
+              ></div>
+
+            </div>
+
+            <div class="score-actions">
+
+              <button
+                class="score-btn minus"
+                onclick="adjustScoreByIndex(
+                  ${data.members.indexOf(item.name)},
+                  -10
+                )"
+              >
+                −10
+              </button>
+
+              <button
+                class="score-btn minus"
+                onclick="adjustScoreByIndex(
+                  ${data.members.indexOf(item.name)},
+                  -5
+                )"
+              >
+                −5
+              </button>
+
+              <button
+                class="score-btn plus"
+                onclick="adjustScoreByIndex(
+                  ${data.members.indexOf(item.name)},
+                  5
+                )"
+              >
+                +5
+              </button>
+
+              <button
+                class="score-btn plus"
+                onclick="adjustScoreByIndex(
+                  ${data.members.indexOf(item.name)},
+                  10
+                )"
+              >
+                +10
+              </button>
+
             </div>
 
           </div>
+        `;
 
-
-          <div class="rank-bar">
-            <div
-              class="rank-fill"
-              style="width:${width}%"
-            ></div>
-          </div>
-
-
-          <!-- 4 NÚT CỘNG TRỪ -->
-
-          <div class="score-actions">
-
-            <button
-              class="score-btn minus"
-              onclick="adjustScoreByIndex(${data.members.indexOf(item.name)}, -10)"
-            >
-              −10
-            </button>
-
-            <button
-              class="score-btn minus"
-              onclick="adjustScoreByIndex(${data.members.indexOf(item.name)}, -5)"
-            >
-              −5
-            </button>
-
-            <button
-              class="score-btn plus"
-              onclick="adjustScoreByIndex(${data.members.indexOf(item.name)}, 5)"
-            >
-              +5
-            </button>
-
-            <button
-              class="score-btn plus"
-              onclick="adjustScoreByIndex(${data.members.indexOf(item.name)}, 10)"
-            >
-              +10
-            </button>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
+      })
+      .join("");
 }
 
 
@@ -876,273 +1047,3 @@ function renderCompetition() {
 ========================= */
 
 render();
-/* =========================
-   THÔNG TIN HỌC SINH
-========================= */
-
-if (!data.memberInfo || typeof data.memberInfo !== "object") {
-  data.memberInfo = {};
-}
-
-data.members.forEach(function(name) {
-  if (!data.memberInfo[name]) {
-    data.memberInfo[name] = {
-      dob: "",
-      father: "",
-      mother: "",
-      phone: ""
-    };
-  }
-});
-
-save();
-
-function getMemberInfo(name) {
-  if (!data.memberInfo[name]) {
-    data.memberInfo[name] = {
-      dob: "",
-      father: "",
-      mother: "",
-      phone: ""
-    };
-  }
-
-  return data.memberInfo[name];
-}
-
-function editMemberInfo(index) {
-  const name = data.members[index];
-  if (!name) return;
-
-  const info = getMemberInfo(name);
-
-  const dob = prompt(
-    "Ngày tháng năm sinh (DD/MM/YYYY):",
-    info.dob || ""
-  );
-  if (dob === null) return;
-
-  const father = prompt(
-    "Họ và tên bố:",
-    info.father || ""
-  );
-  if (father === null) return;
-
-  const mother = prompt(
-    "Họ và tên mẹ:",
-    info.mother || ""
-  );
-  if (mother === null) return;
-
-  const phone = prompt(
-    "Số điện thoại phụ huynh:",
-    info.phone || ""
-  );
-  if (phone === null) return;
-
-  info.dob = dob.trim();
-  info.father = father.trim();
-  info.mother = mother.trim();
-  info.phone = phone.trim();
-
-  save();
-  renderMembers();
-}
-
-
-/* HIỂN THỊ DANH SÁCH THÀNH VIÊN */
-
-function renderMembers() {
-  const box = document.getElementById("memberList");
-
-  if (!box) return;
-
-  if (!data.members.length) {
-    box.innerHTML = "<p>Chưa có thành viên.</p>";
-    return;
-  }
-
-  box.innerHTML = data.members.map(function(name, index) {
-
-    const info = getMemberInfo(name);
-
-    return `
-      <div class="row">
-
-        <div style="flex:1">
-
-          <div class="member-name">
-            ${index + 1}. ${escapeHtml(name)}
-          </div>
-
-          <div class="small" style="margin-top:8px">
-            🎂 ${escapeHtml(info.dob || "Chưa nhập ngày sinh")}
-            <br>
-            👨 Bố: ${escapeHtml(info.father || "Chưa nhập")}
-            <br>
-            👩 Mẹ: ${escapeHtml(info.mother || "Chưa nhập")}
-            <br>
-            📞 SĐT: ${escapeHtml(info.phone || "Chưa nhập")}
-          </div>
-
-        </div>
-
-        <div class="actions">
-
-          <button
-            class="btn"
-            onclick="editMemberInfo(${index})"
-          >
-            📝 Thông tin
-          </button>
-
-          <button
-            class="btn gray"
-            onclick="renameMember(${index})"
-          >
-            ✏️ Đổi tên
-          </button>
-
-          <button
-            class="btn red"
-            onclick="deleteMember(${index})"
-          >
-            🗑️ Xóa
-          </button>
-
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
-}
-
-
-/* THÊM HỌC SINH */
-
-const oldAddMember = addMember;
-
-addMember = function() {
-
-  const input =
-    document.getElementById("newMember");
-
-  const name =
-    input.value.trim();
-
-  if (!name) {
-    alert("Bạn chưa nhập tên.");
-    return;
-  }
-
-  if (
-    data.members.some(
-      n => n.toLowerCase() === name.toLowerCase()
-    )
-  ) {
-    alert("Tên này đã có trong danh sách.");
-    return;
-  }
-
-  data.members.push(name);
-
-  data.memberInfo[name] = {
-    dob: "",
-    father: "",
-    mother: "",
-    phone: ""
-  };
-
-  data.sessions.forEach(function(session) {
-    session.attendance.push(false);
-  });
-
-  input.value = "";
-
-  save();
-  render();
-};
-
-
-/* ĐỔI TÊN */
-
-const oldRenameMember = renameMember;
-
-renameMember = function(index) {
-
-  const oldName =
-    data.members[index];
-
-  const name =
-    prompt(
-      "Đổi tên thành viên:",
-      oldName
-    );
-
-  if (name === null) return;
-
-  const clean =
-    name.trim();
-
-  if (!clean) {
-    alert("Tên không được để trống.");
-    return;
-  }
-
-  if (
-    data.members.some(
-      (n, i) =>
-        i !== index &&
-        n.toLowerCase() === clean.toLowerCase()
-    )
-  ) {
-    alert("Tên này đã có trong danh sách.");
-    return;
-  }
-
-  data.members[index] = clean;
-
-  if (data.memberInfo[oldName]) {
-
-    data.memberInfo[clean] =
-      data.memberInfo[oldName];
-
-    delete data.memberInfo[oldName];
-
-  }
-
-  save();
-  render();
-};
-
-
-/* XÓA HỌC SINH */
-
-const oldDeleteMember = deleteMember;
-
-deleteMember = function(index) {
-
-  const name =
-    data.members[index];
-
-  const ok =
-    confirm(
-      `Xóa "${name}" khỏi danh sách?`
-    );
-
-  if (!ok) return;
-
-  delete data.memberInfo[name];
-
-  data.members.splice(index, 1);
-
-  data.sessions.forEach(function(session) {
-    session.attendance.splice(index, 1);
-  });
-
-  save();
-  render();
-};
-
-renderMembers();
