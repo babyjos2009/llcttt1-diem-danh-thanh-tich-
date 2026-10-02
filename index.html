@@ -12,30 +12,36 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:linear-gradient(135deg,#eafaf3,#eaf3ff);
-  color:#173b35
+  color:#173b35;
 }
 
 header{
   background:linear-gradient(135deg,#168a70,#2d91c7);
   color:#fff;
   padding:28px 18px;
-  text-align:center
+  text-align:center;
 }
 
-h1{margin:0 0 8px;font-size:28px}
-.quote{opacity:.95}
+h1{
+  margin:0 0 8px;
+  font-size:28px;
+}
+
+.quote{
+  opacity:.95;
+}
 
 main{
   max-width:1100px;
   margin:24px auto;
-  padding:0 16px
+  padding:0 16px;
 }
 
 .tabs{
   display:flex;
   gap:10px;
   margin-bottom:16px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .tabs button{
@@ -44,12 +50,13 @@ main{
   border-radius:12px;
   background:#fff;
   cursor:pointer;
-  font-weight:700
+  font-weight:700;
+  font-size:15px;
 }
 
 .tabs .active{
   background:#168a70;
-  color:#fff
+  color:#fff;
 }
 
 .card{
@@ -57,7 +64,7 @@ main{
   border-radius:18px;
   padding:18px;
   margin-bottom:16px;
-  box-shadow:0 6px 20px #00000012
+  box-shadow:0 6px 20px #00000012;
 }
 
 .top{
@@ -65,7 +72,7 @@ main{
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .btn{
@@ -75,42 +82,42 @@ main{
   background:#168a70;
   color:#fff;
   cursor:pointer;
-  font-weight:700
+  font-weight:700;
 }
 
-.btn.red{background:#c94a4a}
-.btn.gray{background:#64748b}
+.btn.red{
+  background:#c94a4a;
+}
+
+.btn.gray{
+  background:#64748b;
+}
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px
+  gap:12px;
 }
 
 .stat{
   text-align:center;
   padding:16px;
   background:#f3faf7;
-  border-radius:14px
+  border-radius:14px;
 }
 
 .stat b{
   display:block;
-  font-size:26px
+  font-size:26px;
 }
 
-input,textarea{
+input{
   width:100%;
   padding:12px;
   border:1px solid #ccdcd7;
   border-radius:10px;
   font-size:16px;
-  margin:12px 0
-}
-
-textarea{
-  min-height:160px;
-  resize:vertical
+  margin:12px 0;
 }
 
 .row{
@@ -119,72 +126,126 @@ textarea{
   align-items:center;
   padding:12px 4px;
   border-bottom:1px solid #eee;
-  gap:12px
+  gap:12px;
 }
 
-.row:last-child{border:0}
+.row:last-child{
+  border:0;
+}
 
 .badge{
   border:0;
   border-radius:10px;
   padding:9px 12px;
-  cursor:pointer
+  cursor:pointer;
 }
 
-.present{background:#d9f6e9;color:#08714e}
-.absent{background:#ffe1e1;color:#a62a2a}
+.present{
+  background:#d9f6e9;
+  color:#08714e;
+}
+
+.absent{
+  background:#ffe1e1;
+  color:#a62a2a;
+}
 
 .actions{
   display:flex;
   gap:7px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
-.member-name{font-weight:700}
+.member-name{
+  font-weight:600;
+}
 
 .session{
   padding:15px;
   border:1px solid #dcebe6;
   border-radius:14px;
-  margin:10px 0
+  margin:10px 0;
 }
 
 .bar{
   height:10px;
   background:#e8eeee;
   border-radius:20px;
-  overflow:hidden
+  overflow:hidden;
 }
 
 .fill{
   height:100%;
-  background:#168a70
+  background:#168a70;
 }
 
 .addbox{
   display:flex;
-  gap:8px
+  gap:8px;
 }
 
-.addbox input{margin:0}
+.addbox input{
+  margin:0;
+}
 
 .small{
   font-size:13px;
-  color:#64748b
+  color:#64748b;
 }
 
+/* THÀNH VIÊN */
+.member-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid #eee;
+}
+
+.member-card:last-child{
+  border-bottom:0;
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  min-width:62px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #d9eee7;
+  background:#eef7f4;
+}
+
+.avatar-empty{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+}
+
+.member-content{
+  flex:1;
+}
+
+.member-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+/* THI ĐUA */
 .competition-nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  margin-bottom:16px
+  margin-bottom:16px;
 }
 
 .month-title{
   text-align:center;
   font-size:20px;
-  font-weight:800
+  font-weight:800;
 }
 
 .rank-card{
@@ -192,32 +253,37 @@ textarea{
   border-radius:16px;
   padding:14px;
   margin:10px 0;
-  background:#fbfefd
+  background:#fbfefd;
 }
 
 .rank-head{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  align-items:center
+  align-items:center;
 }
 
-.rank-name{font-weight:800}
-.rank-score{font-size:20px;font-weight:900}
+.rank-name{
+  font-weight:800;
+}
+
+.rank-score{
+  font-size:20px;
+  font-weight:900;
+}
 
 .rank-bar{
   height:18px;
   background:#edf1f0;
   border-radius:20px;
   overflow:hidden;
-  margin:10px 0
+  margin:10px 0;
 }
 
 .rank-fill{
   height:100%;
   border-radius:20px;
   background:linear-gradient(90deg,#168a70,#2d91c7);
-  transition:width .2s
 }
 
 .score-actions{
@@ -225,7 +291,7 @@ textarea{
   justify-content:flex-end;
   align-items:center;
   gap:6px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .score-btn{
@@ -235,177 +301,189 @@ textarea{
   cursor:pointer;
   font-weight:800;
   background:#eef5f2;
-  color:#173b35
+  color:#173b35;
 }
 
-.score-btn.plus{background:#d9f6e9;color:#08714e}
-.score-btn.minus{background:#ffe1e1;color:#a62a2a}
+.score-btn.plus{
+  background:#d9f6e9;
+  color:#08714e;
+}
+
+.score-btn.minus{
+  background:#ffe1e1;
+  color:#a62a2a;
+}
 
 .prize{
   font-size:13px;
   font-weight:800;
-  margin-top:5px
-}
-
-.rank-medal{
-  font-size:22px;
-  min-width:32px
-}
-
-.competition-note{
-  padding:10px;
-  border-radius:12px;
-  background:#f5faf8;
-  margin-bottom:12px
+  margin-top:5px;
 }
 
 /* GIÁO ÁN */
-.upload-zone{
-  border:2px dashed #9ccfc2;
-  background:#f7fcfa;
-  border-radius:16px;
-  padding:24px;
+.lesson-upload{
+  border:2px dashed #8bc9b5;
+  border-radius:18px;
+  padding:30px 18px;
   text-align:center;
-  transition:.2s
+  background:#f8fffc;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.upload-zone.dragover{
+.lesson-upload:hover,
+.lesson-upload.dragover{
+  background:#edf9f4;
   border-color:#168a70;
-  background:#ecfaf5
+  transform:translateY(-1px);
 }
 
-.upload-icon{
-  font-size:42px;
-  margin-bottom:6px
+.lesson-upload-icon{
+  font-size:48px;
+  margin-bottom:8px;
 }
 
-.lesson-card{
-  border:1px solid #e5ecea;
-  border-radius:16px;
-  padding:15px;
-  margin:10px 0;
-  background:#fbfefd
+.lesson-upload h3{
+  margin:6px 0;
 }
 
-.lesson-card:hover{
-  border-color:#9ccfc2
-}
-
-.lesson-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px
-}
-
-.lesson-title{
-  font-size:18px;
-  font-weight:800
-}
-
-.lesson-content{
-  line-height:1.7;
-  font-size:16px;
-  overflow-wrap:anywhere
-}
-
-.lesson-content h1,
-.lesson-content h2,
-.lesson-content h3,
-.lesson-content h4{
-  color:#168a70;
-  margin-top:20px
-}
-
-.lesson-content p{
-  margin:10px 0
-}
-
-.lesson-content img{
-  max-width:100%;
-  height:auto;
-  border-radius:10px;
-  margin:8px 0
-}
-
-.lesson-content table{
-  width:100%;
-  border-collapse:collapse;
-  margin:14px 0
-}
-
-.lesson-content th,
-.lesson-content td{
-  border:1px solid #dcebe6;
-  padding:8px;
-  vertical-align:top
-}
-
-.lesson-content th{
-  background:#f3faf7
+.lesson-upload p{
+  margin:5px 0;
 }
 
 .lesson-toolbar{
   display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:12px
-}
-
-.lesson-view{
-  margin-top:12px
-}
-
-.avatar{
-  width:72px;
-  height:72px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#eef5f2;
-  border:2px solid #dcebe6;
-  display:flex;
+  gap:10px;
   align-items:center;
-  justify-content:center;
-  flex:0 0 72px
+  margin-bottom:14px;
 }
 
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover
+.lesson-toolbar input{
+  margin:0;
 }
 
-.member-info{
-  line-height:1.8
+.lesson-grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:16px;
+}
+
+.lesson-list{
+  border:1px solid #e2ece8;
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.lesson-item{
+  padding:13px 14px;
+  border-bottom:1px solid #edf1ef;
+  cursor:pointer;
+}
+
+.lesson-item:last-child{
+  border-bottom:0;
+}
+
+.lesson-item:hover{
+  background:#f5fbf8;
+}
+
+.lesson-item.active{
+  background:#e7f7f0;
+  font-weight:700;
+}
+
+.lesson-item-title{
+  font-weight:700;
+}
+
+.lesson-item-small{
+  font-size:12px;
+  color:#71807b;
+  margin-top:4px;
+}
+
+.lesson-viewer{
+  min-height:400px;
+  border:1px solid #e2ece8;
+  border-radius:14px;
+  padding:22px;
+  background:#fff;
+  overflow:auto;
+}
+
+.lesson-viewer h1,
+.lesson-viewer h2,
+.lesson-viewer h3{
+  color:#173b35;
+}
+
+.lesson-viewer img{
+  max-width:100%;
+  height:auto;
+  border-radius:8px;
+}
+
+.lesson-empty{
+  text-align:center;
+  padding:50px 20px;
+  color:#71807b;
+}
+
+.lesson-actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:8px;
 }
 
 .loading{
-  padding:14px;
-  border-radius:12px;
-  background:#f5faf8;
-  margin-top:12px
+  padding:12px;
+  border-radius:10px;
+  background:#eff8f4;
+  color:#17664f;
+  margin-top:10px;
 }
 
 @media(max-width:700px){
 
-  .stats{grid-template-columns:1fr}
+  .stats{
+    grid-template-columns:1fr;
+  }
 
   .row{
     align-items:flex-start;
-    flex-direction:column
+    flex-direction:column;
   }
 
-  .addbox{flex-direction:column}
+  .addbox{
+    flex-direction:column;
+  }
 
-  .competition-nav{flex-direction:column}
+  .competition-nav{
+    flex-direction:column;
+  }
 
-  .competition-nav button{width:100%}
+  .competition-nav button{
+    width:100%;
+  }
 
-  .rank-head{align-items:flex-start}
+  .rank-head{
+    align-items:flex-start;
+  }
 
-  .score-actions{justify-content:flex-start}
+  .score-actions{
+    justify-content:flex-start;
+  }
 
-  .lesson-head{flex-direction:column}
+  .lesson-grid{
+    grid-template-columns:1fr;
+  }
+
+  .member-card{
+    align-items:flex-start;
+  }
 }
 </style>
 </head>
@@ -421,29 +499,40 @@ textarea{
 
 <div class="tabs">
 
-  <button class="active" data-tab="attendance">📝 Điểm danh</button>
-  <button data-tab="sessions">📊 Thống kê</button>
-  <button data-tab="members">👥 Thành viên</button>
-  <button data-tab="competition">🏆 Thanh thi đua</button>
-  <button data-tab="lessons">📚 Giáo án</button>
+  <button class="active" data-tab="attendance">
+    📝 Điểm danh
+  </button>
+
+  <button data-tab="sessions">
+    📊 Thống kê
+  </button>
+
+  <button data-tab="members">
+    👥 Thành viên
+  </button>
+
+  <button data-tab="competition">
+    🏆 Thanh thi đua
+  </button>
+
+  <button data-tab="lessons">
+    📚 Giáo án
+  </button>
 
 </div>
-
 
 <!-- ĐIỂM DANH -->
 <section id="attendance">
 
   <div class="card top">
-
     <div>
-      <b id="sessionTitle"></b>
-      <div id="sessionDate"></div>
+      <b id="sessionTitle">Chưa có buổi học</b>
+      <div id="sessionDate">Hãy bấm “＋ Tạo buổi học” để bắt đầu.</div>
     </div>
 
     <button class="btn" onclick="createSession()">
       ＋ Tạo buổi học
     </button>
-
   </div>
 
   <div class="card stats">
@@ -478,7 +567,6 @@ textarea{
   </div>
 
 </section>
-
 
 <!-- THỐNG KÊ -->
 <section id="sessions" style="display:none">
@@ -518,7 +606,6 @@ textarea{
 
 </section>
 
-
 <!-- THÀNH VIÊN -->
 <section id="members" style="display:none">
 
@@ -527,12 +614,8 @@ textarea{
     <h2>👥 Quản lý thành viên</h2>
 
     <p class="small">
-      Thêm, đổi tên, xóa thành viên và quản lý thông tin học sinh.
+      Thêm, đổi tên, sửa thông tin hoặc ảnh thành viên.
     </p>
-
-    <div class="competition-note">
-      🔒 Thông tin học sinh được lưu trong trình duyệt này.
-    </div>
 
     <div class="addbox">
 
@@ -555,7 +638,6 @@ textarea{
 
 </section>
 
-
 <!-- THANH THI ĐUA -->
 <section id="competition" style="display:none">
 
@@ -564,7 +646,8 @@ textarea{
     <h2>🏆 Thanh thi đua</h2>
 
     <div class="competition-note">
-      Tự cộng/trừ điểm bằng các nút <b>+5, +10, -5, -10</b>.
+      Tự cộng/trừ điểm bằng các nút
+      <b>+5, +10, -5, -10</b>.
       Điểm được lưu riêng theo từng tháng.
     </div>
 
@@ -582,9 +665,13 @@ textarea{
 
     </div>
 
-    <button class="btn red" onclick="resetCompetitionMonth()">
-      ↺ Đặt lại điểm tháng này
-    </button>
+    <div class="actions">
+
+      <button class="btn red" onclick="resetCompetitionMonth()">
+        ↺ Đặt lại điểm tháng này
+      </button>
+
+    </div>
 
   </div>
 
@@ -594,7 +681,6 @@ textarea{
 
 </section>
 
-
 <!-- GIÁO ÁN -->
 <section id="lessons" style="display:none">
 
@@ -603,66 +689,87 @@ textarea{
     <h2>📚 Giáo án bài học</h2>
 
     <p class="small">
-      Bạn có thể tải <b>1 file Word</b> hoặc <b>1 file ZIP chứa nhiều file Word</b>.
-      Website sẽ tự đọc nội dung và tạo thành từng bài giáo án để xem trên web.
+      Tải một file Word <b>.docx</b> hoặc một file <b>.zip</b>
+      chứa nhiều file Word. Website sẽ tự chuyển thành giáo án.
     </p>
 
     <div
       id="lessonUploadZone"
-      class="upload-zone"
+      class="lesson-upload"
+      onclick="document.getElementById('lessonFile').click()"
     >
 
-      <div class="upload-icon">📦</div>
+      <div class="lesson-upload-icon">📚</div>
 
-      <div>
-        <b>Kéo thả file ZIP hoặc Word vào đây</b>
-      </div>
+      <h3>
+        Kéo file vào đây
+      </h3>
 
-      <div class="small" style="margin:7px 0 12px">
-        Hỗ trợ: .zip và .docx
-      </div>
+      <p>
+        hoặc bấm để chọn file
+      </p>
 
-      <label
-        class="btn"
-        style="display:inline-block;cursor:pointer"
+      <p class="small">
+        Hỗ trợ: .docx và .zip
+      </p>
+
+      <input
+        id="lessonFile"
+        type="file"
+        accept=".docx,.zip"
+        multiple
+        hidden
       >
-        📂 Chọn file
-
-        <input
-          id="lessonFile"
-          type="file"
-          accept=".zip,.docx,application/zip,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          style="display:none"
-          onchange="importLessonFiles(this.files)"
-        >
-      </label>
 
     </div>
 
     <div id="lessonProgress"></div>
 
-    <input
-      id="lessonSearch"
-      placeholder="🔎 Tìm tên bài học..."
-      oninput="renderLessons()"
-    >
-
   </div>
 
-  <div class="card" id="lessonViewer"></div>
+  <div class="card">
 
-  <div class="card" id="lessonList"></div>
+    <div class="lesson-toolbar">
+
+      <input
+        id="lessonSearch"
+        placeholder="🔎 Tìm giáo án..."
+        oninput="renderLessons()"
+      >
+
+    </div>
+
+    <div class="lesson-grid">
+
+      <div class="lesson-list" id="lessonList"></div>
+
+      <div class="lesson-viewer" id="lessonViewer">
+
+        <div class="lesson-empty">
+          <div style="font-size:48px">📖</div>
+          <h3>Chưa chọn giáo án</h3>
+          <p>
+            Hãy tải file Word hoặc ZIP ở phía trên.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 </main>
 
-<!-- Đọc DOCX -->
+<!-- ĐỌC WORD -->
 <script src="https://cdn.jsdelivr.net/npm/mammoth@1.11.0/mammoth.browser.min.js"></script>
 
-<!-- Đọc ZIP -->
+<!-- ĐỌC ZIP -->
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
+<!-- CODE CHÍNH -->
 <script src="script.js?v=6"></script>
 
 </body>
