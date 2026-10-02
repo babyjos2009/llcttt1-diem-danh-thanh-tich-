@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lớn Lên Trong Chúa Thánh Thần 1 - Điểm danh</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#eafaf3,#eaf3ff);
+  color:#173b35
+}
+
+header{
+  background:linear-gradient(135deg,#168a70,#2d91c7);
+  color:#fff;
+  padding:28px 18px;
+  text-align:center
+}
+
+h1{
+  margin:0 0 8px;
+  font-size:28px
+}
+
+.quote{
+  opacity:.95
+}
+
+main{
+  max-width:1000px;
+  margin:24px auto;
+  padding:0 16px
+}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+  flex-wrap:wrap
+}
+
+.tabs button{
+  border:0;
+  padding:12px 18px;
+  border-radius:12px;
+  background:#fff;
+  cursor:pointer;
+  font-weight:700
+}
+
+.tabs .active{
+  background:#168a70;
+  color:#fff
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 6px 20px #00000012
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#168a70;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700
+}
+
+.btn.red{
+  background:#c94a4a
+}
+
+.btn.gray{
+  background:#64748b
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.stat{
+  text-align:center;
+  padding:16px;
+  background:#f3faf7;
+  border-radius:14px
+}
+
+.stat b{
+  display:block;
+  font-size:26px
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccdcd7;
+  border-radius:10px;
+  font-size:16px;
+  margin:12px 0
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 4px;
+  border-bottom:1px solid #eee;
+  gap:12px
+}
+
+.row:last-child{
+  border:0
+}
+
+.badge{
+  border:0;
+  border-radius:10px;
+  padding:9px 12px;
+  cursor:pointer
+}
+
+.present{
+  background:#d9f6e9;
+  color:#08714e
+}
+
+.absent{
+  background:#ffe1e1;
+  color:#a62a2a
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+
+.member-name{
+  font-weight:600
+}
+
+.session{
+  padding:15px;
+  border:1px solid #dcebe6;
+  border-radius:14px;
+  margin:10px 0
+}
+
+.bar{
+  height:10px;
+  background:#e8eeee;
+  border-radius:20px;
+  overflow:hidden
+}
+
+.fill{
+  height:100%;
+  background:#168a70
+}
+
+.addbox{
+  display:flex;
+  gap:8px
+}
+
+.addbox input{
+  margin:0
+}
+
+.small{
+  font-size:13px;
+  color:#64748b
+}
+
+/* THANH THI ĐUA */
+
+.competition-nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px
+}
+
+.month-title{
+  text-align:center;
+  font-size:20px;
+  font-weight:800
+}
+
+.rank-card{
+  border:1px solid #e5ecea;
+  border-radius:16px;
+  padding:14px;
+  margin:10px 0;
+  background:#fbfefd
+}
+
+.rank-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center
+}
+
+.rank-name{
+  font-weight:800
+}
+
+.rank-score{
+  font-size:20px;
+  font-weight:900
+}
+
+.rank-bar{
+  height:18px;
+  background:#edf1f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0
+}
+
+.rank-fill{
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#168a70,#2d91c7);
+  transition:width .2s
+}
+
+.score-actions{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap
+}
+
+.score-btn{
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  cursor:pointer;
+  font-weight:800;
+  background:#eef5f2;
+  color:#173b35
+}
+
+.score-btn.plus{
+  background:#d9f6e9;
+  color:#08714e
+}
+
+.score-btn.minus{
+  background:#ffe1e1;
+  color:#a62a2a
+}
+
+.prize{
+  font-size:13px;
+  font-weight:800;
+  margin-top:5px
+}
+
+.rank-medal{
+  font-size:22px;
+  min-width:32px
+}
+
+.competition-note{
+  padding:10px;
+  border-radius:12px;
+  background:#f5faf8;
+  margin-bottom:12px
+}
+
+@media(max-width:600px){
+
+  .stats{
+    grid-template-columns:1fr
+  }
+
+  .row{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+  .addbox{
+    flex-direction:column
+  }
+
+  .competition-nav{
+    flex-direction:column
+  }
+
+  .competition-nav button{
+    width:100%
+  }
+
+  .rank-head{
+    align-items:flex-start
+  }
+
+  .score-actions{
+    justify-content:flex-start
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1</h1>
+  <div class="quote">
+    “Xin Chúa Thánh Thần hướng dẫn chúng con”
+  </div>
+</header>
+
+<main>
+
+<div class="tabs">
+
+  <button class="active" data-tab="attendance">
+    📝 Điểm danh
+  </button>
+
+  <button data-tab="sessions">
+    📊 Thống kê
+  </button>
+
+  <button data-tab="members">
+    👥 Thành viên
+  </button>
+
+  <button data-tab="competition">
+    🏆 Thanh thi đua
+  </button>
+
+</div>
+
+
+<!-- ĐIỂM DANH -->
+
+<section id="attendance">
+
+  <div class="card top">
+
+    <div>
+      <b id="sessionTitle"></b>
+      <div id="sessionDate"></div>
+    </div>
+
+    <button class="btn" onclick="createSession()">
+      ＋ Tạo buổi học
+    </button>
+
+  </div>
+
+
+  <div class="card stats">
+
+    <div class="stat">
+      Tổng số
+      <b id="total">0</b>
+    </div>
+
+    <div class="stat">
+      Có mặt
+      <b id="present">0</b>
+    </div>
+
+    <div class="stat">
+      Vắng
+      <b id="absent">0</b>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <input
+      id="search"
+      placeholder="🔎 Tìm tên..."
+      oninput="render()"
+    >
+
+    <div id="list"></div>
+
+  </div>
+
+</section>
+
+
+<!-- THỐNG KÊ -->
+
+<section id="sessions" style="display:none">
+
+  <div class="card">
+
+    <h2>📊 Thống kê</h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        Số buổi
+        <b id="sessionCount">0</b>
+      </div>
+
+      <div class="stat">
+        Số thành viên
+        <b id="memberCount">0</b>
+      </div>
+
+      <div class="stat">
+        Tỷ lệ đi học
+        <b id="average">0%</b>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>📅 Các buổi học</h2>
+
+    <div id="sessionList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- THÀNH VIÊN -->
+
+<section id="members" style="display:none">
+
+  <div class="card">
+
+    <h2>👥 Quản lý thành viên</h2>
+
+    <p class="small">
+      Thêm, đổi tên hoặc xóa thành viên ngay trên website.
+    </p>
+
+    <div class="addbox">
+
+      <input
+        id="newMember"
+        placeholder="Nhập tên thành viên..."
+      >
+
+      <button class="btn" onclick="addMember()">
+        ＋ Thêm
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div id="memberList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- THANH THI ĐUA -->
+
+<section id="competition" style="display:none">
+
+  <div class="card">
+
+    <h2>🏆 Thanh thi đua</h2>
+
+    <div class="competition-note">
+
+      Bạn tự cộng điểm bằng các nút
+      <b>+5, +10</b>
+      và trừ bằng
+      <b>-5, -10</b>.
+
+      <br>
+
+      Điểm được lưu riêng theo từng tháng.
+
+    </div>
+
+
+    <div class="competition-nav">
+
+      <button
+        class="btn gray"
+        onclick="changeCompetitionMonth(-1)"
+      >
+        ‹ Tháng trước
+      </button>
+
+
+      <div
+        id="competitionMonth"
+        class="month-title"
+      ></div>
+
+
+      <button
+        class="btn gray"
+        onclick="changeCompetitionMonth(1)"
+      >
+        Tháng sau ›
+      </button>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn red"
+        onclick="resetCompetitionMonth()"
+      >
+        ↺ Đặt lại điểm tháng này
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div id="competitionList"></div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<script src="script.js?v=3"></script>
+
+</body>
+</html>
