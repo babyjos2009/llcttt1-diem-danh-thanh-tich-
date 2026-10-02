@@ -22,14 +22,8 @@ header{
   text-align:center
 }
 
-h1{
-  margin:0 0 8px;
-  font-size:28px
-}
-
-.quote{
-  opacity:.95
-}
+h1{margin:0 0 8px;font-size:28px}
+.quote{opacity:.95}
 
 main{
   max-width:1000px;
@@ -84,13 +78,8 @@ main{
   font-weight:700
 }
 
-.btn.red{
-  background:#c94a4a
-}
-
-.btn.gray{
-  background:#64748b
-}
+.btn.red{background:#c94a4a}
+.btn.gray{background:#64748b}
 
 .stats{
   display:grid;
@@ -128,9 +117,7 @@ input{
   gap:12px
 }
 
-.row:last-child{
-  border:0
-}
+.row:last-child{border:0}
 
 .badge{
   border:0;
@@ -139,15 +126,8 @@ input{
   cursor:pointer
 }
 
-.present{
-  background:#d9f6e9;
-  color:#08714e
-}
-
-.absent{
-  background:#ffe1e1;
-  color:#a62a2a
-}
+.present{background:#d9f6e9;color:#08714e}
+.absent{background:#ffe1e1;color:#a62a2a}
 
 .actions{
   display:flex;
@@ -155,9 +135,7 @@ input{
   flex-wrap:wrap
 }
 
-.member-name{
-  font-weight:600
-}
+.member-name{font-weight:600}
 
 .session{
   padding:15px;
@@ -183,9 +161,7 @@ input{
   gap:8px
 }
 
-.addbox input{
-  margin:0
-}
+.addbox input{margin:0}
 
 .small{
   font-size:13px;
@@ -223,9 +199,7 @@ input{
   align-items:center
 }
 
-.rank-name{
-  font-weight:800
-}
+.rank-name{font-weight:800}
 
 .rank-score{
   font-size:20px;
@@ -293,36 +267,107 @@ input{
   margin-bottom:12px
 }
 
+/* GIÁO ÁN */
+
+.lesson-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px
+}
+
+.lesson-card{
+  border:1px solid #e5ecea;
+  border-radius:16px;
+  padding:16px;
+  margin:10px 0;
+  background:#fbfefd
+}
+
+.lesson-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  flex-wrap:wrap
+}
+
+.lesson-viewer{
+  display:none;
+  margin-top:14px
+}
+
+.lesson-viewer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
+  padding-bottom:14px;
+  border-bottom:1px solid #e5ecea
+}
+
+.lesson-content{
+  margin-top:18px;
+  line-height:1.7;
+  font-size:16px;
+  overflow-wrap:anywhere
+}
+
+.lesson-content h1,
+.lesson-content h2,
+.lesson-content h3,
+.lesson-content h4{
+  color:#168a70;
+  margin-top:20px
+}
+
+.lesson-content img{
+  max-width:100%;
+  height:auto;
+  border-radius:10px
+}
+
+.lesson-content table{
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0
+}
+
+.lesson-content th,
+.lesson-content td{
+  border:1px solid #dcebe6;
+  padding:8px;
+  vertical-align:top
+}
+
+.lesson-content th{
+  background:#f3faf7
+}
+
+.lesson-empty{
+  text-align:center;
+  padding:25px 10px
+}
+
 @media(max-width:600px){
 
-  .stats{
-    grid-template-columns:1fr
-  }
+  .stats{grid-template-columns:1fr}
 
   .row{
     align-items:flex-start;
     flex-direction:column
   }
 
-  .addbox{
-    flex-direction:column
-  }
+  .addbox{flex-direction:column}
 
-  .competition-nav{
-    flex-direction:column
-  }
+  .competition-nav{flex-direction:column}
 
-  .competition-nav button{
-    width:100%
-  }
+  .competition-nav button{width:100%}
 
-  .rank-head{
-    align-items:flex-start
-  }
+  .rank-head{align-items:flex-start}
 
-  .score-actions{
-    justify-content:flex-start
-  }
+  .score-actions{justify-content:flex-start}
 
 }
 </style>
@@ -357,6 +402,10 @@ input{
     🏆 Thanh thi đua
   </button>
 
+  <button data-tab="lessons">
+    📚 Giáo án
+  </button>
+
 </div>
 
 
@@ -377,7 +426,6 @@ input{
 
   </div>
 
-
   <div class="card stats">
 
     <div class="stat">
@@ -396,7 +444,6 @@ input{
     </div>
 
   </div>
-
 
   <div class="card">
 
@@ -442,7 +489,6 @@ input{
 
   </div>
 
-
   <div class="card">
 
     <h2>📅 Các buổi học</h2>
@@ -463,8 +509,13 @@ input{
     <h2>👥 Quản lý thành viên</h2>
 
     <p class="small">
-  Thêm, đổi tên, xóa thành viên và quản lý thông tin học sinh.
-</p>
+      Thêm, đổi tên, xóa thành viên và quản lý thông tin học sinh.
+    </p>
+
+    <div class="competition-note">
+      🔒 Thông tin học sinh được lưu trong trình duyệt này.
+    </div>
+
     <div class="addbox">
 
       <input
@@ -479,7 +530,6 @@ input{
     </div>
 
   </div>
-
 
   <div class="card">
 
@@ -511,7 +561,6 @@ input{
 
     </div>
 
-
     <div class="competition-nav">
 
       <button
@@ -521,12 +570,10 @@ input{
         ‹ Tháng trước
       </button>
 
-
       <div
         id="competitionMonth"
         class="month-title"
       ></div>
-
 
       <button
         class="btn gray"
@@ -536,7 +583,6 @@ input{
       </button>
 
     </div>
-
 
     <div class="actions">
 
@@ -551,7 +597,6 @@ input{
 
   </div>
 
-
   <div class="card">
 
     <div id="competitionList"></div>
@@ -560,10 +605,73 @@ input{
 
 </section>
 
+
+<!-- GIÁO ÁN -->
+
+<section id="lessons" style="display:none">
+
+  <div class="card">
+
+    <h2>📚 Giáo án bài học</h2>
+
+    <p class="small">
+      Tải giáo án Word (.docx), website sẽ tự chuyển nội dung
+      thành văn bản/HTML để đọc ngay trên web.
+    </p>
+
+    <div class="lesson-actions">
+
+      <label
+        class="btn"
+        style="display:inline-block;cursor:pointer"
+      >
+        📄 Tải giáo án Word
+
+        <input
+          id="lessonFile"
+          type="file"
+          accept=".docx"
+          style="display:none"
+          onchange="importLessonWord(this)"
+        >
+      </label>
+
+      <button
+        class="btn gray"
+        onclick="createBlankLesson()"
+      >
+        ＋ Giáo án trống
+      </button>
+
+    </div>
+
+    <input
+      id="lessonSearch"
+      placeholder="🔎 Tìm tên bài học..."
+    >
+
+  </div>
+
+
+  <div
+    class="card"
+    id="lessonViewer"
+  ></div>
+
+
+  <div
+    class="card"
+    id="lessonList"
+  ></div>
+
+</section>
+
 </main>
 
+<!-- Bộ đọc Word .docx trên trình duyệt -->
+<script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 
 </body>
 </html>
