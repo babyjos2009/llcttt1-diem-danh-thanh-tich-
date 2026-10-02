@@ -26,7 +26,7 @@ h1{margin:0 0 8px;font-size:28px}
 .quote{opacity:.95}
 
 main{
-  max-width:1000px;
+  max-width:1100px;
   margin:24px auto;
   padding:0 16px
 }
@@ -40,7 +40,7 @@ main{
 
 .tabs button{
   border:0;
-  padding:12px 18px;
+  padding:12px 16px;
   border-radius:12px;
   background:#fff;
   cursor:pointer;
@@ -99,13 +99,18 @@ main{
   font-size:26px
 }
 
-input{
+input,textarea{
   width:100%;
   padding:12px;
   border:1px solid #ccdcd7;
   border-radius:10px;
   font-size:16px;
   margin:12px 0
+}
+
+textarea{
+  min-height:160px;
+  resize:vertical
 }
 
 .row{
@@ -135,7 +140,7 @@ input{
   flex-wrap:wrap
 }
 
-.member-name{font-weight:600}
+.member-name{font-weight:700}
 
 .session{
   padding:15px;
@@ -168,8 +173,6 @@ input{
   color:#64748b
 }
 
-/* THANH THI ĐUA */
-
 .competition-nav{
   display:flex;
   justify-content:space-between;
@@ -200,11 +203,7 @@ input{
 }
 
 .rank-name{font-weight:800}
-
-.rank-score{
-  font-size:20px;
-  font-weight:900
-}
+.rank-score{font-size:20px;font-weight:900}
 
 .rank-bar{
   height:18px;
@@ -239,15 +238,8 @@ input{
   color:#173b35
 }
 
-.score-btn.plus{
-  background:#d9f6e9;
-  color:#08714e
-}
-
-.score-btn.minus{
-  background:#ffe1e1;
-  color:#a62a2a
-}
+.score-btn.plus{background:#d9f6e9;color:#08714e}
+.score-btn.minus{background:#ffe1e1;color:#a62a2a}
 
 .prize{
   font-size:13px;
@@ -268,47 +260,50 @@ input{
 }
 
 /* GIÁO ÁN */
+.upload-zone{
+  border:2px dashed #9ccfc2;
+  background:#f7fcfa;
+  border-radius:16px;
+  padding:24px;
+  text-align:center;
+  transition:.2s
+}
 
-.lesson-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px
+.upload-zone.dragover{
+  border-color:#168a70;
+  background:#ecfaf5
+}
+
+.upload-icon{
+  font-size:42px;
+  margin-bottom:6px
 }
 
 .lesson-card{
   border:1px solid #e5ecea;
   border-radius:16px;
-  padding:16px;
+  padding:15px;
   margin:10px 0;
   background:#fbfefd
+}
+
+.lesson-card:hover{
+  border-color:#9ccfc2
 }
 
 .lesson-head{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  gap:14px;
-  flex-wrap:wrap
+  gap:12px
 }
 
-.lesson-viewer{
-  display:none;
-  margin-top:14px
-}
-
-.lesson-viewer-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:12px;
-  flex-wrap:wrap;
-  padding-bottom:14px;
-  border-bottom:1px solid #e5ecea
+.lesson-title{
+  font-size:18px;
+  font-weight:800
 }
 
 .lesson-content{
-  margin-top:18px;
   line-height:1.7;
   font-size:16px;
   overflow-wrap:anywhere
@@ -322,10 +317,15 @@ input{
   margin-top:20px
 }
 
+.lesson-content p{
+  margin:10px 0
+}
+
 .lesson-content img{
   max-width:100%;
   height:auto;
-  border-radius:10px
+  border-radius:10px;
+  margin:8px 0
 }
 
 .lesson-content table{
@@ -345,12 +345,48 @@ input{
   background:#f3faf7
 }
 
-.lesson-empty{
-  text-align:center;
-  padding:25px 10px
+.lesson-toolbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:12px
 }
 
-@media(max-width:600px){
+.lesson-view{
+  margin-top:12px
+}
+
+.avatar{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#eef5f2;
+  border:2px solid #dcebe6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 72px
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.member-info{
+  line-height:1.8
+}
+
+.loading{
+  padding:14px;
+  border-radius:12px;
+  background:#f5faf8;
+  margin-top:12px
+}
+
+@media(max-width:700px){
 
   .stats{grid-template-columns:1fr}
 
@@ -369,6 +405,7 @@ input{
 
   .score-actions{justify-content:flex-start}
 
+  .lesson-head{flex-direction:column}
 }
 </style>
 </head>
@@ -377,40 +414,23 @@ input{
 
 <header>
   <h1>✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1</h1>
-  <div class="quote">
-    “Xin Chúa Thánh Thần hướng dẫn chúng con”
-  </div>
+  <div class="quote">“Xin Chúa Thánh Thần hướng dẫn chúng con”</div>
 </header>
 
 <main>
 
 <div class="tabs">
 
-  <button class="active" data-tab="attendance">
-    📝 Điểm danh
-  </button>
-
-  <button data-tab="sessions">
-    📊 Thống kê
-  </button>
-
-  <button data-tab="members">
-    👥 Thành viên
-  </button>
-
-  <button data-tab="competition">
-    🏆 Thanh thi đua
-  </button>
-
-  <button data-tab="lessons">
-    📚 Giáo án
-  </button>
+  <button class="active" data-tab="attendance">📝 Điểm danh</button>
+  <button data-tab="sessions">📊 Thống kê</button>
+  <button data-tab="members">👥 Thành viên</button>
+  <button data-tab="competition">🏆 Thanh thi đua</button>
+  <button data-tab="lessons">📚 Giáo án</button>
 
 </div>
 
 
 <!-- ĐIỂM DANH -->
-
 <section id="attendance">
 
   <div class="card top">
@@ -461,7 +481,6 @@ input{
 
 
 <!-- THỐNG KÊ -->
-
 <section id="sessions" style="display:none">
 
   <div class="card">
@@ -501,7 +520,6 @@ input{
 
 
 <!-- THÀNH VIÊN -->
-
 <section id="members" style="display:none">
 
   <div class="card">
@@ -532,16 +550,13 @@ input{
   </div>
 
   <div class="card">
-
     <div id="memberList"></div>
-
   </div>
 
 </section>
 
 
 <!-- THANH THI ĐUA -->
-
 <section id="competition" style="display:none">
 
   <div class="card">
@@ -549,65 +564,38 @@ input{
     <h2>🏆 Thanh thi đua</h2>
 
     <div class="competition-note">
-
-      Bạn tự cộng điểm bằng các nút
-      <b>+5, +10</b>
-      và trừ bằng
-      <b>-5, -10</b>.
-
-      <br>
-
+      Tự cộng/trừ điểm bằng các nút <b>+5, +10, -5, -10</b>.
       Điểm được lưu riêng theo từng tháng.
-
     </div>
 
     <div class="competition-nav">
 
-      <button
-        class="btn gray"
-        onclick="changeCompetitionMonth(-1)"
-      >
+      <button class="btn gray" onclick="changeCompetitionMonth(-1)">
         ‹ Tháng trước
       </button>
 
-      <div
-        id="competitionMonth"
-        class="month-title"
-      ></div>
+      <div id="competitionMonth" class="month-title"></div>
 
-      <button
-        class="btn gray"
-        onclick="changeCompetitionMonth(1)"
-      >
+      <button class="btn gray" onclick="changeCompetitionMonth(1)">
         Tháng sau ›
       </button>
 
     </div>
 
-    <div class="actions">
-
-      <button
-        class="btn red"
-        onclick="resetCompetitionMonth()"
-      >
-        ↺ Đặt lại điểm tháng này
-      </button>
-
-    </div>
+    <button class="btn red" onclick="resetCompetitionMonth()">
+      ↺ Đặt lại điểm tháng này
+    </button>
 
   </div>
 
   <div class="card">
-
     <div id="competitionList"></div>
-
   </div>
 
 </section>
 
 
 <!-- GIÁO ÁN -->
-
 <section id="lessons" style="display:none">
 
   <div class="card">
@@ -615,63 +603,67 @@ input{
     <h2>📚 Giáo án bài học</h2>
 
     <p class="small">
-      Tải giáo án Word (.docx), website sẽ tự chuyển nội dung
-      thành văn bản/HTML để đọc ngay trên web.
+      Bạn có thể tải <b>1 file Word</b> hoặc <b>1 file ZIP chứa nhiều file Word</b>.
+      Website sẽ tự đọc nội dung và tạo thành từng bài giáo án để xem trên web.
     </p>
 
-    <div class="lesson-actions">
+    <div
+      id="lessonUploadZone"
+      class="upload-zone"
+    >
+
+      <div class="upload-icon">📦</div>
+
+      <div>
+        <b>Kéo thả file ZIP hoặc Word vào đây</b>
+      </div>
+
+      <div class="small" style="margin:7px 0 12px">
+        Hỗ trợ: .zip và .docx
+      </div>
 
       <label
         class="btn"
         style="display:inline-block;cursor:pointer"
       >
-        📄 Tải giáo án Word
+        📂 Chọn file
 
         <input
           id="lessonFile"
           type="file"
-          accept=".docx"
+          accept=".zip,.docx,application/zip,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
           style="display:none"
-          onchange="importLessonWord(this)"
+          onchange="importLessonFiles(this.files)"
         >
       </label>
 
-      <button
-        class="btn gray"
-        onclick="createBlankLesson()"
-      >
-        ＋ Giáo án trống
-      </button>
-
     </div>
+
+    <div id="lessonProgress"></div>
 
     <input
       id="lessonSearch"
       placeholder="🔎 Tìm tên bài học..."
+      oninput="renderLessons()"
     >
 
   </div>
 
+  <div class="card" id="lessonViewer"></div>
 
-  <div
-    class="card"
-    id="lessonViewer"
-  ></div>
-
-
-  <div
-    class="card"
-    id="lessonList"
-  ></div>
+  <div class="card" id="lessonList"></div>
 
 </section>
 
 </main>
 
-<!-- Bộ đọc Word .docx trên trình duyệt -->
-<script src="https://cdn.jsdelivr.net/npm/mammoth/mammoth.browser.min.js"></script>
+<!-- Đọc DOCX -->
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.11.0/mammoth.browser.min.js"></script>
 
-<script src="script.js?v=5"></script>
+<!-- Đọc ZIP -->
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+<script src="script.js?v=6"></script>
 
 </body>
 </html>
