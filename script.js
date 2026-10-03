@@ -28,7 +28,7 @@ import {
 ========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWccHm1IE",
+  apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWcchHm1IE",
   authDomain: "llcttt1-diem-danh.firebaseapp.com",
   projectId: "llcttt1-diem-danh",
   storageBucket: "llcttt1-diem-danh.firebasestorage.app",
@@ -36,7 +36,6 @@ const firebaseConfig = {
   appId: "1:1028180173731:web:c649731f9ccc20acb13016",
   measurementId: "G-XDNC5S21BN"
 };
-
 const app =
   initializeApp(firebaseConfig);
 
