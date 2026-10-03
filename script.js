@@ -37,71 +37,35 @@ const firebaseConfig = {
   measurementId: "G-XDNC5S21BN"
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+  getAuth(app);
 
-const db = getFirestore(app);
-
-
-/* =========================================================
-   THÀNH VIÊN MẶC ĐỊNH
-   ĐÃ BỎ HẾT TÊN HỌC SINH
-========================================================= */
-
-const defaultNames = [];
+const db =
+  getFirestore(app);
 
 
 /* =========================================================
-   KEY LOCAL STORAGE
+   LOCAL DATA
 ========================================================= */
 
 const key =
   "llcttt1_attendance_v5";
 
+const oldDefaultNames = [
+  "Nguyễn Văn An",
+  "Trần Văn Bình",
+  "Lê Minh Châu",
+  "Phạm Đức Duy",
+  "Hoàng Gia Huy",
+  "Nguyễn Thị Lan",
+  "Vũ Minh Long",
+  "Đỗ Quang Nam",
+  "Trần Thông"
+];
 
-/* =========================================================
-   GIAO DIỆN MẶC ĐỊNH
-========================================================= */
-
-const defaultTheme = {
-
-  title:
-    "✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1",
-
-  subtitle:
-    "“Xin Chúa Thánh Thần hướng dẫn chúng con”",
-
-  primary:
-    "#168a70",
-
-  secondary:
-    "#2d91c7",
-
-  bg1:
-    "#eafaf3",
-
-  bg2:
-    "#eaf3ff",
-
-  card:
-    "#ffffff",
-
-  text:
-    "#173b35",
-
-  radius:
-    18,
-
-  customCss:
-    ""
-
-};
-
-
-/* =========================================================
-   DỮ LIỆU
-========================================================= */
 
 let data =
   JSON.parse(
@@ -123,22 +87,32 @@ let data =
   };
 
 
-if (!Array.isArray(data.members)) {
+if (
+  !Array.isArray(
+    data.members
+  )
+) {
 
-  data.members =
-    [...defaultNames];
+  data.members = [];
 
 }
 
 
-if (!Array.isArray(data.sessions)) {
+if (
+  !Array.isArray(
+    data.sessions
+  )
+) {
 
   data.sessions = [];
 
 }
 
 
-if (typeof data.current !== "number") {
+if (
+  typeof data.current !==
+  "number"
+) {
 
   data.current = -1;
 
@@ -147,7 +121,8 @@ if (typeof data.current !== "number") {
 
 if (
   !data.competition ||
-  typeof data.competition !== "object"
+  typeof data.competition !==
+    "object"
 ) {
 
   data.competition = {};
@@ -157,7 +132,8 @@ if (
 
 if (
   !data.memberInfo ||
-  typeof data.memberInfo !== "object"
+  typeof data.memberInfo !==
+    "object"
 ) {
 
   data.memberInfo = {};
@@ -165,50 +141,30 @@ if (
 }
 
 
-if (!Array.isArray(data.lessons)) {
+if (
+  !Array.isArray(
+    data.lessons
+  )
+) {
 
   data.lessons = [];
 
 }
 
 
-/* =========================================================
-   XÓA 9 TÊN MẪU CŨ NẾU TRÌNH DUYỆT ĐANG LƯU CHÚNG
-========================================================= */
-
-const oldDefaultNames = [
-
-  "Nguyễn Văn An",
-
-  "Trần Văn Bình",
-
-  "Lê Minh Châu",
-
-  "Phạm Đức Duy",
-
-  "Hoàng Gia Huy",
-
-  "Nguyễn Thị Lan",
-
-  "Vũ Minh Long",
-
-  "Đỗ Quang Nam",
-
-  "Trần Thông"
-
-];
-
-
+/* XÓA 9 TÊN MẪU CŨ */
 if (
 
   data.members.length ===
-  oldDefaultNames.length
-
-  &&
+    oldDefaultNames.length &&
 
   oldDefaultNames.every(
-    (name, i) =>
-      data.members[i] === name
+    (
+      name,
+      index
+    ) =>
+      data.members[index] ===
+      name
   )
 
 ) {
@@ -228,10 +184,6 @@ if (
 }
 
 
-/* =========================================================
-   LƯU LOCAL
-========================================================= */
-
 function saveLocal() {
 
   try {
@@ -246,7 +198,7 @@ function saveLocal() {
     console.error(error);
 
     alert(
-      "Bộ nhớ trình duyệt đã đầy. Hãy xóa bớt giáo án hoặc ảnh rồi thử lại."
+      "Bộ nhớ trình duyệt đã đầy. Hãy xóa bớt ảnh hoặc giáo án."
     );
 
   }
@@ -254,38 +206,38 @@ function saveLocal() {
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+function esc(
+  value
+) {
 
-function esc(value) {
-
-  return String(value).replace(
+  return String(
+    value
+  ).replace(
     /[&<>"']/g,
     m => ({
 
       "&": "&amp;",
+
       "<": "&lt;",
+
       ">": "&gt;",
+
       '"': "&quot;",
+
       "'": "&#039;"
 
     }[m])
-
   );
 
 }
 
 
-/* =========================================================
-   ID
-========================================================= */
-
 function uid() {
 
   return (
 
-    Date.now().toString(36) +
+    Date.now()
+      .toString(36) +
 
     Math.random()
       .toString(36)
@@ -295,10 +247,6 @@ function uid() {
 
 }
 
-
-/* =========================================================
-   SESSION HIỆN TẠI
-========================================================= */
 
 function currentSession() {
 
@@ -319,13 +267,13 @@ function currentSession() {
 }
 
 
-/* =========================================================
-   THÔNG TIN THÀNH VIÊN
-========================================================= */
+function memberInfo(
+  name
+) {
 
-function info(name) {
-
-  if (!data.memberInfo[name]) {
+  if (
+    !data.memberInfo[name]
+  ) {
 
     data.memberInfo[name] = {
 
@@ -349,12 +297,12 @@ function info(name) {
 
 
 /* =========================================================
-   AUTH MESSAGE
+   AUTH UI
 ========================================================= */
 
 function showMsg(
-  msg,
-  kind = "notice"
+  message,
+  type = "notice"
 ) {
 
   const box =
@@ -362,89 +310,68 @@ function showMsg(
       "authMessage"
     );
 
-  if (!box) return;
+  if (!box) {
+    return;
+  }
 
   box.innerHTML =
-    msg
-
+    message
       ? `
-        <div class="notice ${kind}">
-          ${msg}
+        <div class="notice ${type}">
+          ${message}
         </div>
       `
-
       : "";
 
 }
 
 
-/* =========================================================
-   LOGIN / REGISTER
-========================================================= */
-
 function setAuthMode(
-  register = false
+  register
 ) {
 
-  const loginTab =
-    document.getElementById(
+  document
+    .getElementById(
       "loginTab"
+    )
+    ?.classList
+    .toggle(
+      "active",
+      !register
     );
 
-  const registerTab =
-    document.getElementById(
+
+  document
+    .getElementById(
       "registerTab"
+    )
+    ?.classList
+    .toggle(
+      "active",
+      register
     );
 
-  const loginForm =
-    document.getElementById(
+
+  document
+    .getElementById(
       "loginForm"
+    )
+    ?.classList
+    .toggle(
+      "hidden",
+      register
     );
 
-  const registerForm =
-    document.getElementById(
+
+  document
+    .getElementById(
       "registerForm"
-    );
-
-
-  if (loginTab) {
-
-    loginTab.classList.toggle(
-      "active",
-      !register
-    );
-
-  }
-
-
-  if (registerTab) {
-
-    registerTab.classList.toggle(
-      "active",
-      register
-    );
-
-  }
-
-
-  if (loginForm) {
-
-    loginForm.classList.toggle(
-      "hidden",
-      register
-    );
-
-  }
-
-
-  if (registerForm) {
-
-    registerForm.classList.toggle(
+    )
+    ?.classList
+    .toggle(
       "hidden",
       !register
     );
-
-  }
 
 
   showMsg("");
@@ -453,89 +380,86 @@ function setAuthMode(
 
 
 function setPending(
-  show = true
+  show
 ) {
 
-  const forms =
-    document.getElementById(
+  document
+    .getElementById(
       "authForms"
-    );
-
-  const pending =
-    document.getElementById(
-      "pendingBox"
-    );
-
-
-  if (forms) {
-
-    forms.classList.toggle(
+    )
+    ?.classList
+    .toggle(
       "hidden",
       show
     );
 
-  }
 
-
-  if (pending) {
-
-    pending.classList.toggle(
+  document
+    .getElementById(
+      "pendingBox"
+    )
+    ?.classList
+    .toggle(
       "hidden",
       !show
     );
 
-  }
-
 }
 
 
 /* =========================================================
-   ĐỔI TAB LOGIN / REGISTER
+   AUTH EVENTS
 ========================================================= */
 
-const loginTab =
-  document.getElementById(
+document
+  .getElementById(
     "loginTab"
+  )
+  ?.addEventListener(
+    "click",
+    () =>
+      setAuthMode(false)
   );
 
-const registerTab =
-  document.getElementById(
+
+document
+  .getElementById(
     "registerTab"
+  )
+  ?.addEventListener(
+    "click",
+    () =>
+      setAuthMode(true)
   );
 
 
-if (loginTab) {
+/* LOGIN */
 
-  loginTab.onclick = () =>
-    setAuthMode(false);
-
-}
-
-
-if (registerTab) {
-
-  registerTab.onclick = () =>
-    setAuthMode(true);
-
-}
-
-
-/* =========================================================
-   ĐĂNG NHẬP
-========================================================= */
-
-const loginForm =
-  document.getElementById(
+document
+  .getElementById(
     "loginForm"
-  );
-
-
-if (loginForm) {
-
-  loginForm.onsubmit =
+  )
+  ?.addEventListener(
+    "submit",
     async event => {
 
       event.preventDefault();
+
+      const email =
+        document
+          .getElementById(
+            "loginEmail"
+          )
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById(
+            "loginPassword"
+          )
+          .value;
+
 
       showMsg(
         "Đang đăng nhập..."
@@ -544,28 +468,11 @@ if (loginForm) {
 
       try {
 
-        const email =
-          document
-            .getElementById(
-              "loginEmail"
-            )
-            ?.value
-            .trim();
-
-        const password =
-          document
-            .getElementById(
-              "loginPassword"
-            )
-            ?.value || "";
-
-
         await signInWithEmailAndPassword(
           auth,
           email,
           password
         );
-
 
         showMsg("");
 
@@ -574,31 +481,26 @@ if (loginForm) {
         console.error(error);
 
         showMsg(
-          "Đăng nhập không thành công: " +
-          friendlyAuthError(error),
+          friendlyAuthError(
+            error
+          ),
           "error"
         );
 
       }
 
-    };
-
-}
-
-
-/* =========================================================
-   ĐĂNG KÝ
-========================================================= */
-
-const registerForm =
-  document.getElementById(
-    "registerForm"
+    }
   );
 
 
-if (registerForm) {
+/* REGISTER */
 
-  registerForm.onsubmit =
+document
+  .getElementById(
+    "registerForm"
+  )
+  ?.addEventListener(
+    "submit",
     async event => {
 
       event.preventDefault();
@@ -609,8 +511,8 @@ if (registerForm) {
           .getElementById(
             "registerName"
           )
-          ?.value
-          .trim() || "";
+          .value
+          .trim();
 
 
       const email =
@@ -618,8 +520,8 @@ if (registerForm) {
           .getElementById(
             "registerEmail"
           )
-          ?.value
-          .trim() || "";
+          .value
+          .trim();
 
 
       const password =
@@ -627,7 +529,7 @@ if (registerForm) {
           .getElementById(
             "registerPassword"
           )
-          ?.value || "";
+          .value;
 
 
       const password2 =
@@ -635,13 +537,28 @@ if (registerForm) {
           .getElementById(
             "registerPassword2"
           )
-          ?.value || "";
+          .value;
 
 
       if (!name) {
 
         showMsg(
           "Bạn chưa nhập họ tên.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (
+        password.length <
+        6
+      ) {
+
+        showMsg(
+          "Mật khẩu phải có ít nhất 6 ký tự.",
           "error"
         );
 
@@ -672,7 +589,7 @@ if (registerForm) {
 
       try {
 
-        const cred =
+        const result =
           await createUserWithEmailAndPassword(
             auth,
             email,
@@ -681,26 +598,30 @@ if (registerForm) {
 
 
         await setDoc(
+
           doc(
             db,
             "users",
-            cred.user.uid
+            result.user.uid
           ),
+
           {
 
-            name:
-              name,
+            name,
 
-            email:
-              email,
+            email,
 
             status:
               "pending",
+
+            role:
+              "user",
 
             createdAt:
               serverTimestamp()
 
           }
+
         );
 
 
@@ -714,67 +635,17 @@ if (registerForm) {
         console.error(error);
 
         showMsg(
-          "Không thể đăng ký: " +
-          friendlyAuthError(error),
+          friendlyAuthError(
+            error
+          ),
           "error"
         );
 
       }
 
-    };
-
-}
-
-
-/* =========================================================
-   ĐĂNG XUẤT
-========================================================= */
-
-const logoutPending =
-  document.getElementById(
-    "logoutPending"
+    }
   );
 
-if (logoutPending) {
-
-  logoutPending.onclick = () =>
-    signOut(auth);
-
-}
-
-
-const logoutBtn =
-  document.getElementById(
-    "logoutBtn"
-  );
-
-if (logoutBtn) {
-
-  logoutBtn.onclick = () =>
-    signOut(auth);
-
-}
-
-
-const checkApproval =
-  document.getElementById(
-    "checkApproval"
-  );
-
-if (checkApproval) {
-
-  checkApproval.onclick = () =>
-    checkAccess(
-      auth.currentUser,
-      true
-    );
-
-}
-
-
-/* =========================================================
-   LỖI FIREBASE
-========================================================= */
 
 function friendlyAuthError(
   error
@@ -843,7 +714,7 @@ function friendlyAuthError(
   ) {
 
     return (
-      "Tên miền website chưa được thêm vào Authorized domains của Firebase."
+      "Tên miền website chưa được Firebase cho phép."
     );
 
   }
@@ -851,32 +722,28 @@ function friendlyAuthError(
 
   return (
     error?.message ||
-    "Lỗi không xác định."
+    "Có lỗi xảy ra."
   );
 
 }
 
 
 /* =========================================================
-   BIẾN AUTH
+   AUTH ACCESS
 ========================================================= */
 
 let isAdmin =
   false;
 
-let userUnsub =
-  null;
-
-let themeUnsub =
-  null;
-
 let currentUser =
   null;
 
+let userWatcher =
+  null;
 
-/* =========================================================
-   KIỂM TRA ADMIN
-========================================================= */
+let themeWatcher =
+  null;
+
 
 async function checkAdmin(
   uid
@@ -884,7 +751,7 @@ async function checkAdmin(
 
   try {
 
-    const snap =
+    const snapshot =
       await getDoc(
         doc(
           db,
@@ -893,12 +760,12 @@ async function checkAdmin(
         )
       );
 
-    return snap.exists();
+    return snapshot.exists();
 
   } catch (error) {
 
     console.error(
-      "checkAdmin:",
+      "checkAdmin",
       error
     );
 
@@ -909,17 +776,13 @@ async function checkAdmin(
 }
 
 
-/* =========================================================
-   LẤY PROFILE
-========================================================= */
-
 async function getProfile(
   uid
 ) {
 
   try {
 
-    const snap =
+    const snapshot =
       await getDoc(
         doc(
           db,
@@ -929,14 +792,14 @@ async function getProfile(
       );
 
 
-    return snap.exists()
-      ? snap.data()
+    return snapshot.exists()
+      ? snapshot.data()
       : null;
 
   } catch (error) {
 
     console.error(
-      "getProfile:",
+      "getProfile",
       error
     );
 
@@ -947,13 +810,8 @@ async function getProfile(
 }
 
 
-/* =========================================================
-   KIỂM TRA QUYỀN TRUY CẬP
-========================================================= */
-
 async function checkAccess(
-  user,
-  showPending = false
+  user
 ) {
 
   if (!user) {
@@ -988,7 +846,7 @@ async function checkAccess(
   }
 
 
-  /* ĐÃ ĐƯỢC DUYỆT */
+  /* APPROVED */
 
   if (
     profile?.status ===
@@ -1002,7 +860,7 @@ async function checkAccess(
   }
 
 
-  /* CHỜ / TỪ CHỐI / KHÓA */
+  /* PENDING / REJECTED / DISABLED */
 
   setPending(true);
 
@@ -1030,24 +888,23 @@ async function checkAccess(
   } else {
 
     showMsg(
-      "Tài khoản đã đăng ký và đang chờ quản trị viên duyệt.",
+      "Tài khoản đang chờ quản trị viên duyệt.",
       "notice"
     );
 
   }
 
 
-  if (userUnsub) {
+  if (
+    userWatcher
+  ) {
 
-    userUnsub();
-
-    userUnsub =
-      null;
+    userWatcher();
 
   }
 
 
-  userUnsub =
+  userWatcher =
     onSnapshot(
 
       doc(
@@ -1056,15 +913,17 @@ async function checkAccess(
         user.uid
       ),
 
-      async snap => {
+      async snapshot => {
 
-        if (!snap.exists()) {
+        if (
+          !snapshot.exists()
+        ) {
           return;
         }
 
 
         const profile =
-          snap.data();
+          snapshot.data();
 
 
         if (
@@ -1076,6 +935,15 @@ async function checkAccess(
 
         }
 
+      },
+
+      error => {
+
+        console.error(
+          "user watcher",
+          error
+        );
+
       }
 
     );
@@ -1083,17 +951,15 @@ async function checkAccess(
 }
 
 
-/* =========================================================
-   VÀO APP
-========================================================= */
-
 async function enterApp() {
 
-  if (userUnsub) {
+  if (
+    userWatcher
+  ) {
 
-    userUnsub();
+    userWatcher();
 
-    userUnsub =
+    userWatcher =
       null;
 
   }
@@ -1104,7 +970,9 @@ async function enterApp() {
       "authGate"
     )
     ?.classList
-    .add("hidden");
+    .add(
+      "hidden"
+    );
 
 
   document
@@ -1112,26 +980,28 @@ async function enterApp() {
       "appRoot"
     )
     ?.classList
-    .remove("hidden");
+    .remove(
+      "hidden"
+    );
 
 
-  const userLabel =
+  const label =
     document.getElementById(
       "currentUserLabel"
     );
 
 
-  if (userLabel) {
+  if (label) {
 
-    userLabel.textContent =
-
-      (isAdmin
-        ? "👑 Admin • "
-        : "") +
-
+    label.textContent =
       (
-        currentUser
-          ?.email || ""
+        isAdmin
+          ? "👑 Admin • "
+          : "👤 "
+      ) +
+      (
+        currentUser?.email ||
+        ""
       );
 
   }
@@ -1159,13 +1029,7 @@ async function enterApp() {
     );
 
 
-  applyTheme(
-    defaultTheme
-  );
-
-
   loadTheme();
-
 
   renderAll();
 
@@ -1173,8 +1037,58 @@ async function enterApp() {
 
 
 /* =========================================================
-   TAB
+   LOGOUT
 ========================================================= */
+
+document
+  .getElementById(
+    "logoutBtn"
+  )
+  ?.addEventListener(
+    "click",
+    () =>
+      signOut(auth)
+  );
+
+
+document
+  .getElementById(
+    "logoutPending"
+  )
+  ?.addEventListener(
+    "click",
+    () =>
+      signOut(auth)
+  );
+
+
+document
+  .getElementById(
+    "checkApproval"
+  )
+  ?.addEventListener(
+    "click",
+    () =>
+      checkAccess(
+        auth.currentUser
+      )
+  );
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+const allTabs = [
+  "attendance",
+  "sessions",
+  "members",
+  "competition",
+  "lessons",
+  "admin",
+  "theme"
+];
+
 
 document
   .querySelectorAll(
@@ -1183,16 +1097,21 @@ document
   .forEach(
     button => {
 
-      button.onclick = () =>
-        showTab(
-          button.dataset.tab
-        );
+      button.addEventListener(
+        "click",
+        () =>
+          showTab(
+            button.dataset.tab
+          )
+      );
 
     }
   );
 
 
-function showTab(tab) {
+function showTab(
+  tab
+) {
 
   document
     .querySelectorAll(
@@ -1204,46 +1123,25 @@ function showTab(tab) {
         button.classList.toggle(
           "active",
           button.dataset.tab ===
-            tab
+          tab
         );
 
       }
     );
 
 
-  [
-
-    "attendance",
-
-    "sessions",
-
-    "members",
-
-    "competition",
-
-    "lessons",
-
-    "admin",
-
-    "theme"
-
-  ].forEach(
+  allTabs.forEach(
     id => {
 
-      const section =
-        document.getElementById(
+      document
+        .getElementById(
           id
-        );
-
-
-      if (section) {
-
-        section.classList.toggle(
+        )
+        ?.classList
+        .toggle(
           "hidden",
           id !== tab
         );
-
-      }
 
     }
   );
@@ -1265,9 +1163,6 @@ function showTab(tab) {
     loadThemeForm();
 
   }
-
-
-  renderAll();
 
 }
 
@@ -1292,163 +1187,158 @@ function renderAll() {
 
 
 /* =========================================================
-   ĐIỂM DANH
+   ATTENDANCE
 ========================================================= */
 
-const searchInput =
-  document.getElementById(
+document
+  .getElementById(
     "search"
+  )
+  ?.addEventListener(
+    "input",
+    renderAttendance
   );
 
-if (searchInput) {
 
-  searchInput.oninput =
-    renderAttendance;
-
-}
-
-
-const createSessionBtn =
-  document.getElementById(
+document
+  .getElementById(
     "createSessionBtn"
+  )
+  ?.addEventListener(
+    "click",
+    createSession
   );
 
 
-if (createSessionBtn) {
+function createSession() {
 
-  createSessionBtn.onclick =
-    () => {
-
-      const label =
-        prompt(
-          "Tên buổi học:",
-          `Buổi học ${
-            data.sessions.length + 1
-          }`
-        );
+  const label =
+    prompt(
+      "Tên buổi học:",
+      `Buổi học ${
+        data.sessions.length + 1
+      }`
+    );
 
 
-      if (
-        label === null ||
-        !label.trim()
-      ) {
+  if (
+    label === null ||
+    !label.trim()
+  ) {
 
-        return;
+    return;
 
-      }
-
-
-      const d =
-        prompt(
-          "Ngày học DD/MM/YYYY:",
-          new Date()
-            .toLocaleDateString(
-              "vi-VN"
-            )
-        );
+  }
 
 
-      if (d === null) {
-        return;
-      }
-
-
-      const a =
-        d
-          .trim()
-          .split(
-            /[\/\-.]/
-          )
-          .map(Number);
-
-
-      if (
-        a.length !== 3
-      ) {
-
-        alert(
-          "Ngày không hợp lệ."
-        );
-
-        return;
-
-      }
-
-
-      const date =
-        new Date(
-          a[2],
-          a[1] - 1,
-          a[0]
-        );
-
-
-      if (
-
-        Number.isNaN(
-          date.getTime()
+  const dateText =
+    prompt(
+      "Ngày học DD/MM/YYYY:",
+      new Date()
+        .toLocaleDateString(
+          "vi-VN"
         )
-
-        ||
-
-        date.getDate() !==
-          a[0]
-
-        ||
-
-        date.getMonth() !==
-          a[1] - 1
-
-        ||
-
-        date.getFullYear() !==
-          a[2]
-
-      ) {
-
-        alert(
-          "Ngày không hợp lệ."
-        );
-
-        return;
-
-      }
+    );
 
 
-      data.sessions.push({
-
-        date:
-          date.toISOString(),
-
-        label:
-          label.trim(),
-
-        attendance:
-          Array(
-            data.members.length
-          ).fill(false)
-
-      });
+  if (
+    dateText === null
+  ) {
+    return;
+  }
 
 
-      data.current =
-        data.sessions.length - 1;
+  const parts =
+    dateText
+      .trim()
+      .split(
+        /[\/\-.]/
+      )
+      .map(Number);
 
 
-      saveLocal();
+  if (
+    parts.length !== 3
+  ) {
 
-      renderAll();
+    alert(
+      "Ngày không hợp lệ."
+    );
 
-    };
+    return;
+
+  }
+
+
+  const date =
+    new Date(
+      parts[2],
+      parts[1] - 1,
+      parts[0]
+    );
+
+
+  if (
+
+    Number.isNaN(
+      date.getTime()
+    )
+
+    ||
+
+    date.getDate() !==
+      parts[0]
+
+    ||
+
+    date.getMonth() !==
+      parts[1] - 1
+
+    ||
+
+    date.getFullYear() !==
+      parts[2]
+
+  ) {
+
+    alert(
+      "Ngày không hợp lệ."
+    );
+
+    return;
+
+  }
+
+
+  data.sessions.push({
+
+    date:
+      date.toISOString(),
+
+    label:
+      label.trim(),
+
+    attendance:
+      Array(
+        data.members.length
+      ).fill(false)
+
+  });
+
+
+  data.current =
+    data.sessions.length -
+    1;
+
+
+  saveLocal();
+
+  renderAll();
 
 }
 
 
 function renderAttendance() {
-
-  const s =
-    currentSession();
-
 
   const list =
     document.getElementById(
@@ -1461,17 +1351,19 @@ function renderAttendance() {
   }
 
 
+  const s =
+    currentSession();
+
+
   const total =
     document.getElementById(
       "total"
     );
 
-
   const present =
     document.getElementById(
       "present"
     );
-
 
   const absent =
     document.getElementById(
@@ -1479,69 +1371,38 @@ function renderAttendance() {
     );
 
 
-  if (total) {
-
-    total.textContent =
-      data.members.length;
-
-  }
+  total.textContent =
+    data.members.length;
 
 
   if (!s) {
 
-    const title =
-      document.getElementById(
-        "sessionTitle"
-      );
-
-    const date =
-      document.getElementById(
-        "sessionDate"
-      );
+    document.getElementById(
+      "sessionTitle"
+    ).textContent =
+      "Chưa có buổi học";
 
 
-    if (title) {
-
-      title.textContent =
-        "Chưa có buổi học";
-
-    }
+    document.getElementById(
+      "sessionDate"
+    ).textContent =
+      "Hãy tạo buổi học để bắt đầu.";
 
 
-    if (date) {
-
-      date.textContent =
-        "Hãy bấm “＋ Tạo buổi học” để bắt đầu.";
-
-    }
+    present.textContent =
+      "0";
 
 
-    if (present) {
-
-      present.textContent =
-        "0";
-
-    }
-
-
-    if (absent) {
-
-      absent.textContent =
-        data.members.length;
-
-    }
+    absent.textContent =
+      data.members.length;
 
 
     list.innerHTML = `
 
-      <div
-        class="lesson-empty"
-      >
+      <div class="lesson-empty">
 
         <div
-          style="
-            font-size:42px
-          "
+          style="font-size:42px"
         >
           📅
         </div>
@@ -1550,12 +1411,8 @@ function renderAttendance() {
           Chưa có buổi học nào
         </h3>
 
-        <p class="small">
-          Bạn hãy tạo buổi học trước.
-        </p>
-
         <button
-          class="primary"
+          class="btn"
           onclick="
             document
               .getElementById(
@@ -1571,42 +1428,25 @@ function renderAttendance() {
 
     `;
 
-
     return;
 
   }
 
 
-  const title =
-    document.getElementById(
-      "sessionTitle"
+  document.getElementById(
+    "sessionTitle"
+  ).textContent =
+    s.label;
+
+
+  document.getElementById(
+    "sessionDate"
+  ).textContent =
+    new Date(
+      s.date
+    ).toLocaleDateString(
+      "vi-VN"
     );
-
-  const date =
-    document.getElementById(
-      "sessionDate"
-    );
-
-
-  if (title) {
-
-    title.textContent =
-      s.label;
-
-  }
-
-
-  if (date) {
-
-    date.textContent =
-      new Date(
-        s.date
-      )
-      .toLocaleDateString(
-        "vi-VN"
-      );
-
-  }
 
 
   const q =
@@ -1616,105 +1456,109 @@ function renderAttendance() {
       )?.value ||
       ""
     )
-    .toLowerCase();
+      .toLowerCase();
 
 
-  list.innerHTML =
+  const rows =
     data.members
-
       .map(
         (
           name,
-          i
+          index
         ) => ({
           name,
-          i
+          index
         })
       )
-
       .filter(
         x =>
           x.name
             .toLowerCase()
             .includes(q)
-      )
-
-      .map(
-        x => `
-
-          <div
-            class="row"
-          >
-
-            <span>
-
-              <b>
-                ${x.i + 1}.
-                ${esc(x.name)}
-              </b>
-
-            </span>
+      );
 
 
-            <button
-              class="
-                badge
-                ${
-                  s.attendance[x.i]
-                    ? "present"
-                    : "absent"
-                }
-              "
-              onclick="
-                toggleAttendance(
-                  ${x.i}
-                )
-              "
-            >
-              ${
-                s.attendance[x.i]
-                  ? "✓ Có mặt"
-                  : "✕ Vắng"
-              }
-            </button>
+  list.innerHTML =
+    rows.length
 
-          </div>
+      ? rows
+          .map(
+            x => {
 
-        `
-      )
-
-      .join("");
+              const isPresent =
+                !!s.attendance[
+                  x.index
+                ];
 
 
-  if (!list.innerHTML) {
+              return `
 
-    list.innerHTML =
-      "<p>Không tìm thấy thành viên.</p>";
+                <div
+                  class="row"
+                >
 
-  }
+                  <span>
+
+                    <b>
+                      ${
+                        x.index + 1
+                      }.
+                      ${esc(
+                        x.name
+                      )}
+                    </b>
+
+                  </span>
+
+
+                  <button
+                    class="
+                      badge
+                      ${
+                        isPresent
+                          ? "present"
+                          : "absent"
+                      }
+                    "
+                    onclick="
+                      toggleAttendance(
+                        ${x.index}
+                      )
+                    "
+                  >
+
+                    ${
+                      isPresent
+                        ? "✓ Có mặt"
+                        : "✕ Vắng"
+                    }
+
+                  </button>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("")
+
+      : "<p>Không tìm thấy thành viên.</p>";
 
 
   const p =
-    s.attendance.filter(
-      Boolean
-    ).length;
+    s.attendance
+      .filter(Boolean)
+      .length;
 
 
-  if (present) {
-
-    present.textContent =
-      p;
-
-  }
+  present.textContent =
+    p;
 
 
-  if (absent) {
-
-    absent.textContent =
-      data.members.length -
-      p;
-
-  }
+  absent.textContent =
+    data.members.length -
+    p;
 
 }
 
@@ -1743,7 +1587,7 @@ window.toggleAttendance =
 
 
 /* =========================================================
-   THỐNG KÊ
+   SESSIONS
 ========================================================= */
 
 function renderSessions() {
@@ -1759,39 +1603,21 @@ function renderSessions() {
   }
 
 
-  const count =
-    document.getElementById(
-      "sessionCount"
-    );
-
-  const memberCount =
-    document.getElementById(
-      "memberCount"
-    );
-
-  const average =
-    document.getElementById(
-      "average"
-    );
+  document.getElementById(
+    "sessionCount"
+  ).textContent =
+    data.sessions.length;
 
 
-  if (count) {
-
-    count.textContent =
-      data.sessions.length;
-
-  }
+  document.getElementById(
+    "memberCount"
+  ).textContent =
+    data.members.length;
 
 
-  if (memberCount) {
-
-    memberCount.textContent =
-      data.members.length;
-
-  }
-
-
-  if (!data.sessions.length) {
+  if (
+    !data.sessions.length
+  ) {
 
     box.innerHTML =
       `
@@ -1801,12 +1627,10 @@ function renderSessions() {
       `;
 
 
-    if (average) {
-
-      average.textContent =
-        "0%";
-
-    }
+    document.getElementById(
+      "average"
+    ).textContent =
+      "0%";
 
 
     return;
@@ -1814,14 +1638,15 @@ function renderSessions() {
   }
 
 
-  let tp = 0;
+  let totalPresent =
+    0;
 
-  let tc = 0;
+  let totalCount =
+    0;
 
 
   box.innerHTML =
     data.sessions
-
       .map(
         (
           s,
@@ -1829,9 +1654,9 @@ function renderSessions() {
         ) => {
 
           const p =
-            s.attendance.filter(
-              Boolean
-            ).length;
+            s.attendance
+              .filter(Boolean)
+              .length;
 
 
           const t =
@@ -1848,9 +1673,12 @@ function renderSessions() {
               : 0;
 
 
-          tp += p;
+          totalPresent +=
+            p;
 
-          tc += t;
+
+          totalCount +=
+            t;
 
 
           return `
@@ -1860,24 +1688,30 @@ function renderSessions() {
             >
 
               <b>
-                ${esc(s.label)}
+                ${esc(
+                  s.label
+                )}
               </b>
 
-              <div>
+              <div
+                class="small"
+              >
                 ${
                   new Date(
                     s.date
                   )
-                  .toLocaleDateString(
-                    "vi-VN"
-                  )
+                    .toLocaleDateString(
+                      "vi-VN"
+                    )
                 }
               </div>
 
               <div>
                 ${p}/${t}
-                có mặt (${pct}%)
+                có mặt
+                (${pct}%)
               </div>
+
 
               <div
                 class="bar"
@@ -1901,7 +1735,7 @@ function renderSessions() {
               >
 
                 <button
-                  class="primary"
+                  class="btn"
                   onclick="
                     selectSession(
                       ${i}
@@ -1911,8 +1745,9 @@ function renderSessions() {
                   Mở buổi này
                 </button>
 
+
                 <button
-                  class="danger"
+                  class="btn red"
                   onclick="
                     deleteSession(
                       ${i}
@@ -1930,23 +1765,21 @@ function renderSessions() {
 
         }
       )
-
       .join("");
 
 
-  if (average) {
+  document.getElementById(
+    "average"
+  ).textContent =
+    totalCount
 
-    average.textContent =
-      tc
-        ? Math.round(
-            tp /
-            tc *
-            100
-          ) + "%"
+      ? Math.round(
+          totalPresent /
+          totalCount *
+          100
+        ) + "%"
 
-        : "0%";
-
-  }
+      : "0%";
 
 }
 
@@ -1986,23 +1819,14 @@ window.deleteSession =
     );
 
 
-    if (
+    data.current =
       data.sessions.length
-    ) {
-
-      data.current =
-        Math.min(
-          index,
-          data.sessions.length -
-            1
-        );
-
-    } else {
-
-      data.current =
-        -1;
-
-    }
+        ? Math.min(
+            index,
+            data.sessions.length -
+              1
+          )
+        : -1;
 
 
     saveLocal();
@@ -2013,88 +1837,82 @@ window.deleteSession =
 
 
 /* =========================================================
-   THÀNH VIÊN
+   MEMBERS
 ========================================================= */
 
-const addMemberBtn =
-  document.getElementById(
+document
+  .getElementById(
     "addMemberBtn"
+  )
+  ?.addEventListener(
+    "click",
+    addMember
   );
 
 
-if (addMemberBtn) {
+function addMember() {
 
-  addMemberBtn.onclick =
-    () => {
-
-      const input =
-        document.getElementById(
-          "newMember"
-        );
+  const input =
+    document.getElementById(
+      "newMember"
+    );
 
 
-      if (!input) {
-        return;
-      }
+  const name =
+    input.value.trim();
 
 
-      const n =
-        input.value.trim();
+  if (!name) {
+
+    alert(
+      "Bạn chưa nhập tên."
+    );
+
+    return;
+
+  }
 
 
-      if (!n) {
+  if (
+    data.members.some(
+      x =>
+        x.toLowerCase() ===
+        name.toLowerCase()
+    )
+  ) {
 
-        alert(
-          "Bạn chưa nhập tên."
-        );
+    alert(
+      "Tên này đã có."
+    );
 
-        return;
+    return;
 
-      }
-
-
-      if (
-        data.members.some(
-          x =>
-            x.toLowerCase() ===
-            n.toLowerCase()
-        )
-      ) {
-
-        alert(
-          "Tên này đã có."
-        );
-
-        return;
-
-      }
+  }
 
 
-      data.members.push(
-        n
-      );
+  data.members.push(
+    name
+  );
 
 
-      data.sessions.forEach(
-        s =>
-          s.attendance.push(
-            false
-          )
-      );
+  data.sessions.forEach(
+    session =>
+      session.attendance.push(
+        false
+      )
+  );
 
 
-      info(n);
+  memberInfo(name);
 
 
-      input.value =
-        "";
+  input.value =
+    "";
 
 
-      saveLocal();
+  saveLocal();
 
-      renderAll();
-
-    };
+  renderAll();
 
 }
 
@@ -2112,23 +1930,18 @@ function renderMembers() {
   }
 
 
-  if (!data.members.length) {
+  if (
+    !data.members.length
+  ) {
 
     box.innerHTML = `
 
       <div
-        class="
-          lesson-empty
-        "
-        style="
-          padding:35px 15px
-        "
+        class="lesson-empty"
       >
 
         <div
-          style="
-            font-size:45px
-          "
+          style="font-size:46px"
         >
           👥
         </div>
@@ -2138,8 +1951,7 @@ function renderMembers() {
         </h3>
 
         <p>
-          Nhập tên ở phía trên rồi bấm
-          <b>＋ Thêm</b>.
+          Thêm tên ở phía trên.
         </p>
 
       </div>
@@ -2153,15 +1965,16 @@ function renderMembers() {
 
   box.innerHTML =
     data.members
-
       .map(
         (
           name,
-          i
+          index
         ) => {
 
           const x =
-            info(name);
+            memberInfo(
+              name
+            );
 
 
           return `
@@ -2174,16 +1987,14 @@ function renderMembers() {
                 x.photo
 
                   ? `
-
                     <img
                       class="avatar"
                       src="${x.photo}"
+                      alt=""
                     >
-
                   `
 
                   : `
-
                     <div
                       class="
                         avatar
@@ -2192,7 +2003,6 @@ function renderMembers() {
                     >
                       👤
                     </div>
-
                   `
               }
 
@@ -2203,18 +2013,17 @@ function renderMembers() {
                 "
               >
 
-                <div>
-
-                  <b>
-                    ${i + 1}.
-                    ${esc(name)}
-                  </b>
-
-                </div>
+                <b>
+                  ${index + 1}.
+                  ${esc(name)}
+                </b>
 
 
                 <div
                   class="small"
+                  style="
+                    margin-top:5px
+                  "
                 >
 
                   🎂
@@ -2235,76 +2044,74 @@ function renderMembers() {
 
 
                 <div
-                  class="
-                    member-actions
-                  "
+                  class="actions"
                   style="
                     margin-top:8px
                   "
                 >
 
                   <button
-                    class="secondary"
+                    class="btn gray"
                     onclick="
                       editMemberInfo(
-                        ${i}
+                        ${index}
                       )
                     "
                   >
                     📝 Thông tin
                   </button>
 
+
                   <button
-                    class="secondary"
+                    class="btn gray"
                     onclick="
                       uploadPhoto(
-                        ${i}
+                        ${index}
                       )
                     "
                   >
                     🖼️ Ảnh
                   </button>
 
+
                   <button
-                    class="secondary"
+                    class="btn gray"
                     onclick="
                       renameMember(
-                        ${i}
+                        ${index}
                       )
                     "
                   >
                     ✏️ Đổi tên
                   </button>
 
+
                   <button
-                    class="danger"
+                    class="btn red"
                     onclick="
                       deleteMember(
-                        ${i}
+                        ${index}
                       )
                     "
                   >
                     🗑️ Xóa
                   </button>
 
+
                   ${
                     x.photo
-
                       ? `
-
                         <button
-                          class="danger"
+                          class="btn red"
                           onclick="
                             removePhoto(
-                              ${i}
+                              ${index}
                             )
                           "
                         >
                           🗑️ Xóa ảnh
                         </button>
-
                       `
-
                       : ""
                   }
 
@@ -2318,7 +2125,6 @@ function renderMembers() {
 
         }
       )
-
       .join("");
 
 }
@@ -2327,20 +2133,20 @@ function renderMembers() {
 window.renameMember =
   index => {
 
-    const old =
+    const oldName =
       data.members[index];
 
 
-    const n =
+    const newName =
       prompt(
         "Đổi tên:",
-        old
+        oldName
       );
 
 
     if (
-      n === null ||
-      !n.trim()
+      newName === null ||
+      !newName.trim()
     ) {
 
       return;
@@ -2349,17 +2155,18 @@ window.renameMember =
 
 
     const clean =
-      n.trim();
+      newName.trim();
 
 
     if (
       data.members.some(
         (
           x,
-          j
+          i
         ) =>
 
-          j !== index &&
+          i !== index &&
+
           x.toLowerCase() ===
             clean.toLowerCase()
 
@@ -2376,18 +2183,21 @@ window.renameMember =
 
 
     if (
-      data.memberInfo[old]
+      data.memberInfo[
+        oldName
+      ]
     ) {
 
       data.memberInfo[
         clean
       ] =
         data.memberInfo[
-          old
+          oldName
         ];
 
+
       delete data.memberInfo[
-        old
+        oldName
       ];
 
     }
@@ -2429,8 +2239,8 @@ window.deleteMember =
 
 
     data.sessions.forEach(
-      s =>
-        s.attendance.splice(
+      session =>
+        session.attendance.splice(
           index,
           1
         )
@@ -2457,7 +2267,7 @@ window.editMemberInfo =
 
 
     const x =
-      info(name);
+      memberInfo(name);
 
 
     const dob =
@@ -2467,7 +2277,9 @@ window.editMemberInfo =
       );
 
 
-    if (dob === null) {
+    if (
+      dob === null
+    ) {
       return;
     }
 
@@ -2479,7 +2291,9 @@ window.editMemberInfo =
       );
 
 
-    if (father === null) {
+    if (
+      father === null
+    ) {
       return;
     }
 
@@ -2491,7 +2305,9 @@ window.editMemberInfo =
       );
 
 
-    if (mother === null) {
+    if (
+      mother === null
+    ) {
       return;
     }
 
@@ -2503,45 +2319,27 @@ window.editMemberInfo =
       );
 
 
-    if (phone === null) {
+    if (
+      phone === null
+    ) {
       return;
     }
 
 
-    Object.assign(
-      x,
-      {
-
-        dob:
-          dob.trim(),
-
-        father:
-          father.trim(),
-
-        mother:
-          mother.trim(),
-
-        phone:
-          phone.trim()
-
-      }
-    );
+    x.dob =
+      dob.trim();
 
 
-    saveLocal();
-
-    renderMembers();
-
-  };
+    x.father =
+      father.trim();
 
 
-window.removePhoto =
-  index => {
+    x.mother =
+      mother.trim();
 
-    info(
-      data.members[index]
-    ).photo =
-      "";
+
+    x.phone =
+      phone.trim();
 
 
     saveLocal();
@@ -2571,11 +2369,11 @@ window.uploadPhoto =
     input.onchange =
       () => {
 
-        const f =
+        const file =
           input.files?.[0];
 
 
-        if (!f) {
+        if (!file) {
           return;
         }
 
@@ -2594,42 +2392,43 @@ window.uploadPhoto =
             img.onload =
               () => {
 
-                const c =
-                  document.createElement(
-                    "canvas"
-                  );
-
-
-                const mx =
+                const max =
                   240;
 
 
                 const scale =
                   Math.min(
                     1,
-                    mx /
-                    Math.max(
-                      img.width,
-                      img.height
-                    )
+                    max /
+                      Math.max(
+                        img.width,
+                        img.height
+                      )
                   );
 
 
-                c.width =
+                const canvas =
+                  document
+                    .createElement(
+                      "canvas"
+                    );
+
+
+                canvas.width =
                   Math.round(
                     img.width *
                     scale
                   );
 
 
-                c.height =
+                canvas.height =
                   Math.round(
                     img.height *
                     scale
                   );
 
 
-                c
+                canvas
                   .getContext(
                     "2d"
                   )
@@ -2637,15 +2436,17 @@ window.uploadPhoto =
                     img,
                     0,
                     0,
-                    c.width,
-                    c.height
+                    canvas.width,
+                    canvas.height
                   );
 
 
-                info(
-                  data.members[index]
+                memberInfo(
+                  data.members[
+                    index
+                  ]
                 ).photo =
-                  c.toDataURL(
+                  canvas.toDataURL(
                     "image/jpeg",
                     .82
                   );
@@ -2665,7 +2466,7 @@ window.uploadPhoto =
 
 
         reader.readAsDataURL(
-          f
+          file
         );
 
       };
@@ -2676,11 +2477,26 @@ window.uploadPhoto =
   };
 
 
+window.removePhoto =
+  index => {
+
+    memberInfo(
+      data.members[index]
+    ).photo = "";
+
+
+    saveLocal();
+
+    renderMembers();
+
+  };
+
+
 /* =========================================================
-   THANH THI ĐUA
+   COMPETITION
 ========================================================= */
 
-let compMonth =
+let competitionMonth =
   new Date()
     .toISOString()
     .slice(
@@ -2689,7 +2505,7 @@ let compMonth =
     );
 
 
-function scores(
+function getScores(
   month
 ) {
 
@@ -2707,19 +2523,19 @@ function scores(
 
 
   data.members.forEach(
-    n => {
+    name => {
 
       if (
         typeof
           data.competition[
             month
-          ][n] !==
+          ][name] !==
         "number"
       ) {
 
         data.competition[
           month
-        ][n] = 0;
+        ][name] = 0;
 
       }
 
@@ -2734,36 +2550,33 @@ function scores(
 }
 
 
-const prevMonth =
-  document.getElementById(
+document
+  .getElementById(
     "prevMonth"
-  );
-
-
-if (prevMonth) {
-
-  prevMonth.onclick =
+  )
+  ?.addEventListener(
+    "click",
     () => {
 
       const [
-        y,
-        m
+        year,
+        month
       ] =
-        compMonth
+        competitionMonth
           .split("-")
           .map(Number);
 
 
-      const d =
+      const date =
         new Date(
-          y,
-          m - 2,
+          year,
+          month - 2,
           1
         );
 
 
-      compMonth =
-        d
+      competitionMonth =
+        date
           .toISOString()
           .slice(
             0,
@@ -2773,41 +2586,37 @@ if (prevMonth) {
 
       renderCompetition();
 
-    };
+    }
+  );
 
-}
 
-
-const nextMonth =
-  document.getElementById(
+document
+  .getElementById(
     "nextMonth"
-  );
-
-
-if (nextMonth) {
-
-  nextMonth.onclick =
+  )
+  ?.addEventListener(
+    "click",
     () => {
 
       const [
-        y,
-        m
+        year,
+        month
       ] =
-        compMonth
+        competitionMonth
           .split("-")
           .map(Number);
 
 
-      const d =
+      const date =
         new Date(
-          y,
-          m,
+          year,
+          month,
           1
         );
 
 
-      compMonth =
-        d
+      competitionMonth =
+        date
           .toISOString()
           .slice(
             0,
@@ -2817,20 +2626,16 @@ if (nextMonth) {
 
       renderCompetition();
 
-    };
-
-}
-
-
-const resetCompetition =
-  document.getElementById(
-    "resetCompetition"
+    }
   );
 
 
-if (resetCompetition) {
-
-  resetCompetition.onclick =
+document
+  .getElementById(
+    "resetCompetition"
+  )
+  ?.addEventListener(
+    "click",
     () => {
 
       if (
@@ -2844,15 +2649,19 @@ if (resetCompetition) {
       }
 
 
-      const s =
-        scores(
-          compMonth
+      const scores =
+        getScores(
+          competitionMonth
         );
 
 
       data.members.forEach(
-        n =>
-          s[n] = 0
+        name => {
+
+          scores[name] =
+            0;
+
+        }
       );
 
 
@@ -2860,9 +2669,8 @@ if (resetCompetition) {
 
       renderCompetition();
 
-    };
-
-}
+    }
+  );
 
 
 window.adjustScore =
@@ -2871,26 +2679,29 @@ window.adjustScore =
     amount
   ) => {
 
-    const n =
+    const name =
       data.members[index];
 
 
-    if (!n) {
+    if (!name) {
       return;
     }
 
 
-    const s =
-      scores(
-        compMonth
+    const scores =
+      getScores(
+        competitionMonth
       );
 
 
-    s[n] =
+    scores[name] =
       Math.max(
         0,
-        (s[n] || 0) +
-          amount
+        (
+          scores[name] ||
+          0
+        ) +
+        amount
       );
 
 
@@ -2903,7 +2714,7 @@ window.adjustScore =
 
 function renderCompetition() {
 
-  const monthTitle =
+  const title =
     document.getElementById(
       "competitionMonth"
     );
@@ -2916,7 +2727,7 @@ function renderCompetition() {
 
 
   if (
-    !monthTitle ||
+    !title ||
     !box
   ) {
     return;
@@ -2924,42 +2735,42 @@ function renderCompetition() {
 
 
   const [
-    y,
-    m
+    year,
+    month
   ] =
-    compMonth
+    competitionMonth
       .split("-")
       .map(Number);
 
 
-  monthTitle.textContent =
-    `THÁNG ${m}/${y}`;
+  title.textContent =
+    `THÁNG ${month}/${year}`;
 
 
-  const s =
-    scores(
-      compMonth
+  const scores =
+    getScores(
+      competitionMonth
     );
 
 
   const ranked =
     data.members
-
       .map(
         (
-          n,
-          i
+          name,
+          index
         ) => ({
 
-          n,
-          i,
+          name,
+
+          index,
 
           score:
-            s[n] || 0
+            scores[name] ||
+            0
 
         })
       )
-
       .sort(
         (
           a,
@@ -2967,31 +2778,28 @@ function renderCompetition() {
         ) =>
 
           b.score -
-            a.score
+          a.score ||
 
-          ||
-
-          a.n.localeCompare(
-            b.n,
+          a.name.localeCompare(
+            b.name,
             "vi"
           )
+
       );
 
 
-  if (!ranked.length) {
+  if (
+    !ranked.length
+  ) {
 
     box.innerHTML = `
 
       <div
-        class="
-          lesson-empty
-        "
+        class="lesson-empty"
       >
 
         <div
-          style="
-            font-size:45px
-          "
+          style="font-size:45px"
         >
           🏆
         </div>
@@ -2999,11 +2807,6 @@ function renderCompetition() {
         <h3>
           Chưa có thành viên
         </h3>
-
-        <p>
-          Hãy thêm thành viên ở mục
-          <b>👥 Thành viên</b>.
-        </p>
 
       </div>
 
@@ -3014,7 +2817,7 @@ function renderCompetition() {
   }
 
 
-  const max =
+  const maxScore =
     Math.max(
       10,
       ...ranked.map(
@@ -3026,204 +2829,218 @@ function renderCompetition() {
 
   box.innerHTML =
     ranked
-
       .map(
         (
-          x,
-          k
-        ) => `
+          item,
+          rankIndex
+        ) => {
 
-          <div
-            class="rank-card"
-          >
+          const rank =
+            rankIndex + 1;
+
+
+          const width =
+            Math.min(
+              100,
+              item.score /
+                maxScore *
+                100
+            );
+
+
+          let medal;
+
+
+          if (
+            rank === 1
+          ) {
+
+            medal =
+              "🥇";
+
+          } else if (
+            rank === 2
+          ) {
+
+            medal =
+              "🥈";
+
+          } else if (
+            rank === 3
+          ) {
+
+            medal =
+              "🥉";
+
+          } else {
+
+            medal =
+              "#" +
+              rank;
+
+          }
+
+
+          return `
 
             <div
-              class="rank-head"
+              class="rank-card"
             >
 
-              <div>
+              <div
+                class="rank-head"
+              >
 
-                <span
-                  style="
-                    font-size:22px
-                  "
-                >
+                <div>
+
+                  <span
+                    style="
+                      font-size:22px
+                    "
+                  >
+                    ${medal}
+                  </span>
+
+                  <span
+                    class="rank-name"
+                  >
+                    ${esc(
+                      item.name
+                    )}
+                  </span>
+
+
                   ${
-                    k === 0
-                      ? "🥇"
-                      : k === 1
-                      ? "🥈"
-                      : k === 2
-                      ? "🥉"
-                      : "#" +
-                        (
-                          k + 1
-                        )
+                    rank <= 3
+
+                      ? `
+                        <div
+                          class="prize"
+                        >
+                          ${
+                            rank === 1
+                              ? "🏆 Giải Nhất"
+                              : rank === 2
+                              ? "🥈 Giải Nhì"
+                              : "🥉 Giải Ba"
+                          }
+                        </div>
+                      `
+
+                      : ""
+
                   }
-                </span>
+
+                </div>
 
 
-                <span
+                <div
+                  class="rank-score"
+                >
+                  ${item.score}
+                  điểm
+                </div>
+
+              </div>
+
+
+              <div
+                class="rank-bar"
+              >
+
+                <div
+                  class="rank-fill"
+                  style="
+                    width:${width}%
+                  "
+                ></div>
+
+              </div>
+
+
+              <div
+                class="score-actions"
+              >
+
+                <button
                   class="
-                    rank-name
+                    score-btn
+                    minus
+                  "
+                  onclick="
+                    adjustScore(
+                      ${item.index},
+                      -10
+                    )
                   "
                 >
-                  ${esc(x.n)}
-                </span>
+                  −10
+                </button>
 
 
-                ${
-                  k < 3
+                <button
+                  class="
+                    score-btn
+                    minus
+                  "
+                  onclick="
+                    adjustScore(
+                      ${item.index},
+                      -5
+                    )
+                  "
+                >
+                  −5
+                </button>
 
-                    ? `
 
-                      <div
-                        class="
-                          prize
-                        "
-                      >
-                        ${
-                          k === 0
-                            ? "🏆 Giải Nhất"
-                            : k === 1
-                            ? "🥈 Giải Nhì"
-                            : "🥉 Giải Ba"
-                        }
-                      </div>
+                <button
+                  class="
+                    score-btn
+                    plus
+                  "
+                  onclick="
+                    adjustScore(
+                      ${item.index},
+                      5
+                    )
+                  "
+                >
+                  +5
+                </button>
 
-                    `
 
-                    : ""
-
-                }
+                <button
+                  class="
+                    score-btn
+                    plus
+                  "
+                  onclick="
+                    adjustScore(
+                      ${item.index},
+                      10
+                    )
+                  "
+                >
+                  +10
+                </button>
 
               </div>
 
-
-              <div
-                class="
-                  rank-score
-                "
-              >
-
-                ${x.score}
-                điểm
-
-              </div>
-
             </div>
 
+          `;
 
-            <div
-              class="
-                rank-bar
-              "
-            >
-
-              <div
-                class="
-                  rank-fill
-                "
-                style="
-                  width:${Math.min(
-                    100,
-                    x.score /
-                      max *
-                      100
-                  )}%
-                "
-              ></div>
-
-            </div>
-
-
-            <div
-              class="
-                score-actions
-              "
-            >
-
-              <button
-                class="
-                  score-btn
-                  minus
-                "
-                onclick="
-                  adjustScore(
-                    ${x.i},
-                    -10
-                  )
-                "
-              >
-                −10
-              </button>
-
-              <button
-                class="
-                  score-btn
-                  minus
-                "
-                onclick="
-                  adjustScore(
-                    ${x.i},
-                    -5
-                  )
-                "
-              >
-                −5
-              </button>
-
-              <button
-                class="
-                  score-btn
-                  plus
-                "
-                onclick="
-                  adjustScore(
-                    ${x.i},
-                    5
-                  )
-                "
-              >
-                +5
-              </button>
-
-              <button
-                class="
-                  score-btn
-                  plus
-                "
-                onclick="
-                  adjustScore(
-                    ${x.i},
-                    10
-                  )
-                "
-              >
-                +10
-              </button>
-
-            </div>
-
-          </div>
-
-        `
+        }
       )
-
       .join("");
 
 }
 
 
 /* =========================================================
-   GIÁO ÁN
+   LESSON
 ========================================================= */
-
-const lessonUploadZone =
-  document.getElementById(
-    "lessonUploadZone"
-  );
-
 
 const lessonFile =
   document.getElementById(
@@ -3231,98 +3048,86 @@ const lessonFile =
   );
 
 
-if (
-  lessonUploadZone &&
-  lessonFile
-) {
-
-  lessonUploadZone.onclick =
+document
+  .getElementById(
+    "chooseLessonBtn"
+  )
+  ?.addEventListener(
+    "click",
     () =>
-      lessonFile.click();
-
-
-  lessonFile.onchange =
-    () =>
-      importLessonFiles(
-        lessonFile.files
-      );
-
-
-  [
-    "dragenter",
-    "dragover"
-  ].forEach(
-    ev => {
-
-      lessonUploadZone.addEventListener(
-        ev,
-        e => {
-
-          e.preventDefault();
-
-          lessonUploadZone
-            .classList
-            .add(
-              "dragover"
-            );
-
-        }
-      );
-
-    }
+      lessonFile?.click()
   );
 
 
-  [
-    "dragleave",
-    "drop"
-  ].forEach(
-    ev => {
-
-      lessonUploadZone.addEventListener(
-        ev,
-        e => {
-
-          e.preventDefault();
-
-          lessonUploadZone
-            .classList
-            .remove(
-              "dragover"
-            );
-
-        }
-      );
-
-    }
-  );
+lessonFile?.addEventListener(
+  "change",
+  () =>
+    importLessonFiles(
+      lessonFile.files
+    )
+);
 
 
-  lessonUploadZone.addEventListener(
-    "drop",
-    e =>
-      importLessonFiles(
-        e
-          .dataTransfer
-          .files
-      )
-  );
-
-}
-
-
-const lessonSearch =
+const lessonZone =
   document.getElementById(
-    "lessonSearch"
+    "lessonUploadZone"
   );
 
 
-if (lessonSearch) {
+lessonZone?.addEventListener(
+  "dragover",
+  event => {
 
-  lessonSearch.oninput =
-    renderLessons;
+    event.preventDefault();
 
-}
+    lessonZone.classList.add(
+      "dragover"
+    );
+
+  }
+);
+
+
+lessonZone?.addEventListener(
+  "dragleave",
+  () => {
+
+    lessonZone.classList.remove(
+      "dragover"
+    );
+
+  }
+);
+
+
+lessonZone?.addEventListener(
+  "drop",
+  event => {
+
+    event.preventDefault();
+
+    lessonZone.classList.remove(
+      "dragover"
+    );
+
+    importLessonFiles(
+      event
+        .dataTransfer
+        .files
+    );
+
+  }
+);
+
+
+document
+  .getElementById(
+    "lessonSearch"
+  )
+  ?.addEventListener(
+    "input",
+    renderLessons
+  );
 
 
 async function docxToLesson(
@@ -3341,7 +3146,7 @@ async function docxToLesson(
   }
 
 
-  const r =
+  const result =
     await window.mammoth
       .convertToHtml(
 
@@ -3353,7 +3158,6 @@ async function docxToLesson(
         {
 
           convertImage:
-
             window
               .mammoth
               .images
@@ -3365,7 +3169,6 @@ async function docxToLesson(
                     .read(
                       "base64"
                     )
-
                     .then(
                       base64 => ({
 
@@ -3389,29 +3192,21 @@ async function docxToLesson(
 
     title:
       filename
-
         .replace(
           /\.docx$/i,
           ""
         )
-
         .replace(
           /[_-]+/g,
           " "
         )
-
-        .trim()
-
-        ||
-
+        .trim() ||
       "Giáo án",
-
 
     filename,
 
     html:
-      r.value ||
-
+      result.value ||
       "<p>Không có nội dung.</p>"
 
   };
@@ -3424,7 +3219,8 @@ async function importLessonFiles(
 ) {
 
   if (
-    !files?.length
+    !files ||
+    !files.length
   ) {
     return;
   }
@@ -3439,16 +3235,15 @@ async function importLessonFiles(
   try {
 
     for (
-      const f of
+      const file of
       Array.from(files)
     ) {
-
 
       /* ZIP */
 
       if (
         /\.zip$/i.test(
-          f.name
+          file.name
         )
       ) {
 
@@ -3463,23 +3258,23 @@ async function importLessonFiles(
         }
 
 
-        const z =
+        const zip =
           await window.JSZip
             .loadAsync(
-              await f.arrayBuffer()
+              await file.arrayBuffer()
             );
 
 
         const items =
           Object
             .values(
-              z.files
+              zip.files
             )
             .filter(
-              x =>
-                !x.dir &&
+              item =>
+                !item.dir &&
                 /\.docx$/i.test(
-                  x.name
+                  item.name
                 )
             );
 
@@ -3489,28 +3284,31 @@ async function importLessonFiles(
         ) {
 
           throw new Error(
-            "ZIP không có file .docx."
+            "File ZIP không có .docx."
           );
 
         }
 
 
         for (
-          const item
-          of items
+          const item of
+          items
         ) {
 
           if (progress) {
 
-            progress.innerHTML =
-              `
-                <div class="progress">
-                  ⏳ Đang chuyển:
-                  ${esc(
-                    item.name
-                  )}
-                </div>
-              `;
+            progress.innerHTML = `
+
+              <div
+                class="notice"
+              >
+                ⏳ Đang chuyển:
+                ${esc(
+                  item.name
+                )}
+              </div>
+
+            `;
 
           }
 
@@ -3523,10 +3321,13 @@ async function importLessonFiles(
 
           const lesson =
             await docxToLesson(
+
               await item.async(
                 "arraybuffer"
               ),
+
               filename
+
             );
 
 
@@ -3539,38 +3340,46 @@ async function importLessonFiles(
 
         }
 
-
       }
 
-
-      /* WORD */
+      /* DOCX */
 
       else if (
         /\.docx$/i.test(
-          f.name
+          file.name
         )
       ) {
 
         if (progress) {
 
-          progress.innerHTML =
-            `
-              <div class="progress">
-                ⏳ Đang đọc:
-                ${esc(f.name)}
-              </div>
-            `;
+          progress.innerHTML = `
+
+            <div class="notice">
+
+              ⏳ Đang đọc:
+              ${esc(
+                file.name
+              )}
+
+            </div>
+
+          `;
 
         }
 
 
-        data.lessons.push(
-
+        const lesson =
           await docxToLesson(
-            await f.arrayBuffer(),
-            f.name
-          )
 
+            await file.arrayBuffer(),
+
+            file.name
+
+          );
+
+
+        data.lessons.push(
+          lesson
         );
 
 
@@ -3578,13 +3387,10 @@ async function importLessonFiles(
 
       }
 
-
-      /* FILE KHÁC */
-
       else {
 
         alert(
-          `Bỏ qua ${f.name} vì không phải .docx hoặc .zip.`
+          `Bỏ qua ${file.name}.`
         );
 
       }
@@ -3597,12 +3403,15 @@ async function importLessonFiles(
 
     if (progress) {
 
-      progress.innerHTML =
-        `
-          <div class="progress">
-            ✅ Đã nhập giáo án thành công.
-          </div>
-        `;
+      progress.innerHTML = `
+
+        <div class="notice">
+
+          ✅ Đã nhập giáo án thành công.
+
+        </div>
+
+      `;
 
     }
 
@@ -3613,31 +3422,31 @@ async function importLessonFiles(
 
     if (progress) {
 
-      progress.innerHTML =
-        `
-          <div
-            class="
-              notice
-              error
-            "
-          >
-            ${esc(
-              error.message ||
-              "Không thể đọc file."
-            )}
-          </div>
-        `;
+      progress.innerHTML = `
+
+        <div
+          class="
+            notice
+            error
+          "
+        >
+
+          ${esc(
+            error.message ||
+            "Không thể đọc file."
+          )}
+
+        </div>
+
+      `;
 
     }
 
-    alert(
-      error.message ||
-      "Không thể đọc file."
-    );
-
   } finally {
 
-    if (lessonFile) {
+    if (
+      lessonFile
+    ) {
 
       lessonFile.value =
         "";
@@ -3664,41 +3473,33 @@ function renderLessons() {
 
   const q =
     (
-      lessonSearch?.value ||
+      document.getElementById(
+        "lessonSearch"
+      )?.value ||
       ""
     )
       .toLowerCase();
 
 
-  const a =
+  const filtered =
     data.lessons.filter(
-      x =>
-        x.title
+      lesson =>
+        lesson.title
           .toLowerCase()
           .includes(q)
     );
 
 
-  if (!a.length) {
+  if (!filtered.length) {
 
     list.innerHTML = `
 
       <div
-        class="
-          lesson-empty
-        "
+        class="lesson-empty"
         style="
-          padding:30px 15px
+          padding:35px 15px
         "
       >
-
-        <div
-          style="
-            font-size:40px
-          "
-        >
-          📚
-        </div>
 
         ${
           data.lessons.length
@@ -3713,21 +3514,18 @@ function renderLessons() {
 
     `;
 
-
     return;
 
   }
 
 
   list.innerHTML =
-    a
+    filtered
       .map(
-        x => `
+        lesson => `
 
           <div
-            class="
-              lesson-item
-            "
+            class="lesson-item"
           >
 
             <div
@@ -3736,7 +3534,9 @@ function renderLessons() {
               "
             >
               📖
-              ${esc(x.title)}
+              ${esc(
+                lesson.title
+              )}
             </div>
 
 
@@ -3746,7 +3546,7 @@ function renderLessons() {
               "
             >
               ${esc(
-                x.filename ||
+                lesson.filename ||
                 ""
               )}
             </div>
@@ -3757,15 +3557,15 @@ function renderLessons() {
                 actions
               "
               style="
-                margin-top:7px
+                margin-top:8px
               "
             >
 
               <button
-                class="primary"
+                class="btn"
                 onclick="
                   viewLesson(
-                    '${x.id}'
+                    '${lesson.id}'
                   )
                 "
               >
@@ -3774,12 +3574,10 @@ function renderLessons() {
 
 
               <button
-                class="
-                  secondary
-                "
+                class="btn gray"
                 onclick="
                   renameLesson(
-                    '${x.id}'
+                    '${lesson.id}'
                   )
                 "
               >
@@ -3788,10 +3586,10 @@ function renderLessons() {
 
 
               <button
-                class="danger"
+                class="btn red"
                 onclick="
                   deleteLesson(
-                    '${x.id}'
+                    '${lesson.id}'
                   )
                 "
               >
@@ -3812,14 +3610,15 @@ function renderLessons() {
 window.viewLesson =
   id => {
 
-    const x =
+    const lesson =
       data.lessons.find(
-        v =>
-          v.id === id
+        x =>
+          x.id ===
+          id
       );
 
 
-    if (!x) {
+    if (!lesson) {
       return;
     }
 
@@ -3840,25 +3639,21 @@ window.viewLesson =
       <div>
 
         <div
-          class="
-            lesson-close
-          "
+          class="lesson-close"
         >
 
           <h2
-            style="
-              margin:0
-            "
+            style="margin:0"
           >
             📖
             ${esc(
-              x.title
+              lesson.title
             )}
           </h2>
 
 
           <button
-            class="danger"
+            class="btn red"
             onclick="
               closeLesson()
             "
@@ -3871,20 +3666,20 @@ window.viewLesson =
 
         <div
           class="small"
-          style="
-            margin:
-              8px 0 15px
-          "
         >
           File:
           ${esc(
-            x.filename ||
+            lesson.filename ||
             ""
           )}
         </div>
 
 
-        <hr>
+        <hr
+          style="
+            margin:15px 0
+          "
+        >
 
 
         <div
@@ -3893,7 +3688,7 @@ window.viewLesson =
           "
         >
           ${
-            x.html ||
+            lesson.html ||
             "<p>Không có nội dung.</p>"
           }
         </div>
@@ -3901,12 +3696,12 @@ window.viewLesson =
 
         <div
           style="
-            margin-top:22px
+            margin-top:20px
           "
         >
 
           <button
-            class="danger"
+            class="btn red"
             onclick="
               closeLesson()
             "
@@ -3958,7 +3753,7 @@ window.closeLesson =
         </h3>
 
         <p>
-          Hãy chọn một giáo án ở danh sách bên trái.
+          Hãy chọn một giáo án.
         </p>
 
       </div>
@@ -3971,28 +3766,29 @@ window.closeLesson =
 window.renameLesson =
   id => {
 
-    const x =
+    const lesson =
       data.lessons.find(
-        v =>
-          v.id === id
+        x =>
+          x.id ===
+          id
       );
 
 
-    if (!x) {
+    if (!lesson) {
       return;
     }
 
 
-    const n =
+    const name =
       prompt(
         "Tên giáo án:",
-        x.title
+        lesson.title
       );
 
 
     if (
-      n === null ||
-      !n.trim()
+      name === null ||
+      !name.trim()
     ) {
 
       return;
@@ -4000,8 +3796,8 @@ window.renameLesson =
     }
 
 
-    x.title =
-      n.trim();
+    lesson.title =
+      name.trim();
 
 
     saveLocal();
@@ -4016,17 +3812,26 @@ window.renameLesson =
 window.deleteLesson =
   id => {
 
-    const x =
+    const lesson =
       data.lessons.find(
-        v =>
-          v.id === id
+        x =>
+          x.id ===
+          id
       );
 
 
     if (
-      !x ||
+      !lesson
+    ) {
+
+      return;
+
+    }
+
+
+    if (
       !confirm(
-        `Xóa giáo án ${x.title}?`
+        `Xóa giáo án "${lesson.title}"?`
       )
     ) {
 
@@ -4037,8 +3842,9 @@ window.deleteLesson =
 
     data.lessons =
       data.lessons.filter(
-        v =>
-          v.id !== id
+        x =>
+          x.id !==
+          id
       );
 
 
@@ -4055,18 +3861,14 @@ window.deleteLesson =
    ADMIN
 ========================================================= */
 
-const refreshUsers =
-  document.getElementById(
+document
+  .getElementById(
     "refreshUsers"
+  )
+  ?.addEventListener(
+    "click",
+    renderAdminUsers
   );
-
-
-if (refreshUsers) {
-
-  refreshUsers.onclick =
-    renderAdminUsers;
-
-}
 
 
 async function renderAdminUsers() {
@@ -4088,12 +3890,12 @@ async function renderAdminUsers() {
 
 
   box.innerHTML =
-    "Đang tải...";
+    "⏳ Đang tải...";
 
 
   try {
 
-    const snap =
+    const snapshot =
       await getDocs(
         collection(
           db,
@@ -4102,20 +3904,18 @@ async function renderAdminUsers() {
       );
 
 
-    const rows =
-      snap.docs
-
+    const users =
+      snapshot.docs
         .map(
-          d => ({
+          document => ({
 
             id:
-              d.id,
+              document.id,
 
-            ...d.data()
+            ...document.data()
 
           })
         )
-
         .sort(
           (
             a,
@@ -4124,8 +3924,7 @@ async function renderAdminUsers() {
             String(
               a.email ||
               ""
-            )
-            .localeCompare(
+            ).localeCompare(
               String(
                 b.email ||
                 ""
@@ -4134,192 +3933,178 @@ async function renderAdminUsers() {
         );
 
 
+    if (!users.length) {
+
+      box.innerHTML =
+        `
+          <p class="small">
+            Chưa có tài khoản nào đăng ký.
+          </p>
+        `;
+
+      return;
+
+    }
+
+
     box.innerHTML =
-      rows.length
+      users
+        .map(
+          user => {
 
-        ? rows
-
-            .map(
-              u => {
-
-                const st =
-                  u.status ||
-                  "pending";
+            const status =
+              user.status ||
+              "pending";
 
 
-                return `
+            return `
 
-                  <div
+              <div
+                class="
+                  user-admin-card
+                "
+              >
+
+                <b>
+                  ${esc(
+                    user.name ||
+                    "Chưa có tên"
+                  )}
+                </b>
+
+
+                <div
+                  class="small"
+                >
+                  ${esc(
+                    user.email ||
+                    ""
+                  )}
+                </div>
+
+
+                <div
+                  style="
+                    margin:
+                      8px 0
+                  "
+                >
+
+                  <span
                     class="
-                      user-admin-card
+                      status
+                      ${status}
                     "
                   >
+                    ${esc(
+                      status
+                    )}
+                  </span>
 
-                    <div>
-
-                      <b>
-                        ${esc(
-                          u.name ||
-                          "Chưa có tên"
-                        )}
-                      </b>
-
-                    </div>
+                </div>
 
 
-                    <div
-                      class="small"
-                    >
-                      ${esc(
-                        u.email ||
-                        ""
-                      )}
-                    </div>
+                <div
+                  class="actions"
+                >
+
+                  ${
+                    status !==
+                    "approved"
+
+                      ? `
+
+                        <button
+                          class="btn"
+                          onclick="
+                            setUserStatus(
+                              '${user.id}',
+                              'approved'
+                            )
+                          "
+                        >
+                          ✅ Duyệt
+                        </button>
+
+                      `
+
+                      : ""
+
+                  }
 
 
-                    <div
-                      style="
-                        margin:8px 0
-                      "
-                    >
+                  ${
+                    status !==
+                    "rejected"
 
-                      <span
-                        class="
-                          status
-                          ${st}
-                        "
-                      >
-                        ${esc(st)}
-                      </span>
+                      ? `
 
+                        <button
+                          class="btn red"
+                          onclick="
+                            setUserStatus(
+                              '${user.id}',
+                              'rejected'
+                            )
+                          "
+                        >
+                          ❌ Từ chối
+                        </button>
 
-                      ${
-                        u.role ===
-                        "admin"
+                      `
 
-                          ? " 👑 admin"
+                      : ""
 
-                          : ""
-                      }
-
-                    </div>
+                  }
 
 
-                    <div
-                      class="
-                        actions
-                      "
-                    >
+                  ${
+                    status !==
+                    "disabled"
 
-                      ${
-                        st !==
-                        "approved"
+                      ? `
 
-                          ? `
+                        <button
+                          class="btn gray"
+                          onclick="
+                            setUserStatus(
+                              '${user.id}',
+                              'disabled'
+                            )
+                          "
+                        >
+                          🚫 Khóa
+                        </button>
 
-                            <button
-                              class="
-                                primary
-                              "
-                              onclick="
-                                setUserStatus(
-                                  '${u.id}',
-                                  'approved'
-                                )
-                              "
-                            >
-                              ✅ Duyệt
-                            </button>
+                      `
 
-                          `
+                      : `
 
-                          : ""
+                        <button
+                          class="btn"
+                          onclick="
+                            setUserStatus(
+                              '${user.id}',
+                              'approved'
+                            )
+                          "
+                        >
+                          🔓 Mở khóa
+                        </button>
 
-                      }
+                      `
 
+                  }
 
-                      ${
-                        st !==
-                        "rejected"
+                </div>
 
-                          ? `
+              </div>
 
-                            <button
-                              class="
-                                danger
-                              "
-                              onclick="
-                                setUserStatus(
-                                  '${u.id}',
-                                  'rejected'
-                                )
-                              "
-                            >
-                              ❌ Từ chối
-                            </button>
+            `;
 
-                          `
-
-                          : ""
-
-                      }
-
-
-                      ${
-                        st !==
-                        "disabled"
-
-                          ? `
-
-                            <button
-                              class="
-                                secondary
-                              "
-                              onclick="
-                                setUserStatus(
-                                  '${u.id}',
-                                  'disabled'
-                                )
-                              "
-                            >
-                              🚫 Khóa
-                            </button>
-
-                          `
-
-                          : `
-
-                            <button
-                              class="
-                                primary
-                              "
-                              onclick="
-                                setUserStatus(
-                                  '${u.id}',
-                                  'approved'
-                                )
-                              "
-                            >
-                              🔓 Mở khóa
-                            </button>
-
-                          `
-
-                      }
-
-                    </div>
-
-                  </div>
-
-                `;
-
-              }
-            )
-
-            .join("")
-
-
-        : "<p>Chưa có tài khoản nào.</p>";
+          }
+        )
+        .join("");
 
 
   } catch (error) {
@@ -4359,9 +4144,23 @@ window.setUserStatus =
     }
 
 
+    const labels = {
+
+      approved:
+        "duyệt",
+
+      rejected:
+        "từ chối",
+
+      disabled:
+        "khóa"
+
+    };
+
+
     if (
       !confirm(
-        `Đặt trạng thái tài khoản thành ${status}?`
+        `Bạn có chắc muốn ${labels[status] || status} tài khoản này?`
       )
     ) {
 
@@ -4373,14 +4172,17 @@ window.setUserStatus =
     try {
 
       await updateDoc(
+
         doc(
           db,
           "users",
           uid
         ),
+
         {
           status
         }
+
       );
 
 
@@ -4389,10 +4191,13 @@ window.setUserStatus =
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       alert(
-        "Không cập nhật được tài khoản: " +
+        "Không thể cập nhật tài khoản: " +
         error.message
       );
 
@@ -4402,8 +4207,43 @@ window.setUserStatus =
 
 
 /* =========================================================
-   GIAO DIỆN
+   THEME
 ========================================================= */
+
+const defaultTheme = {
+
+  title:
+    "✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1",
+
+  subtitle:
+    "“Xin Chúa Thánh Thần hướng dẫn chúng con”",
+
+  primary:
+    "#168a70",
+
+  secondary:
+    "#2d91c7",
+
+  bg1:
+    "#eafaf3",
+
+  bg2:
+    "#eaf3ff",
+
+  card:
+    "#ffffff",
+
+  text:
+    "#173b35",
+
+  radius:
+    18,
+
+  customCss:
+    ""
+
+};
+
 
 function applyTheme(
   theme
@@ -4416,60 +4256,50 @@ function applyTheme(
     };
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--primary",
-      x.primary
-    );
+  const root =
+    document.documentElement;
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--secondary",
-      x.secondary
-    );
+  root.style.setProperty(
+    "--primary",
+    x.primary
+  );
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--bg1",
-      x.bg1
-    );
+  root.style.setProperty(
+    "--secondary",
+    x.secondary
+  );
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--bg2",
-      x.bg2
-    );
+  root.style.setProperty(
+    "--bg1",
+    x.bg1
+  );
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--card",
-      x.card
-    );
+  root.style.setProperty(
+    "--bg2",
+    x.bg2
+  );
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--text",
-      x.text
-    );
+  root.style.setProperty(
+    "--card",
+    x.card
+  );
 
 
-  document.documentElement
-    .style
-    .setProperty(
-      "--radius",
-      `${x.radius}px`
-    );
+  root.style.setProperty(
+    "--text",
+    x.text
+  );
+
+
+  root.style.setProperty(
+    "--radius",
+    `${x.radius}px`
+  );
 
 
   const title =
@@ -4528,50 +4358,53 @@ function applyTheme(
   }
 
 
-  let s =
+  let customStyle =
     document.getElementById(
       "customThemeStyle"
     );
 
 
-  if (!s) {
+  if (!customStyle) {
 
-    s =
+    customStyle =
       document.createElement(
         "style"
       );
 
-    s.id =
+
+    customStyle.id =
       "customThemeStyle";
 
+
     document.head.appendChild(
-      s
+      customStyle
     );
 
   }
 
 
-  s.textContent =
+  customStyle.textContent =
     x.customCss ||
     "";
 
 }
 
 
-/* =========================================================
-   LOAD THEME
-========================================================= */
-
 async function loadTheme() {
 
-  if (themeUnsub) {
+  if (
+    themeWatcher
+  ) {
 
-    themeUnsub();
+    themeWatcher();
+
+    themeWatcher =
+      null;
 
   }
 
 
-  themeUnsub =
+  themeWatcher =
     onSnapshot(
 
       doc(
@@ -4580,12 +4413,12 @@ async function loadTheme() {
         "site"
       ),
 
-      snap => {
+      snapshot => {
 
         applyTheme(
 
-          snap.exists()
-            ? snap.data()
+          snapshot.exists()
+            ? snapshot.data()
             : defaultTheme
 
         );
@@ -4595,7 +4428,7 @@ async function loadTheme() {
       error => {
 
         console.error(
-          "loadTheme:",
+          "Theme listener:",
           error
         );
 
@@ -4610,15 +4443,11 @@ async function loadTheme() {
 }
 
 
-/* =========================================================
-   FORM THEME
-========================================================= */
-
 async function loadThemeForm() {
 
   try {
 
-    const snap =
+    const snapshot =
       await getDoc(
         doc(
           db,
@@ -4628,15 +4457,15 @@ async function loadThemeForm() {
       );
 
 
-    const t =
+    const theme =
       {
 
         ...defaultTheme,
 
         ...(
 
-          snap.exists()
-            ? snap.data()
+          snapshot.exists()
+            ? snapshot.data()
             : {}
 
         )
@@ -4647,34 +4476,34 @@ async function loadThemeForm() {
     const fields = {
 
       themeTitle:
-        t.title,
+        theme.title,
 
       themeSubtitle:
-        t.subtitle,
+        theme.subtitle,
 
       themePrimary:
-        t.primary,
+        theme.primary,
 
       themeSecondary:
-        t.secondary,
+        theme.secondary,
 
       themeBg1:
-        t.bg1,
+        theme.bg1,
 
       themeBg2:
-        t.bg2,
+        theme.bg2,
 
       themeCard:
-        t.card,
+        theme.card,
 
       themeText:
-        t.text,
+        theme.text,
 
       themeRadius:
-        t.radius,
+        theme.radius,
 
       themeCustomCss:
-        t.customCss ||
+        theme.customCss ||
         ""
 
     };
@@ -4690,15 +4519,17 @@ async function loadThemeForm() {
         ]
       ) => {
 
-        const el =
+        const element =
           document.getElementById(
             id
           );
 
 
-        if (el) {
+        if (
+          element
+        ) {
 
-          el.value =
+          element.value =
             value;
 
         }
@@ -4713,21 +4544,24 @@ async function loadThemeForm() {
       );
 
 
-    if (radiusValue) {
+    if (
+      radiusValue
+    ) {
 
       radiusValue.textContent =
-        t.radius;
+        theme.radius;
 
     }
 
 
-    updatePreview(t);
+    applyTheme(
+      theme
+    );
 
 
   } catch (error) {
 
     console.error(
-      "loadThemeForm:",
       error
     );
 
@@ -4736,76 +4570,80 @@ async function loadThemeForm() {
 }
 
 
-/* =========================================================
-   THEME OBJECT
-========================================================= */
-
 function formTheme() {
 
-  const get =
+  const value =
     id =>
-      document.getElementById(
-        id
-      )?.value;
+      document
+        .getElementById(
+          id
+        )?.value;
 
 
   return {
 
     title:
       (
-        get("themeTitle") ||
+        value(
+          "themeTitle"
+        ) ||
         defaultTheme.title
       ).trim(),
 
-
     subtitle:
       (
-        get(
+        value(
           "themeSubtitle"
         ) ||
         defaultTheme.subtitle
       ).trim(),
 
-
     primary:
-      get("themePrimary") ||
+      value(
+        "themePrimary"
+      ) ||
       defaultTheme.primary,
 
-
     secondary:
-      get("themeSecondary") ||
+      value(
+        "themeSecondary"
+      ) ||
       defaultTheme.secondary,
 
-
     bg1:
-      get("themeBg1") ||
+      value(
+        "themeBg1"
+      ) ||
       defaultTheme.bg1,
 
-
     bg2:
-      get("themeBg2") ||
+      value(
+        "themeBg2"
+      ) ||
       defaultTheme.bg2,
 
-
     card:
-      get("themeCard") ||
+      value(
+        "themeCard"
+      ) ||
       defaultTheme.card,
 
-
     text:
-      get("themeText") ||
+      value(
+        "themeText"
+      ) ||
       defaultTheme.text,
-
 
     radius:
       Number(
-        get("themeRadius") ||
+        value(
+          "themeRadius"
+        ) ||
         defaultTheme.radius
       ),
 
-
     customCss:
-      get(
+      value(
         "themeCustomCss"
       ) || ""
 
@@ -4814,83 +4652,7 @@ function formTheme() {
 }
 
 
-/* =========================================================
-   PREVIEW
-========================================================= */
-
-function updatePreview(
-  theme
-) {
-
-  const x =
-    {
-      ...defaultTheme,
-      ...theme
-    };
-
-
-  const title =
-    document.getElementById(
-      "previewTitle"
-    );
-
-
-  const subtitle =
-    document.getElementById(
-      "previewSubtitle"
-    );
-
-
-  if (title) {
-
-    title.textContent =
-      x.title;
-
-  }
-
-
-  if (subtitle) {
-
-    subtitle.textContent =
-      x.subtitle;
-
-  }
-
-}
-
-
-/* =========================================================
-   LIVE THEME EDIT
-========================================================= */
-
-const themeRadius =
-  document.getElementById(
-    "themeRadius"
-  );
-
-
-if (themeRadius) {
-
-  themeRadius.oninput =
-    () => {
-
-      const value =
-        document.getElementById(
-          "themeRadiusValue"
-        );
-
-
-      if (value) {
-
-        value.textContent =
-          themeRadius.value;
-
-      }
-
-    };
-
-}
-
+/* LIVE PREVIEW */
 
 [
   "themeTitle",
@@ -4916,70 +4678,61 @@ if (themeRadius) {
 ].forEach(
   id => {
 
-    const el =
-      document.getElementById(
+    document
+      .getElementById(
         id
-      );
-
-
-    if (el) {
-
-      el.addEventListener(
+      )
+      ?.addEventListener(
         "input",
         () => {
 
-          const t =
+          const theme =
             formTheme();
 
-          applyTheme(t);
-
-          updatePreview(t);
+          applyTheme(
+            theme
+          );
 
         }
       );
-
-    }
 
   }
 );
 
 
-/* =========================================================
-   THEME BUTTONS
-========================================================= */
+document
+  .getElementById(
+    "themeRadius"
+  )
+  ?.addEventListener(
+    "input",
+    event => {
 
-const previewTheme =
-  document.getElementById(
-    "previewTheme"
+      document
+        .getElementById(
+          "themeRadiusValue"
+        ).textContent =
+          event.target.value;
+
+    }
   );
 
 
-if (previewTheme) {
+/* SAVE THEME */
 
-  previewTheme.onclick =
-    () => {
-
-      applyTheme(
-        formTheme()
-      );
-
-    };
-
-}
-
-
-const saveTheme =
-  document.getElementById(
+document
+  .getElementById(
     "saveTheme"
-  );
-
-
-if (saveTheme) {
-
-  saveTheme.onclick =
+  )
+  ?.addEventListener(
+    "click",
     async () => {
 
       try {
+
+        const theme =
+          formTheme();
+
 
         await setDoc(
 
@@ -4989,7 +4742,7 @@ if (saveTheme) {
             "site"
           ),
 
-          formTheme(),
+          theme,
 
           {
             merge:
@@ -5000,7 +4753,7 @@ if (saveTheme) {
 
 
         alert(
-          "✅ Đã lưu giao diện cho toàn bộ website."
+          "✅ Đã lưu giao diện."
         );
 
 
@@ -5010,28 +4763,27 @@ if (saveTheme) {
           error
         );
 
+
         alert(
-          "Không lưu được giao diện: " +
+          "Không thể lưu giao diện: " +
           error.message
         );
 
       }
 
-    };
-
-}
-
-
-const resetTheme =
-  document.getElementById(
-    "resetTheme"
+    }
   );
 
 
-if (resetTheme) {
+/* RESET */
 
-  resetTheme.onclick =
-    () => {
+document
+  .getElementById(
+    "resetTheme"
+  )
+  ?.addEventListener(
+    "click",
+    async () => {
 
       if (
         !confirm(
@@ -5044,29 +4796,49 @@ if (resetTheme) {
       }
 
 
-      applyTheme(
-        defaultTheme
-      );
+      try {
+
+        await setDoc(
+
+          doc(
+            db,
+            "settings",
+            "site"
+          ),
+
+          defaultTheme,
+
+          {
+            merge:
+              true
+          }
+
+        );
 
 
-      loadThemeForm();
+        applyTheme(
+          defaultTheme
+        );
 
-    };
 
-}
+        await loadThemeForm();
+
+
+      } catch (error) {
+
+        alert(
+          "Không thể đặt lại giao diện: " +
+          error.message
+        );
+
+      }
+
+    }
+  );
 
 
 /* =========================================================
-   THEME MẶC ĐỊNH
-========================================================= */
-
-applyTheme(
-  defaultTheme
-);
-
-
-/* =========================================================
-   FIREBASE AUTH STATE
+   AUTH STATE
 ========================================================= */
 
 onAuthStateChanged(
@@ -5080,6 +4852,18 @@ onAuthStateChanged(
 
       isAdmin =
         false;
+
+
+      if (
+        userWatcher
+      ) {
+
+        userWatcher();
+
+        userWatcher =
+          null;
+
+      }
 
 
       document
@@ -5141,8 +4925,12 @@ onAuthStateChanged(
 
 
 /* =========================================================
-   LƯU + RENDER
+   START
 ========================================================= */
+
+applyTheme(
+  defaultTheme
+);
 
 saveLocal();
 
