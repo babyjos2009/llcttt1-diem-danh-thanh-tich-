@@ -1,26 +1,6 @@
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  getDocs,
-  collection,
-  onSnapshot,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,updateDoc,getDocs,collection,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 /* =========================================================
@@ -28,7 +8,7 @@ import {
 ========================================================= */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWccHm1IE",
+  apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWcchHm1IE",
   authDomain: "llcttt1-diem-danh.firebaseapp.com",
   projectId: "llcttt1-diem-danh",
   storageBucket: "llcttt1-diem-danh.firebasestorage.app",
@@ -36,14 +16,18 @@ const firebaseConfig = {
   appId: "1:1028180173731:web:c649731f9ccc20acb13016",
   measurementId: "G-XDNC5S21BN"
 };
-const app =
-  initializeApp(firebaseConfig);
 
-const auth =
-  getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-const db =
-  getFirestore(app);
+
+/* =========================================================
+   ADMIN CỦA BẠN
+========================================================= */
+
+const ADMIN_UID =
+  "vBmdB1U85uZ5lhZq026Rnqk4WZP2";
 
 
 /* =========================================================
@@ -65,233 +49,117 @@ const oldDefaultNames = [
   "Trần Thông"
 ];
 
-
 let data =
   JSON.parse(
     localStorage.getItem(key) || "null"
   ) || {
-
     members: [],
-
     sessions: [],
-
     current: -1,
-
     competition: {},
-
     memberInfo: {},
-
     lessons: []
-
   };
 
 
-if (
-  !Array.isArray(
-    data.members
-  )
-) {
-
+if (!Array.isArray(data.members)) {
   data.members = [];
-
 }
 
-
-if (
-  !Array.isArray(
-    data.sessions
-  )
-) {
-
+if (!Array.isArray(data.sessions)) {
   data.sessions = [];
-
 }
 
-
-if (
-  typeof data.current !==
-  "number"
-) {
-
+if (typeof data.current !== "number") {
   data.current = -1;
-
 }
 
-
-if (
-  !data.competition ||
-  typeof data.competition !==
-    "object"
-) {
-
+if (!data.competition || typeof data.competition !== "object") {
   data.competition = {};
-
 }
 
-
-if (
-  !data.memberInfo ||
-  typeof data.memberInfo !==
-    "object"
-) {
-
+if (!data.memberInfo || typeof data.memberInfo !== "object") {
   data.memberInfo = {};
-
 }
 
-
-if (
-  !Array.isArray(
-    data.lessons
-  )
-) {
-
+if (!Array.isArray(data.lessons)) {
   data.lessons = [];
-
 }
 
 
 /* XÓA 9 TÊN MẪU CŨ */
 if (
-
-  data.members.length ===
-    oldDefaultNames.length &&
-
+  data.members.length === oldDefaultNames.length &&
   oldDefaultNames.every(
-    (
-      name,
-      index
-    ) =>
-      data.members[index] ===
-      name
+    (name, index) => data.members[index] === name
   )
-
 ) {
-
   data.members = [];
 
-  data.sessions.forEach(
-    session => {
-
-      session.attendance = [];
-
-    }
-  );
+  data.sessions.forEach(session => {
+    session.attendance = [];
+  });
 
   data.memberInfo = {};
-
 }
 
 
 function saveLocal() {
-
   try {
-
     localStorage.setItem(
       key,
       JSON.stringify(data)
     );
-
   } catch (error) {
-
     console.error(error);
-
     alert(
       "Bộ nhớ trình duyệt đã đầy. Hãy xóa bớt ảnh hoặc giáo án."
     );
-
   }
-
 }
 
 
-function esc(
-  value
-) {
-
-  return String(
-    value
-  ).replace(
+function esc(value) {
+  return String(value).replace(
     /[&<>"']/g,
     m => ({
-
       "&": "&amp;",
-
       "<": "&lt;",
-
       ">": "&gt;",
-
       '"': "&quot;",
-
       "'": "&#039;"
-
     }[m])
   );
-
 }
 
 
 function uid() {
-
   return (
-
-    Date.now()
-      .toString(36) +
-
-    Math.random()
-      .toString(36)
-      .slice(2)
-
+    Date.now().toString(36) +
+    Math.random().toString(36).slice(2)
   );
-
 }
 
 
 function currentSession() {
-
-  if (
-    data.current < 0
-  ) {
-
-    return null;
-
-  }
-
-  return (
-    data.sessions[
-      data.current
-    ] || null
-  );
-
+  return data.current >= 0
+    ? data.sessions[data.current] || null
+    : null;
 }
 
 
-function memberInfo(
-  name
-) {
-
-  if (
-    !data.memberInfo[name]
-  ) {
-
+function info(name) {
+  if (!data.memberInfo[name]) {
     data.memberInfo[name] = {
-
       dob: "",
-
       father: "",
-
       mother: "",
-
       phone: "",
-
       photo: ""
-
     };
-
   }
 
   return data.memberInfo[name];
-
 }
 
 
@@ -299,174 +167,94 @@ function memberInfo(
    AUTH UI
 ========================================================= */
 
-function showMsg(
-  message,
-  type = "notice"
-) {
-
+function showMsg(msg, kind = "notice") {
   const box =
-    document.getElementById(
-      "authMessage"
-    );
+    document.getElementById("authMessage");
 
-  if (!box) {
-    return;
-  }
+  if (!box) return;
 
-  box.innerHTML =
-    message
-      ? `
-        <div class="notice ${type}">
-          ${message}
-        </div>
-      `
-      : "";
-
+  box.innerHTML = msg
+    ? `<div class="notice ${kind}">${msg}</div>`
+    : "";
 }
 
 
-function setAuthMode(
-  register
-) {
+function setAuthMode(register = false) {
+  document
+    .getElementById("loginTab")
+    ?.classList.toggle("active", !register);
 
   document
-    .getElementById(
-      "loginTab"
-    )
-    ?.classList
-    .toggle(
-      "active",
-      !register
-    );
-
+    .getElementById("registerTab")
+    ?.classList.toggle("active", register);
 
   document
-    .getElementById(
-      "registerTab"
-    )
-    ?.classList
-    .toggle(
-      "active",
-      register
-    );
-
+    .getElementById("loginForm")
+    ?.classList.toggle("hidden", register);
 
   document
-    .getElementById(
-      "loginForm"
-    )
-    ?.classList
-    .toggle(
-      "hidden",
-      register
-    );
-
-
-  document
-    .getElementById(
-      "registerForm"
-    )
-    ?.classList
-    .toggle(
-      "hidden",
-      !register
-    );
-
+    .getElementById("registerForm")
+    ?.classList.toggle("hidden", !register);
 
   showMsg("");
-
 }
 
 
-function setPending(
-  show
-) {
+function setPending(show = true) {
+  document
+    .getElementById("authForms")
+    ?.classList.toggle("hidden", show);
 
   document
-    .getElementById(
-      "authForms"
-    )
-    ?.classList
-    .toggle(
-      "hidden",
-      show
-    );
-
-
-  document
-    .getElementById(
-      "pendingBox"
-    )
-    ?.classList
-    .toggle(
-      "hidden",
-      !show
-    );
-
+    .getElementById("pendingBox")
+    ?.classList.toggle("hidden", !show);
 }
 
 
 /* =========================================================
-   AUTH EVENTS
+   LOGIN / REGISTER TAB
 ========================================================= */
 
 document
-  .getElementById(
-    "loginTab"
-  )
+  .getElementById("loginTab")
   ?.addEventListener(
     "click",
-    () =>
-      setAuthMode(false)
+    () => setAuthMode(false)
+  );
+
+document
+  .getElementById("registerTab")
+  ?.addEventListener(
+    "click",
+    () => setAuthMode(true)
   );
 
 
-document
-  .getElementById(
-    "registerTab"
-  )
-  ?.addEventListener(
-    "click",
-    () =>
-      setAuthMode(true)
-  );
-
-
-/* LOGIN */
+/* =========================================================
+   LOGIN
+========================================================= */
 
 document
-  .getElementById(
-    "loginForm"
-  )
+  .getElementById("loginForm")
   ?.addEventListener(
     "submit",
-    async event => {
-
-      event.preventDefault();
+    async e => {
+      e.preventDefault();
 
       const email =
         document
-          .getElementById(
-            "loginEmail"
-          )
+          .getElementById("loginEmail")
           .value
           .trim();
 
       const password =
         document
-          .getElementById(
-            "loginPassword"
-          )
+          .getElementById("loginPassword")
           .value;
 
-
-      showMsg(
-        "Đang đăng nhập..."
-      );
-
+      showMsg("Đang đăng nhập...");
 
       try {
-
         await signInWithEmailAndPassword(
           auth,
           email,
@@ -474,314 +262,177 @@ document
         );
 
         showMsg("");
-
       } catch (error) {
-
         console.error(error);
 
         showMsg(
-          friendlyAuthError(
-            error
-          ),
+          "Đăng nhập không thành công: " +
+          friendlyAuthError(error),
           "error"
         );
-
       }
-
     }
   );
 
 
-/* REGISTER */
+/* =========================================================
+   REGISTER
+========================================================= */
 
 document
-  .getElementById(
-    "registerForm"
-  )
+  .getElementById("registerForm")
   ?.addEventListener(
     "submit",
-    async event => {
-
-      event.preventDefault();
-
+    async e => {
+      e.preventDefault();
 
       const name =
         document
-          .getElementById(
-            "registerName"
-          )
+          .getElementById("registerName")
           .value
           .trim();
-
 
       const email =
         document
-          .getElementById(
-            "registerEmail"
-          )
+          .getElementById("registerEmail")
           .value
           .trim();
 
-
       const password =
         document
-          .getElementById(
-            "registerPassword"
-          )
+          .getElementById("registerPassword")
           .value;
-
 
       const password2 =
         document
-          .getElementById(
-            "registerPassword2"
-          )
+          .getElementById("registerPassword2")
           .value;
 
-
       if (!name) {
-
         showMsg(
           "Bạn chưa nhập họ tên.",
           "error"
         );
-
         return;
-
       }
 
-
-      if (
-        password.length <
-        6
-      ) {
-
+      if (password.length < 6) {
         showMsg(
           "Mật khẩu phải có ít nhất 6 ký tự.",
           "error"
         );
-
         return;
-
       }
 
-
-      if (
-        password !==
-        password2
-      ) {
-
+      if (password !== password2) {
         showMsg(
           "Hai mật khẩu không giống nhau.",
           "error"
         );
-
         return;
-
       }
 
-
-      showMsg(
-        "Đang tạo tài khoản..."
-      );
-
+      showMsg("Đang tạo tài khoản...");
 
       try {
-
-        const result =
+        const cred =
           await createUserWithEmailAndPassword(
             auth,
             email,
             password
           );
 
-
+        /* TỰ TẠO users/{UID} */
         await setDoc(
-
           doc(
             db,
             "users",
-            result.user.uid
+            cred.user.uid
           ),
-
           {
-
-            name,
-
-            email,
-
-            status:
-              "pending",
-
-            role:
-              "user",
-
-            createdAt:
-              serverTimestamp()
-
+            name: name,
+            email: email,
+            status: "pending",
+            role: "user",
+            createdAt: serverTimestamp()
+          },
+          {
+            merge: true
           }
-
         );
-
 
         setPending(true);
 
-        showMsg("");
-
+        showMsg(
+          "✅ Đăng ký thành công. Tài khoản đang chờ quản trị viên duyệt."
+        );
 
       } catch (error) {
-
         console.error(error);
 
         showMsg(
-          friendlyAuthError(
-            error
-          ),
+          "Không thể đăng ký: " +
+          friendlyAuthError(error),
           "error"
         );
-
       }
-
     }
   );
 
 
-function friendlyAuthError(
-  error
-) {
+function friendlyAuthError(error) {
+  const code = error?.code || "";
 
-  const code =
-    error?.code || "";
-
-
-  if (
-    code.includes(
-      "invalid-credential"
-    )
-  ) {
-
-    return (
-      "Email hoặc mật khẩu không đúng."
-    );
-
+  if (code.includes("invalid-credential")) {
+    return "Email hoặc mật khẩu không đúng.";
   }
 
-
-  if (
-    code.includes(
-      "email-already-in-use"
-    )
-  ) {
-
-    return (
-      "Email này đã được đăng ký."
-    );
-
+  if (code.includes("email-already-in-use")) {
+    return "Email này đã được đăng ký.";
   }
 
-
-  if (
-    code.includes(
-      "weak-password"
-    )
-  ) {
-
-    return (
-      "Mật khẩu cần ít nhất 6 ký tự."
-    );
-
+  if (code.includes("weak-password")) {
+    return "Mật khẩu cần ít nhất 6 ký tự.";
   }
 
-
-  if (
-    code.includes(
-      "invalid-email"
-    )
-  ) {
-
-    return (
-      "Email không hợp lệ."
-    );
-
+  if (code.includes("invalid-email")) {
+    return "Email không hợp lệ.";
   }
 
-
-  if (
-    code.includes(
-      "unauthorized-domain"
-    )
-  ) {
-
-    return (
-      "Tên miền website chưa được Firebase cho phép."
-    );
-
+  if (code.includes("unauthorized-domain")) {
+    return "Tên miền website chưa được Firebase cho phép.";
   }
 
+  if (code.includes("permission-denied")) {
+    return "Firebase từ chối quyền ghi Firestore. Hãy kiểm tra Rules.";
+  }
 
   return (
     error?.message ||
     "Có lỗi xảy ra."
   );
-
 }
 
 
 /* =========================================================
-   AUTH ACCESS
+   AUTH STATE
 ========================================================= */
 
-let isAdmin =
-  false;
-
-let currentUser =
-  null;
-
-let userWatcher =
-  null;
-
-let themeWatcher =
-  null;
+let isAdmin = false;
+let userUnsub = null;
+let themeUnsub = null;
+let currentUser = null;
 
 
-async function checkAdmin(
-  uid
-) {
-
-  try {
-
-    const snapshot =
-      await getDoc(
-        doc(
-          db,
-          "admins",
-          uid
-        )
-      );
-
-    return snapshot.exists();
-
-  } catch (error) {
-
-    console.error(
-      "checkAdmin",
-      error
-    );
-
-    return false;
-
-  }
-
+/* ADMIN KHÔNG PHỤ THUỘC COLLECTION admins */
+async function checkAdmin(uid) {
+  return uid === ADMIN_UID;
 }
 
 
-async function getProfile(
-  uid
-) {
-
+async function getProfile(uid) {
   try {
-
-    const snapshot =
+    const snap =
       await getDoc(
         doc(
           db,
@@ -790,72 +441,111 @@ async function getProfile(
         )
       );
 
-
-    return snapshot.exists()
-      ? snapshot.data()
+    return snap.exists()
+      ? snap.data()
       : null;
-
   } catch (error) {
-
-    console.error(
-      "getProfile",
-      error
-    );
-
+    console.error("getProfile:", error);
     return null;
-
   }
-
 }
 
 
-async function checkAccess(
-  user
-) {
+/* =========================================================
+   KIỂM TRA QUYỀN
+========================================================= */
 
-  if (!user) {
-    return;
-  }
+async function checkAccess(user) {
+  if (!user) return;
 
-
-  currentUser =
-    user;
-
+  currentUser = user;
 
   isAdmin =
-    await checkAdmin(
-      user.uid
-    );
+    await checkAdmin(user.uid);
+
+  let profile =
+    await getProfile(user.uid);
 
 
-  const profile =
-    await getProfile(
-      user.uid
-    );
+  /*
+    Nếu tài khoản Firebase tồn tại
+    nhưng Firestore chưa có users/{UID}
+    thì tự tạo hồ sơ pending.
+  */
+
+  if (!isAdmin && !profile) {
+
+    try {
+
+      await setDoc(
+        doc(
+          db,
+          "users",
+          user.uid
+        ),
+        {
+          name:
+            user.displayName ||
+            (
+              user.email ||
+              "Người dùng"
+            ).split("@")[0],
+
+          email:
+            user.email || "",
+
+          status:
+            "pending",
+
+          role:
+            "user",
+
+          createdAt:
+            serverTimestamp()
+
+        },
+        {
+          merge: true
+        }
+      );
+
+      profile =
+        await getProfile(
+          user.uid
+        );
+
+    } catch (error) {
+
+      console.error(
+        "Không tạo được users:",
+        error
+      );
+
+      showMsg(
+        "Không tạo được hồ sơ tài khoản: " +
+        error.message,
+        "error"
+      );
+
+    }
+  }
 
 
   /* ADMIN */
 
   if (isAdmin) {
-
     await enterApp();
-
     return;
-
   }
 
 
   /* APPROVED */
 
   if (
-    profile?.status ===
-    "approved"
+    profile?.status === "approved"
   ) {
-
     await enterApp();
-
     return;
-
   }
 
 
@@ -863,10 +553,8 @@ async function checkAccess(
 
   setPending(true);
 
-
   if (
-    profile?.status ===
-    "rejected"
+    profile?.status === "rejected"
   ) {
 
     showMsg(
@@ -875,8 +563,7 @@ async function checkAccess(
     );
 
   } else if (
-    profile?.status ===
-    "disabled"
+    profile?.status === "disabled"
   ) {
 
     showMsg(
@@ -894,94 +581,65 @@ async function checkAccess(
   }
 
 
-  if (
-    userWatcher
-  ) {
-
-    userWatcher();
-
+  if (userUnsub) {
+    userUnsub();
   }
 
 
-  userWatcher =
+  userUnsub =
     onSnapshot(
-
       doc(
         db,
         "users",
         user.uid
       ),
+      async snap => {
 
-      async snapshot => {
-
-        if (
-          !snapshot.exists()
-        ) {
+        if (!snap.exists()) {
           return;
         }
 
-
-        const profile =
-          snapshot.data();
-
+        const p =
+          snap.data();
 
         if (
-          profile.status ===
-          "approved"
+          p.status === "approved"
         ) {
-
           await enterApp();
-
         }
 
       },
-
       error => {
-
         console.error(
-          "user watcher",
+          "user watcher:",
           error
         );
-
       }
-
     );
-
 }
 
 
+/* =========================================================
+   VÀO WEB
+========================================================= */
+
 async function enterApp() {
 
-  if (
-    userWatcher
-  ) {
-
-    userWatcher();
-
-    userWatcher =
-      null;
-
+  if (userUnsub) {
+    userUnsub();
+    userUnsub = null;
   }
 
 
   document
-    .getElementById(
-      "authGate"
-    )
+    .getElementById("authGate")
     ?.classList
-    .add(
-      "hidden"
-    );
-
+    .add("hidden");
 
   document
-    .getElementById(
-      "appRoot"
-    )
+    .getElementById("appRoot")
     ?.classList
-    .remove(
-      "hidden"
-    );
+    .remove("hidden");
 
 
   const label =
@@ -991,7 +649,6 @@ async function enterApp() {
 
 
   if (label) {
-
     label.textContent =
       (
         isAdmin
@@ -1002,14 +659,11 @@ async function enterApp() {
         currentUser?.email ||
         ""
       );
-
   }
 
 
   document
-    .getElementById(
-      "adminTab"
-    )
+    .getElementById("adminTab")
     ?.classList
     .toggle(
       "hidden",
@@ -1018,9 +672,7 @@ async function enterApp() {
 
 
   document
-    .getElementById(
-      "themeTab"
-    )
+    .getElementById("themeTab")
     ?.classList
     .toggle(
       "hidden",
@@ -1028,10 +680,13 @@ async function enterApp() {
     );
 
 
+  applyTheme(
+    defaultTheme
+  );
+
   loadTheme();
 
   renderAll();
-
 }
 
 
@@ -1040,31 +695,21 @@ async function enterApp() {
 ========================================================= */
 
 document
-  .getElementById(
-    "logoutBtn"
-  )
+  .getElementById("logoutPending")
   ?.addEventListener(
     "click",
-    () =>
-      signOut(auth)
+    () => signOut(auth)
   );
 
-
 document
-  .getElementById(
-    "logoutPending"
-  )
+  .getElementById("logoutBtn")
   ?.addEventListener(
     "click",
-    () =>
-      signOut(auth)
+    () => signOut(auth)
   );
 
-
 document
-  .getElementById(
-    "checkApproval"
-  )
+  .getElementById("checkApproval")
   ?.addEventListener(
     "click",
     () =>
@@ -1078,17 +723,6 @@ document
    TABS
 ========================================================= */
 
-const allTabs = [
-  "attendance",
-  "sessions",
-  "members",
-  "competition",
-  "lessons",
-  "admin",
-  "theme"
-];
-
-
 document
   .querySelectorAll(
     ".tabs button[data-tab]"
@@ -1098,19 +732,16 @@ document
 
       button.addEventListener(
         "click",
-        () =>
-          showTab(
-            button.dataset.tab
-          )
+        () => showTab(
+          button.dataset.tab
+        )
       );
 
     }
   );
 
 
-function showTab(
-  tab
-) {
+function showTab(tab) {
 
   document
     .querySelectorAll(
@@ -1121,21 +752,26 @@ function showTab(
 
         button.classList.toggle(
           "active",
-          button.dataset.tab ===
-          tab
+          button.dataset.tab === tab
         );
 
       }
     );
 
 
-  allTabs.forEach(
+  [
+    "attendance",
+    "sessions",
+    "members",
+    "competition",
+    "lessons",
+    "admin",
+    "theme"
+  ].forEach(
     id => {
 
       document
-        .getElementById(
-          id
-        )
+        .getElementById(id)
         ?.classList
         .toggle(
           "hidden",
@@ -1146,23 +782,14 @@ function showTab(
   );
 
 
-  if (
-    tab === "admin"
-  ) {
-
+  if (tab === "admin") {
     renderAdminUsers();
-
   }
 
 
-  if (
-    tab === "theme"
-  ) {
-
+  if (tab === "theme") {
     loadThemeForm();
-
   }
-
 }
 
 
@@ -1171,28 +798,20 @@ function showTab(
 ========================================================= */
 
 function renderAll() {
-
   renderAttendance();
-
   renderSessions();
-
   renderMembers();
-
   renderCompetition();
-
   renderLessons();
-
 }
 
 
 /* =========================================================
-   ATTENDANCE
+   ĐIỂM DANH
 ========================================================= */
 
 document
-  .getElementById(
-    "search"
-  )
+  .getElementById("search")
   ?.addEventListener(
     "input",
     renderAttendance
@@ -1200,9 +819,7 @@ document
 
 
 document
-  .getElementById(
-    "createSessionBtn"
-  )
+  .getElementById("createSessionBtn")
   ?.addEventListener(
     "click",
     createSession
@@ -1214,9 +831,7 @@ function createSession() {
   const label =
     prompt(
       "Tên buổi học:",
-      `Buổi học ${
-        data.sessions.length + 1
-      }`
+      `Buổi học ${data.sessions.length + 1}`
     );
 
 
@@ -1224,25 +839,18 @@ function createSession() {
     label === null ||
     !label.trim()
   ) {
-
     return;
-
   }
 
 
   const dateText =
     prompt(
       "Ngày học DD/MM/YYYY:",
-      new Date()
-        .toLocaleDateString(
-          "vi-VN"
-        )
+      new Date().toLocaleDateString("vi-VN")
     );
 
 
-  if (
-    dateText === null
-  ) {
+  if (dateText === null) {
     return;
   }
 
@@ -1250,22 +858,13 @@ function createSession() {
   const parts =
     dateText
       .trim()
-      .split(
-        /[\/\-.]/
-      )
+      .split(/[\/\-.]/)
       .map(Number);
 
 
-  if (
-    parts.length !== 3
-  ) {
-
-    alert(
-      "Ngày không hợp lệ."
-    );
-
+  if (parts.length !== 3) {
+    alert("Ngày không hợp lệ.");
     return;
-
   }
 
 
@@ -1278,34 +877,15 @@ function createSession() {
 
 
   if (
-
-    Number.isNaN(
-      date.getTime()
-    )
-
-    ||
-
-    date.getDate() !==
-      parts[0]
-
-    ||
-
-    date.getMonth() !==
-      parts[1] - 1
-
-    ||
-
-    date.getFullYear() !==
-      parts[2]
-
+    Number.isNaN(date.getTime()) ||
+    date.getDate() !== parts[0] ||
+    date.getMonth() !== parts[1] - 1 ||
+    date.getFullYear() !== parts[2]
   ) {
 
-    alert(
-      "Ngày không hợp lệ."
-    );
+    alert("Ngày không hợp lệ.");
 
     return;
-
   }
 
 
@@ -1326,51 +906,29 @@ function createSession() {
 
 
   data.current =
-    data.sessions.length -
-    1;
-
+    data.sessions.length - 1;
 
   saveLocal();
 
   renderAll();
-
 }
 
 
 function renderAttendance() {
 
   const list =
-    document.getElementById(
-      "list"
-    );
+    document.getElementById("list");
 
-
-  if (!list) {
-    return;
-  }
+  if (!list) return;
 
 
   const s =
     currentSession();
 
 
-  const total =
-    document.getElementById(
-      "total"
-    );
-
-  const present =
-    document.getElementById(
-      "present"
-    );
-
-  const absent =
-    document.getElementById(
-      "absent"
-    );
-
-
-  total.textContent =
+  document.getElementById(
+    "total"
+  ).textContent =
     data.members.length;
 
 
@@ -1388,17 +946,23 @@ function renderAttendance() {
       "Hãy tạo buổi học để bắt đầu.";
 
 
-    present.textContent =
+    document.getElementById(
+      "present"
+    ).textContent =
       "0";
 
 
-    absent.textContent =
+    document.getElementById(
+      "absent"
+    ).textContent =
       data.members.length;
 
 
     list.innerHTML = `
 
-      <div class="lesson-empty">
+      <div
+        class="lesson-empty"
+      >
 
         <div
           style="font-size:42px"
@@ -1428,7 +992,6 @@ function renderAttendance() {
     `;
 
     return;
-
   }
 
 
@@ -1454,8 +1017,7 @@ function renderAttendance() {
         "search"
       )?.value ||
       ""
-    )
-      .toLowerCase();
+    ).toLowerCase();
 
 
   const rows =
@@ -1470,95 +1032,94 @@ function renderAttendance() {
         })
       )
       .filter(
-        x =>
-          x.name
+        item =>
+          item.name
             .toLowerCase()
             .includes(q)
       );
 
 
   list.innerHTML =
-    rows.length
+    rows
+      .map(
+        item => {
 
-      ? rows
-          .map(
-            x => {
-
-              const isPresent =
-                !!s.attendance[
-                  x.index
-                ];
+          const present =
+            !!s.attendance[
+              item.index
+            ];
 
 
-              return `
+          return `
 
-                <div
-                  class="row"
-                >
+            <div
+              class="row"
+            >
 
-                  <span>
-
-                    <b>
-                      ${
-                        x.index + 1
-                      }.
-                      ${esc(
-                        x.name
-                      )}
-                    </b>
-
-                  </span>
+              <span>
+                <b>
+                  ${
+                    item.index + 1
+                  }.
+                  ${esc(
+                    item.name
+                  )}
+                </b>
+              </span>
 
 
-                  <button
-                    class="
-                      badge
-                      ${
-                        isPresent
-                          ? "present"
-                          : "absent"
-                      }
-                    "
-                    onclick="
-                      toggleAttendance(
-                        ${x.index}
-                      )
-                    "
-                  >
+              <button
+                class="
+                  badge
+                  ${
+                    present
+                      ? "present"
+                      : "absent"
+                  }
+                "
+                onclick="
+                  toggleAttendance(
+                    ${item.index}
+                  )
+                "
+              >
+                ${
+                  present
+                    ? "✓ Có mặt"
+                    : "✕ Vắng"
+                }
+              </button>
 
-                    ${
-                      isPresent
-                        ? "✓ Có mặt"
-                        : "✕ Vắng"
-                    }
+            </div>
 
-                  </button>
+          `;
+        }
+      )
+      .join("");
 
-                </div>
 
-              `;
-
-            }
-          )
-          .join("")
-
-      : "<p>Không tìm thấy thành viên.</p>";
+  if (!list.innerHTML) {
+    list.innerHTML =
+      "<p>Không tìm thấy thành viên.</p>";
+  }
 
 
   const p =
-    s.attendance
-      .filter(Boolean)
-      .length;
+    s.attendance.filter(
+      Boolean
+    ).length;
 
 
-  present.textContent =
+  document.getElementById(
+    "present"
+  ).textContent =
     p;
 
 
-  absent.textContent =
-    data.members.length -
-    p;
-
+  document.getElementById(
+    "absent"
+  ).textContent =
+    data.members.length - p;
 }
 
 
@@ -1568,25 +1129,19 @@ window.toggleAttendance =
     const s =
       currentSession();
 
-
-    if (!s) {
-      return;
-    }
-
+    if (!s) return;
 
     s.attendance[index] =
       !s.attendance[index];
 
-
     saveLocal();
 
     renderAll();
-
   };
 
 
 /* =========================================================
-   SESSIONS
+   THỐNG KÊ
 ========================================================= */
 
 function renderSessions() {
@@ -1596,10 +1151,7 @@ function renderSessions() {
       "sessionList"
     );
 
-
-  if (!box) {
-    return;
-  }
+  if (!box) return;
 
 
   document.getElementById(
@@ -1614,16 +1166,10 @@ function renderSessions() {
     data.members.length;
 
 
-  if (
-    !data.sessions.length
-  ) {
+  if (!data.sessions.length) {
 
     box.innerHTML =
-      `
-        <p class="small">
-          Chưa có buổi học nào.
-        </p>
-      `;
+      "<p class='small'>Chưa có buổi học nào.</p>";
 
 
     document.getElementById(
@@ -1633,15 +1179,11 @@ function renderSessions() {
 
 
     return;
-
   }
 
 
-  let totalPresent =
-    0;
-
-  let totalCount =
-    0;
+  let totalPresent = 0;
+  let totalCount = 0;
 
 
   box.innerHTML =
@@ -1649,35 +1191,27 @@ function renderSessions() {
       .map(
         (
           s,
-          i
+          index
         ) => {
 
           const p =
-            s.attendance
-              .filter(Boolean)
-              .length;
+            s.attendance.filter(
+              Boolean
+            ).length;
 
-
-          const t =
+          const total =
             s.attendance.length;
 
-
-          const pct =
-            t
+          const percent =
+            total
               ? Math.round(
-                  p /
-                  t *
-                  100
+                  p / total * 100
                 )
               : 0;
 
 
-          totalPresent +=
-            p;
-
-
-          totalCount +=
-            t;
+          totalPresent += p;
+          totalCount += total;
 
 
           return `
@@ -1692,25 +1226,21 @@ function renderSessions() {
                 )}
               </b>
 
-              <div
-                class="small"
-              >
+              <div>
                 ${
                   new Date(
                     s.date
+                  ).toLocaleDateString(
+                    "vi-VN"
                   )
-                    .toLocaleDateString(
-                      "vi-VN"
-                    )
                 }
               </div>
 
               <div>
-                ${p}/${t}
+                ${p}/${total}
                 có mặt
-                (${pct}%)
+                (${percent}%)
               </div>
-
 
               <div
                 class="bar"
@@ -1719,37 +1249,33 @@ function renderSessions() {
                 <div
                   class="fill"
                   style="
-                    width:${pct}%
+                    width:${percent}%
                   "
                 ></div>
 
               </div>
 
-
               <div
                 class="actions"
-                style="
-                  margin-top:8px
-                "
+                style="margin-top:8px"
               >
 
                 <button
                   class="btn"
                   onclick="
                     selectSession(
-                      ${i}
+                      ${index}
                     )
                   "
                 >
                   Mở buổi này
                 </button>
 
-
                 <button
                   class="btn red"
                   onclick="
                     deleteSession(
-                      ${i}
+                      ${index}
                     )
                   "
                 >
@@ -1771,15 +1297,12 @@ function renderSessions() {
     "average"
   ).textContent =
     totalCount
-
       ? Math.round(
           totalPresent /
           totalCount *
           100
         ) + "%"
-
       : "0%";
-
 }
 
 
@@ -1791,10 +1314,7 @@ window.selectSession =
 
     saveLocal();
 
-    showTab(
-      "attendance"
-    );
-
+    showTab("attendance");
   };
 
 
@@ -1806,9 +1326,7 @@ window.deleteSession =
         "Xóa buổi học này?"
       )
     ) {
-
       return;
-
     }
 
 
@@ -1822,8 +1340,7 @@ window.deleteSession =
       data.sessions.length
         ? Math.min(
             index,
-            data.sessions.length -
-              1
+            data.sessions.length - 1
           )
         : -1;
 
@@ -1831,12 +1348,11 @@ window.deleteSession =
     saveLocal();
 
     renderAll();
-
   };
 
 
 /* =========================================================
-   MEMBERS
+   THÀNH VIÊN
 ========================================================= */
 
 document
@@ -1868,7 +1384,6 @@ function addMember() {
     );
 
     return;
-
   }
 
 
@@ -1885,7 +1400,6 @@ function addMember() {
     );
 
     return;
-
   }
 
 
@@ -1902,7 +1416,7 @@ function addMember() {
   );
 
 
-  memberInfo(name);
+  info(name);
 
 
   input.value =
@@ -1912,7 +1426,6 @@ function addMember() {
   saveLocal();
 
   renderAll();
-
 }
 
 
@@ -1924,14 +1437,10 @@ function renderMembers() {
     );
 
 
-  if (!box) {
-    return;
-  }
+  if (!box) return;
 
 
-  if (
-    !data.members.length
-  ) {
+  if (!data.members.length) {
 
     box.innerHTML = `
 
@@ -1940,7 +1449,7 @@ function renderMembers() {
       >
 
         <div
-          style="font-size:46px"
+          style="font-size:45px"
         >
           👥
         </div>
@@ -1950,7 +1459,8 @@ function renderMembers() {
         </h3>
 
         <p>
-          Thêm tên ở phía trên.
+          Nhập tên ở phía trên rồi bấm
+          <b>＋ Thêm</b>.
         </p>
 
       </div>
@@ -1958,7 +1468,6 @@ function renderMembers() {
     `;
 
     return;
-
   }
 
 
@@ -1971,9 +1480,7 @@ function renderMembers() {
         ) => {
 
           const x =
-            memberInfo(
-              name
-            );
+            info(name);
 
 
           return `
@@ -2007,9 +1514,7 @@ function renderMembers() {
 
 
               <div
-                class="
-                  member-content
-                "
+                class="member-content"
               >
 
                 <b>
@@ -2020,9 +1525,7 @@ function renderMembers() {
 
                 <div
                   class="small"
-                  style="
-                    margin-top:5px
-                  "
+                  style="margin-top:5px"
                 >
 
                   🎂
@@ -2044,9 +1547,7 @@ function renderMembers() {
 
                 <div
                   class="actions"
-                  style="
-                    margin-top:8px
-                  "
+                  style="margin-top:8px"
                 >
 
                   <button
@@ -2125,7 +1626,6 @@ function renderMembers() {
         }
       )
       .join("");
-
 }
 
 
@@ -2147,9 +1647,7 @@ window.renameMember =
       newName === null ||
       !newName.trim()
     ) {
-
       return;
-
     }
 
 
@@ -2163,12 +1661,9 @@ window.renameMember =
           x,
           i
         ) =>
-
           i !== index &&
-
           x.toLowerCase() ===
-            clean.toLowerCase()
-
+          clean.toLowerCase()
       )
     ) {
 
@@ -2177,7 +1672,6 @@ window.renameMember =
       );
 
       return;
-
     }
 
 
@@ -2194,7 +1688,6 @@ window.renameMember =
           oldName
         ];
 
-
       delete data.memberInfo[
         oldName
       ];
@@ -2209,7 +1702,6 @@ window.renameMember =
     saveLocal();
 
     renderAll();
-
   };
 
 
@@ -2225,9 +1717,7 @@ window.deleteMember =
         `Xóa ${name}?`
       )
     ) {
-
       return;
-
     }
 
 
@@ -2254,7 +1744,6 @@ window.deleteMember =
     saveLocal();
 
     renderAll();
-
   };
 
 
@@ -2264,9 +1753,8 @@ window.editMemberInfo =
     const name =
       data.members[index];
 
-
     const x =
-      memberInfo(name);
+      info(name);
 
 
     const dob =
@@ -2276,11 +1764,7 @@ window.editMemberInfo =
       );
 
 
-    if (
-      dob === null
-    ) {
-      return;
-    }
+    if (dob === null) return;
 
 
     const father =
@@ -2290,11 +1774,7 @@ window.editMemberInfo =
       );
 
 
-    if (
-      father === null
-    ) {
-      return;
-    }
+    if (father === null) return;
 
 
     const mother =
@@ -2304,11 +1784,7 @@ window.editMemberInfo =
       );
 
 
-    if (
-      mother === null
-    ) {
-      return;
-    }
+    if (mother === null) return;
 
 
     const phone =
@@ -2318,24 +1794,17 @@ window.editMemberInfo =
       );
 
 
-    if (
-      phone === null
-    ) {
-      return;
-    }
+    if (phone === null) return;
 
 
     x.dob =
       dob.trim();
 
-
     x.father =
       father.trim();
 
-
     x.mother =
       mother.trim();
-
 
     x.phone =
       phone.trim();
@@ -2344,7 +1813,6 @@ window.editMemberInfo =
     saveLocal();
 
     renderMembers();
-
   };
 
 
@@ -2357,12 +1825,8 @@ window.uploadPhoto =
       );
 
 
-    input.type =
-      "file";
-
-
-    input.accept =
-      "image/*";
+    input.type = "file";
+    input.accept = "image/*";
 
 
     input.onchange =
@@ -2372,9 +1836,7 @@ window.uploadPhoto =
           input.files?.[0];
 
 
-        if (!file) {
-          return;
-        }
+        if (!file) return;
 
 
         const reader =
@@ -2391,26 +1853,24 @@ window.uploadPhoto =
             img.onload =
               () => {
 
-                const max =
-                  240;
+                const max = 240;
 
 
                 const scale =
                   Math.min(
                     1,
                     max /
-                      Math.max(
-                        img.width,
-                        img.height
-                      )
+                    Math.max(
+                      img.width,
+                      img.height
+                    )
                   );
 
 
                 const canvas =
-                  document
-                    .createElement(
-                      "canvas"
-                    );
+                  document.createElement(
+                    "canvas"
+                  );
 
 
                 canvas.width =
@@ -2428,9 +1888,7 @@ window.uploadPhoto =
 
 
                 canvas
-                  .getContext(
-                    "2d"
-                  )
+                  .getContext("2d")
                   .drawImage(
                     img,
                     0,
@@ -2440,10 +1898,8 @@ window.uploadPhoto =
                   );
 
 
-                memberInfo(
-                  data.members[
-                    index
-                  ]
+                info(
+                  data.members[index]
                 ).photo =
                   canvas.toDataURL(
                     "image/jpeg",
@@ -2454,32 +1910,28 @@ window.uploadPhoto =
                 saveLocal();
 
                 renderMembers();
-
               };
 
 
             img.src =
               reader.result;
-
           };
 
 
         reader.readAsDataURL(
           file
         );
-
       };
 
 
     input.click();
-
   };
 
 
 window.removePhoto =
   index => {
 
-    memberInfo(
+    info(
       data.members[index]
     ).photo = "";
 
@@ -2487,15 +1939,14 @@ window.removePhoto =
     saveLocal();
 
     renderMembers();
-
   };
 
 
 /* =========================================================
-   COMPETITION
+   THI ĐUA
 ========================================================= */
 
-let competitionMonth =
+let compMonth =
   new Date()
     .toISOString()
     .slice(
@@ -2504,20 +1955,10 @@ let competitionMonth =
     );
 
 
-function getScores(
-  month
-) {
+function scores(month) {
 
-  if (
-    !data.competition[
-      month
-    ]
-  ) {
-
-    data.competition[
-      month
-    ] = {};
-
+  if (!data.competition[month]) {
+    data.competition[month] = {};
   }
 
 
@@ -2526,26 +1967,19 @@ function getScores(
 
       if (
         typeof
-          data.competition[
-            month
-          ][name] !==
+        data.competition[month][name] !==
         "number"
       ) {
 
-        data.competition[
-          month
-        ][name] = 0;
-
+        data.competition[month][name] =
+          0;
       }
 
     }
   );
 
 
-  return data.competition[
-    month
-  ];
-
+  return data.competition[month];
 }
 
 
@@ -2558,24 +1992,24 @@ document
     () => {
 
       const [
-        year,
-        month
+        y,
+        m
       ] =
-        competitionMonth
+        compMonth
           .split("-")
           .map(Number);
 
 
-      const date =
+      const d =
         new Date(
-          year,
-          month - 2,
+          y,
+          m - 2,
           1
         );
 
 
-      competitionMonth =
-        date
+      compMonth =
+        d
           .toISOString()
           .slice(
             0,
@@ -2584,7 +2018,6 @@ document
 
 
       renderCompetition();
-
     }
   );
 
@@ -2598,24 +2031,24 @@ document
     () => {
 
       const [
-        year,
-        month
+        y,
+        m
       ] =
-        competitionMonth
+        compMonth
           .split("-")
           .map(Number);
 
 
-      const date =
+      const d =
         new Date(
-          year,
-          month,
+          y,
+          m,
           1
         );
 
 
-      competitionMonth =
-        date
+      compMonth =
+        d
           .toISOString()
           .slice(
             0,
@@ -2624,7 +2057,6 @@ document
 
 
       renderCompetition();
-
     }
   );
 
@@ -2642,32 +2074,25 @@ document
           "Đặt lại điểm tháng này?"
         )
       ) {
-
         return;
-
       }
 
 
-      const scores =
-        getScores(
-          competitionMonth
+      const s =
+        scores(
+          compMonth
         );
 
 
       data.members.forEach(
-        name => {
-
-          scores[name] =
-            0;
-
-        }
+        name =>
+          s[name] = 0
       );
 
 
       saveLocal();
 
       renderCompetition();
-
     }
   );
 
@@ -2682,24 +2107,19 @@ window.adjustScore =
       data.members[index];
 
 
-    if (!name) {
-      return;
-    }
+    if (!name) return;
 
 
-    const scores =
-      getScores(
-        competitionMonth
+    const s =
+      scores(
+        compMonth
       );
 
 
-    scores[name] =
+    s[name] =
       Math.max(
         0,
-        (
-          scores[name] ||
-          0
-        ) +
+        (s[name] || 0) +
         amount
       );
 
@@ -2707,7 +2127,6 @@ window.adjustScore =
     saveLocal();
 
     renderCompetition();
-
   };
 
 
@@ -2718,37 +2137,31 @@ function renderCompetition() {
       "competitionMonth"
     );
 
-
   const box =
     document.getElementById(
       "competitionList"
     );
 
 
-  if (
-    !title ||
-    !box
-  ) {
-    return;
-  }
+  if (!title || !box) return;
 
 
   const [
-    year,
-    month
+    y,
+    m
   ] =
-    competitionMonth
+    compMonth
       .split("-")
       .map(Number);
 
 
   title.textContent =
-    `THÁNG ${month}/${year}`;
+    `THÁNG ${m}/${y}`;
 
 
-  const scores =
-    getScores(
-      competitionMonth
+  const s =
+    scores(
+      compMonth
     );
 
 
@@ -2759,37 +2172,23 @@ function renderCompetition() {
           name,
           index
         ) => ({
-
           name,
-
           index,
-
           score:
-            scores[name] ||
-            0
-
+            s[name] || 0
         })
       )
       .sort(
-        (
-          a,
-          b
-        ) =>
-
-          b.score -
-          a.score ||
-
+        (a,b) =>
+          b.score - a.score ||
           a.name.localeCompare(
             b.name,
             "vi"
           )
-
       );
 
 
-  if (
-    !ranked.length
-  ) {
+  if (!ranked.length) {
 
     box.innerHTML = `
 
@@ -2812,16 +2211,14 @@ function renderCompetition() {
     `;
 
     return;
-
   }
 
 
-  const maxScore =
+  const max =
     Math.max(
       10,
       ...ranked.map(
-        x =>
-          x.score
+        item => item.score
       )
     );
 
@@ -2837,47 +2234,23 @@ function renderCompetition() {
           const rank =
             rankIndex + 1;
 
-
           const width =
             Math.min(
               100,
               item.score /
-                maxScore *
-                100
+              max *
+              100
             );
 
 
-          let medal;
-
-
-          if (
+          const medal =
             rank === 1
-          ) {
-
-            medal =
-              "🥇";
-
-          } else if (
-            rank === 2
-          ) {
-
-            medal =
-              "🥈";
-
-          } else if (
-            rank === 3
-          ) {
-
-            medal =
-              "🥉";
-
-          } else {
-
-            medal =
-              "#" +
-              rank;
-
-          }
+              ? "🥇"
+              : rank === 2
+              ? "🥈"
+              : rank === 3
+              ? "🥉"
+              : "#" + rank;
 
 
           return `
@@ -2893,9 +2266,7 @@ function renderCompetition() {
                 <div>
 
                   <span
-                    style="
-                      font-size:22px
-                    "
+                    style="font-size:22px"
                   >
                     ${medal}
                   </span>
@@ -2927,7 +2298,6 @@ function renderCompetition() {
                       `
 
                       : ""
-
                   }
 
                 </div>
@@ -3033,17 +2403,22 @@ function renderCompetition() {
         }
       )
       .join("");
-
 }
 
 
 /* =========================================================
-   LESSON
+   GIÁO ÁN
 ========================================================= */
 
 const lessonFile =
   document.getElementById(
     "lessonFile"
+  );
+
+
+const lessonZone =
+  document.getElementById(
+    "lessonUploadZone"
   );
 
 
@@ -3067,17 +2442,11 @@ lessonFile?.addEventListener(
 );
 
 
-const lessonZone =
-  document.getElementById(
-    "lessonUploadZone"
-  );
-
-
 lessonZone?.addEventListener(
   "dragover",
-  event => {
+  e => {
 
-    event.preventDefault();
+    e.preventDefault();
 
     lessonZone.classList.add(
       "dragover"
@@ -3101,18 +2470,16 @@ lessonZone?.addEventListener(
 
 lessonZone?.addEventListener(
   "drop",
-  event => {
+  e => {
 
-    event.preventDefault();
+    e.preventDefault();
 
     lessonZone.classList.remove(
       "dragover"
     );
 
     importLessonFiles(
-      event
-        .dataTransfer
-        .files
+      e.dataTransfer.files
     );
 
   }
@@ -3134,18 +2501,14 @@ async function docxToLesson(
   filename
 ) {
 
-  if (
-    !window.mammoth
-  ) {
-
+  if (!window.mammoth) {
     throw new Error(
       "Thư viện Word chưa tải."
     );
-
   }
 
 
-  const result =
+  const r =
     await window.mammoth
       .convertToHtml(
 
@@ -3155,37 +2518,26 @@ async function docxToLesson(
         },
 
         {
-
           convertImage:
             window
               .mammoth
               .images
               .imgElement(
-
                 image =>
-
                   image
-                    .read(
-                      "base64"
-                    )
+                    .read("base64")
                     .then(
-                      base64 => ({
-
+                      b => ({
                         src:
-                          `data:${image.contentType};base64,${base64}`
-
+                          `data:${image.contentType};base64,${b}`
                       })
                     )
-
               )
-
         }
-
       );
 
 
   return {
-
     id:
       uid(),
 
@@ -3205,11 +2557,9 @@ async function docxToLesson(
     filename,
 
     html:
-      result.value ||
+      r.value ||
       "<p>Không có nội dung.</p>"
-
   };
-
 }
 
 
@@ -3217,10 +2567,7 @@ async function importLessonFiles(
   files
 ) {
 
-  if (
-    !files ||
-    !files.length
-  ) {
+  if (!files?.length) {
     return;
   }
 
@@ -3238,22 +2585,16 @@ async function importLessonFiles(
       Array.from(files)
     ) {
 
-      /* ZIP */
-
       if (
         /\.zip$/i.test(
           file.name
         )
       ) {
 
-        if (
-          !window.JSZip
-        ) {
-
+        if (!window.JSZip) {
           throw new Error(
             "Thư viện ZIP chưa tải."
           );
-
         }
 
 
@@ -3278,14 +2619,10 @@ async function importLessonFiles(
             );
 
 
-        if (
-          !items.length
-        ) {
-
+        if (!items.length) {
           throw new Error(
             "File ZIP không có .docx."
           );
-
         }
 
 
@@ -3295,20 +2632,12 @@ async function importLessonFiles(
         ) {
 
           if (progress) {
-
             progress.innerHTML = `
-
-              <div
-                class="notice"
-              >
+              <div class="notice">
                 ⏳ Đang chuyển:
-                ${esc(
-                  item.name
-                )}
+                ${esc(item.name)}
               </div>
-
             `;
-
           }
 
 
@@ -3318,82 +2647,51 @@ async function importLessonFiles(
               .pop();
 
 
-          const lesson =
+          data.lessons.push(
             await docxToLesson(
-
               await item.async(
                 "arraybuffer"
               ),
-
               filename
-
-            );
-
-
-          data.lessons.push(
-            lesson
+            )
           );
 
 
           saveLocal();
-
         }
 
-      }
-
-      /* DOCX */
-
-      else if (
+      } else if (
         /\.docx$/i.test(
           file.name
         )
       ) {
 
         if (progress) {
-
           progress.innerHTML = `
-
             <div class="notice">
-
               ⏳ Đang đọc:
-              ${esc(
-                file.name
-              )}
-
+              ${esc(file.name)}
             </div>
-
           `;
-
         }
 
 
-        const lesson =
-          await docxToLesson(
-
-            await file.arrayBuffer(),
-
-            file.name
-
-          );
-
-
         data.lessons.push(
-          lesson
+          await docxToLesson(
+            await file.arrayBuffer(),
+            file.name
+          )
         );
 
 
         saveLocal();
 
-      }
-
-      else {
+      } else {
 
         alert(
           `Bỏ qua ${file.name}.`
         );
-
       }
-
     }
 
 
@@ -3401,17 +2699,11 @@ async function importLessonFiles(
 
 
     if (progress) {
-
       progress.innerHTML = `
-
         <div class="notice">
-
           ✅ Đã nhập giáo án thành công.
-
         </div>
-
       `;
-
     }
 
   } catch (error) {
@@ -3422,38 +2714,26 @@ async function importLessonFiles(
     if (progress) {
 
       progress.innerHTML = `
-
         <div
           class="
             notice
             error
           "
         >
-
           ${esc(
             error.message ||
             "Không thể đọc file."
           )}
-
         </div>
-
       `;
-
     }
 
   } finally {
 
-    if (
-      lessonFile
-    ) {
-
-      lessonFile.value =
-        "";
-
+    if (lessonFile) {
+      lessonFile.value = "";
     }
-
   }
-
 }
 
 
@@ -3464,10 +2744,7 @@ function renderLessons() {
       "lessonList"
     );
 
-
-  if (!list) {
-    return;
-  }
+  if (!list) return;
 
 
   const q =
@@ -3476,11 +2753,10 @@ function renderLessons() {
         "lessonSearch"
       )?.value ||
       ""
-    )
-      .toLowerCase();
+    ).toLowerCase();
 
 
-  const filtered =
+  const items =
     data.lessons.filter(
       lesson =>
         lesson.title
@@ -3489,24 +2765,19 @@ function renderLessons() {
     );
 
 
-  if (!filtered.length) {
+  if (!items.length) {
 
     list.innerHTML = `
 
       <div
         class="lesson-empty"
-        style="
-          padding:35px 15px
-        "
+        style="padding:30px 15px"
       >
 
         ${
           data.lessons.length
-
             ? "Không tìm thấy giáo án."
-
             : "Chưa có giáo án nào."
-
         }
 
       </div>
@@ -3514,12 +2785,11 @@ function renderLessons() {
     `;
 
     return;
-
   }
 
 
   list.innerHTML =
-    filtered
+    items
       .map(
         lesson => `
 
@@ -3528,9 +2798,7 @@ function renderLessons() {
           >
 
             <div
-              class="
-                lesson-item-title
-              "
+              class="lesson-item-title"
             >
               📖
               ${esc(
@@ -3538,11 +2806,8 @@ function renderLessons() {
               )}
             </div>
 
-
             <div
-              class="
-                lesson-item-small
-              "
+              class="lesson-item-small"
             >
               ${esc(
                 lesson.filename ||
@@ -3552,12 +2817,8 @@ function renderLessons() {
 
 
             <div
-              class="
-                actions
-              "
-              style="
-                margin-top:8px
-              "
+              class="actions"
+              style="margin-top:8px"
             >
 
               <button
@@ -3598,11 +2859,9 @@ function renderLessons() {
             </div>
 
           </div>
-
         `
       )
       .join("");
-
 }
 
 
@@ -3611,15 +2870,10 @@ window.viewLesson =
 
     const lesson =
       data.lessons.find(
-        x =>
-          x.id ===
-          id
+        x => x.id === id
       );
 
-
-    if (!lesson) {
-      return;
-    }
+    if (!lesson) return;
 
 
     const viewer =
@@ -3627,10 +2881,7 @@ window.viewLesson =
         "lessonViewer"
       );
 
-
-    if (!viewer) {
-      return;
-    }
+    if (!viewer) return;
 
 
     viewer.innerHTML = `
@@ -3674,17 +2925,11 @@ window.viewLesson =
         </div>
 
 
-        <hr
-          style="
-            margin:15px 0
-          "
-        >
+        <hr>
 
 
         <div
-          class="
-            lesson-content
-          "
+          class="lesson-content"
         >
           ${
             lesson.html ||
@@ -3694,9 +2939,7 @@ window.viewLesson =
 
 
         <div
-          style="
-            margin-top:20px
-          "
+          style="margin-top:20px"
         >
 
           <button
@@ -3713,7 +2956,6 @@ window.viewLesson =
       </div>
 
     `;
-
   };
 
 
@@ -3725,24 +2967,17 @@ window.closeLesson =
         "lessonViewer"
       );
 
-
-    if (!viewer) {
-      return;
-    }
+    if (!viewer) return;
 
 
     viewer.innerHTML = `
 
       <div
-        class="
-          lesson-empty
-        "
+        class="lesson-empty"
       >
 
         <div
-          style="
-            font-size:48px
-          "
+          style="font-size:48px"
         >
           📖
         </div>
@@ -3758,7 +2993,6 @@ window.closeLesson =
       </div>
 
     `;
-
   };
 
 
@@ -3767,15 +3001,10 @@ window.renameLesson =
 
     const lesson =
       data.lessons.find(
-        x =>
-          x.id ===
-          id
+        x => x.id === id
       );
 
-
-    if (!lesson) {
-      return;
-    }
+    if (!lesson) return;
 
 
     const name =
@@ -3789,9 +3018,7 @@ window.renameLesson =
       name === null ||
       !name.trim()
     ) {
-
       return;
-
     }
 
 
@@ -3804,7 +3031,6 @@ window.renameLesson =
     renderLessons();
 
     viewLesson(id);
-
   };
 
 
@@ -3813,37 +3039,23 @@ window.deleteLesson =
 
     const lesson =
       data.lessons.find(
-        x =>
-          x.id ===
-          id
+        x => x.id === id
       );
 
 
     if (
-      !lesson
-    ) {
-
-      return;
-
-    }
-
-
-    if (
+      !lesson ||
       !confirm(
         `Xóa giáo án "${lesson.title}"?`
       )
     ) {
-
       return;
-
     }
 
 
     data.lessons =
       data.lessons.filter(
-        x =>
-          x.id !==
-          id
+        x => x.id !== id
       );
 
 
@@ -3852,7 +3064,6 @@ window.deleteLesson =
     renderLessons();
 
     closeLesson();
-
   };
 
 
@@ -3872,9 +3083,7 @@ document
 
 async function renderAdminUsers() {
 
-  if (!isAdmin) {
-    return;
-  }
+  if (!isAdmin) return;
 
 
   const box =
@@ -3883,9 +3092,7 @@ async function renderAdminUsers() {
     );
 
 
-  if (!box) {
-    return;
-  }
+  if (!box) return;
 
 
   box.innerHTML =
@@ -3894,7 +3101,7 @@ async function renderAdminUsers() {
 
   try {
 
-    const snapshot =
+    const snap =
       await getDocs(
         collection(
           db,
@@ -3903,51 +3110,40 @@ async function renderAdminUsers() {
       );
 
 
-    const users =
-      snapshot.docs
+    const rows =
+      snap.docs
         .map(
-          document => ({
-
-            id:
-              document.id,
-
-            ...document.data()
-
+          d => ({
+            id: d.id,
+            ...d.data()
           })
         )
         .sort(
-          (
-            a,
-            b
-          ) =>
+          (a,b) =>
             String(
-              a.email ||
-              ""
+              a.email || ""
             ).localeCompare(
               String(
-                b.email ||
-                ""
+                b.email || ""
               )
             )
         );
 
 
-    if (!users.length) {
+    if (!rows.length) {
 
-      box.innerHTML =
-        `
-          <p class="small">
-            Chưa có tài khoản nào đăng ký.
-          </p>
-        `;
+      box.innerHTML = `
+        <p>
+          Chưa có tài khoản chờ duyệt.
+        </p>
+      `;
 
       return;
-
     }
 
 
     box.innerHTML =
-      users
+      rows
         .map(
           user => {
 
@@ -3983,10 +3179,7 @@ async function renderAdminUsers() {
 
 
                 <div
-                  style="
-                    margin:
-                      8px 0
-                  "
+                  style="margin:8px 0"
                 >
 
                   <span
@@ -4008,11 +3201,8 @@ async function renderAdminUsers() {
                 >
 
                   ${
-                    status !==
-                    "approved"
-
+                    status !== "approved"
                       ? `
-
                         <button
                           class="btn"
                           onclick="
@@ -4024,20 +3214,14 @@ async function renderAdminUsers() {
                         >
                           ✅ Duyệt
                         </button>
-
                       `
-
                       : ""
-
                   }
 
 
                   ${
-                    status !==
-                    "rejected"
-
+                    status !== "rejected"
                       ? `
-
                         <button
                           class="btn red"
                           onclick="
@@ -4049,20 +3233,14 @@ async function renderAdminUsers() {
                         >
                           ❌ Từ chối
                         </button>
-
                       `
-
                       : ""
-
                   }
 
 
                   ${
-                    status !==
-                    "disabled"
-
+                    status !== "disabled"
                       ? `
-
                         <button
                           class="btn gray"
                           onclick="
@@ -4074,11 +3252,8 @@ async function renderAdminUsers() {
                         >
                           🚫 Khóa
                         </button>
-
                       `
-
                       : `
-
                         <button
                           class="btn"
                           onclick="
@@ -4090,9 +3265,7 @@ async function renderAdminUsers() {
                         >
                           🔓 Mở khóa
                         </button>
-
                       `
-
                   }
 
                 </div>
@@ -4100,7 +3273,6 @@ async function renderAdminUsers() {
               </div>
 
             `;
-
           }
         )
         .join("");
@@ -4111,24 +3283,19 @@ async function renderAdminUsers() {
     console.error(error);
 
 
-    box.innerHTML =
-      `
-
-        <div
-          class="
-            notice
-            error
-          "
-        >
-          ${esc(
-            error.message
-          )}
-        </div>
-
-      `;
-
+    box.innerHTML = `
+      <div
+        class="
+          notice
+          error
+        "
+      >
+        ${esc(
+          error.message
+        )}
+      </div>
+    `;
   }
-
 }
 
 
@@ -4138,22 +3305,13 @@ window.setUserStatus =
     status
   ) => {
 
-    if (!isAdmin) {
-      return;
-    }
+    if (!isAdmin) return;
 
 
     const labels = {
-
-      approved:
-        "duyệt",
-
-      rejected:
-        "từ chối",
-
-      disabled:
-        "khóa"
-
+      approved: "duyệt",
+      rejected: "từ chối",
+      disabled: "khóa"
     };
 
 
@@ -4162,46 +3320,35 @@ window.setUserStatus =
         `Bạn có chắc muốn ${labels[status] || status} tài khoản này?`
       )
     ) {
-
       return;
-
     }
 
 
     try {
 
       await updateDoc(
-
         doc(
           db,
           "users",
           uid
         ),
-
         {
-          status
+          status: status
         }
-
       );
 
 
       renderAdminUsers();
 
-
     } catch (error) {
 
-      console.error(
-        error
-      );
-
+      console.error(error);
 
       alert(
         "Không thể cập nhật tài khoản: " +
         error.message
       );
-
     }
-
   };
 
 
@@ -4210,7 +3357,6 @@ window.setUserStatus =
 ========================================================= */
 
 const defaultTheme = {
-
   title:
     "✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1",
 
@@ -4240,62 +3386,48 @@ const defaultTheme = {
 
   customCss:
     ""
-
 };
 
 
-function applyTheme(
-  theme
-) {
+function applyTheme(theme) {
 
-  const x =
-    {
-      ...defaultTheme,
-      ...theme
-    };
+  const x = {
+    ...defaultTheme,
+    ...theme
+  };
 
 
-  const root =
-    document.documentElement;
-
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--primary",
     x.primary
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--secondary",
     x.secondary
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--bg1",
     x.bg1
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--bg2",
     x.bg2
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--card",
     x.card
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--text",
     x.text
   );
 
-
-  root.style.setProperty(
+  document.documentElement.style.setProperty(
     "--radius",
     `${x.radius}px`
   );
@@ -4306,12 +3438,9 @@ function applyTheme(
       "siteTitle"
     );
 
-
   if (title) {
-
     title.textContent =
       x.title;
-
   }
 
 
@@ -4320,12 +3449,9 @@ function applyTheme(
       "siteSubtitle"
     );
 
-
   if (subtitle) {
-
     subtitle.textContent =
       x.subtitle;
-
   }
 
 
@@ -4334,12 +3460,9 @@ function applyTheme(
       "previewTitle"
     );
 
-
   if (previewTitle) {
-
     previewTitle.textContent =
       x.title;
-
   }
 
 
@@ -4348,97 +3471,72 @@ function applyTheme(
       "previewSubtitle"
     );
 
-
   if (previewSubtitle) {
-
     previewSubtitle.textContent =
       x.subtitle;
-
   }
 
 
-  let customStyle =
+  let style =
     document.getElementById(
       "customThemeStyle"
     );
 
 
-  if (!customStyle) {
+  if (!style) {
 
-    customStyle =
+    style =
       document.createElement(
         "style"
       );
 
-
-    customStyle.id =
+    style.id =
       "customThemeStyle";
 
-
     document.head.appendChild(
-      customStyle
+      style
     );
-
   }
 
 
-  customStyle.textContent =
-    x.customCss ||
-    "";
-
+  style.textContent =
+    x.customCss || "";
 }
 
 
 async function loadTheme() {
 
-  if (
-    themeWatcher
-  ) {
-
-    themeWatcher();
-
-    themeWatcher =
-      null;
-
+  if (themeUnsub) {
+    themeUnsub();
+    themeUnsub = null;
   }
 
 
-  themeWatcher =
+  themeUnsub =
     onSnapshot(
-
       doc(
         db,
         "settings",
         "site"
       ),
-
-      snapshot => {
-
+      snap => {
         applyTheme(
-
-          snapshot.exists()
-            ? snapshot.data()
+          snap.exists()
+            ? snap.data()
             : defaultTheme
-
         );
-
       },
-
       error => {
-
         console.error(
-          "Theme listener:",
+          "Theme:",
           error
         );
 
         applyTheme(
           defaultTheme
         );
-
       }
-
     );
-
 }
 
 
@@ -4446,7 +3544,7 @@ async function loadThemeForm() {
 
   try {
 
-    const snapshot =
+    const snap =
       await getDoc(
         doc(
           db,
@@ -4456,240 +3554,155 @@ async function loadThemeForm() {
       );
 
 
-    const theme =
-      {
-
-        ...defaultTheme,
-
-        ...(
-
-          snapshot.exists()
-            ? snapshot.data()
-            : {}
-
-        )
-
-      };
+    const t = {
+      ...defaultTheme,
+      ...(snap.exists()
+        ? snap.data()
+        : {})
+    };
 
 
     const fields = {
-
-      themeTitle:
-        theme.title,
-
-      themeSubtitle:
-        theme.subtitle,
-
-      themePrimary:
-        theme.primary,
-
-      themeSecondary:
-        theme.secondary,
-
-      themeBg1:
-        theme.bg1,
-
-      themeBg2:
-        theme.bg2,
-
-      themeCard:
-        theme.card,
-
-      themeText:
-        theme.text,
-
-      themeRadius:
-        theme.radius,
-
-      themeCustomCss:
-        theme.customCss ||
-        ""
-
+      themeTitle: t.title,
+      themeSubtitle: t.subtitle,
+      themePrimary: t.primary,
+      themeSecondary: t.secondary,
+      themeBg1: t.bg1,
+      themeBg2: t.bg2,
+      themeCard: t.card,
+      themeText: t.text,
+      themeRadius: t.radius,
+      themeCustomCss: t.customCss || ""
     };
 
 
     Object.entries(
       fields
     ).forEach(
-      (
-        [
-          id,
-          value
-        ]
-      ) => {
+      ([id, value]) => {
 
         const element =
           document.getElementById(
             id
           );
 
-
-        if (
-          element
-        ) {
-
+        if (element) {
           element.value =
             value;
-
         }
-
       }
     );
 
 
-    const radiusValue =
+    const radius =
       document.getElementById(
         "themeRadiusValue"
       );
 
-
-    if (
-      radiusValue
-    ) {
-
-      radiusValue.textContent =
-        theme.radius;
-
+    if (radius) {
+      radius.textContent =
+        t.radius;
     }
 
 
-    applyTheme(
-      theme
-    );
-
+    applyTheme(t);
 
   } catch (error) {
 
     console.error(
+      "loadThemeForm:",
       error
     );
-
   }
-
 }
 
 
 function formTheme() {
 
-  const value =
+  const get =
     id =>
-      document
-        .getElementById(
-          id
-        )?.value;
+      document.getElementById(
+        id
+      )?.value;
 
 
   return {
 
     title:
       (
-        value(
-          "themeTitle"
-        ) ||
+        get("themeTitle") ||
         defaultTheme.title
       ).trim(),
 
     subtitle:
       (
-        value(
-          "themeSubtitle"
-        ) ||
+        get("themeSubtitle") ||
         defaultTheme.subtitle
       ).trim(),
 
     primary:
-      value(
-        "themePrimary"
-      ) ||
+      get("themePrimary") ||
       defaultTheme.primary,
 
     secondary:
-      value(
-        "themeSecondary"
-      ) ||
+      get("themeSecondary") ||
       defaultTheme.secondary,
 
     bg1:
-      value(
-        "themeBg1"
-      ) ||
+      get("themeBg1") ||
       defaultTheme.bg1,
 
     bg2:
-      value(
-        "themeBg2"
-      ) ||
+      get("themeBg2") ||
       defaultTheme.bg2,
 
     card:
-      value(
-        "themeCard"
-      ) ||
+      get("themeCard") ||
       defaultTheme.card,
 
     text:
-      value(
-        "themeText"
-      ) ||
+      get("themeText") ||
       defaultTheme.text,
 
     radius:
       Number(
-        value(
-          "themeRadius"
-        ) ||
+        get("themeRadius") ||
         defaultTheme.radius
       ),
 
     customCss:
-      value(
+      get(
         "themeCustomCss"
       ) || ""
 
   };
-
 }
 
 
-/* LIVE PREVIEW */
+/* LIVE THEME */
 
 [
   "themeTitle",
-
   "themeSubtitle",
-
   "themePrimary",
-
   "themeSecondary",
-
   "themeBg1",
-
   "themeBg2",
-
   "themeCard",
-
   "themeText",
-
   "themeRadius",
-
   "themeCustomCss"
-
 ].forEach(
   id => {
 
     document
-      .getElementById(
-        id
-      )
+      .getElementById(id)
       ?.addEventListener(
         "input",
         () => {
 
-          const theme =
-            formTheme();
-
           applyTheme(
-            theme
+            formTheme()
           );
 
         }
@@ -4705,19 +3718,21 @@ document
   )
   ?.addEventListener(
     "input",
-    event => {
+    e => {
 
-      document
-        .getElementById(
+      const value =
+        document.getElementById(
           "themeRadiusValue"
-        ).textContent =
-          event.target.value;
+        );
+
+      if (value) {
+        value.textContent =
+          e.target.value;
+      }
 
     }
   );
 
-
-/* SAVE THEME */
 
 document
   .getElementById(
@@ -4729,25 +3744,16 @@ document
 
       try {
 
-        const theme =
-          formTheme();
-
-
         await setDoc(
-
           doc(
             db,
             "settings",
             "site"
           ),
-
-          theme,
-
+          formTheme(),
           {
-            merge:
-              true
+            merge: true
           }
-
         );
 
 
@@ -4755,13 +3761,9 @@ document
           "✅ Đã lưu giao diện."
         );
 
-
       } catch (error) {
 
-        console.error(
-          error
-        );
-
+        console.error(error);
 
         alert(
           "Không thể lưu giao diện: " +
@@ -4769,12 +3771,9 @@ document
         );
 
       }
-
     }
   );
 
-
-/* RESET */
 
 document
   .getElementById(
@@ -4789,29 +3788,22 @@ document
           "Đưa giao diện về mặc định?"
         )
       ) {
-
         return;
-
       }
 
 
       try {
 
         await setDoc(
-
           doc(
             db,
             "settings",
             "site"
           ),
-
           defaultTheme,
-
           {
-            merge:
-              true
+            merge: true
           }
-
         );
 
 
@@ -4822,7 +3814,6 @@ document
 
         await loadThemeForm();
 
-
       } catch (error) {
 
         alert(
@@ -4831,13 +3822,12 @@ document
         );
 
       }
-
     }
   );
 
 
 /* =========================================================
-   AUTH STATE
+   AUTH STATE CHANGE
 ========================================================= */
 
 onAuthStateChanged(
@@ -4846,22 +3836,13 @@ onAuthStateChanged(
 
     if (!user) {
 
-      currentUser =
-        null;
-
-      isAdmin =
-        false;
+      currentUser = null;
+      isAdmin = false;
 
 
-      if (
-        userWatcher
-      ) {
-
-        userWatcher();
-
-        userWatcher =
-          null;
-
+      if (userUnsub) {
+        userUnsub();
+        userUnsub = null;
       }
 
 
@@ -4870,9 +3851,7 @@ onAuthStateChanged(
           "authGate"
         )
         ?.classList
-        .remove(
-          "hidden"
-        );
+        .remove("hidden");
 
 
       document
@@ -4880,9 +3859,7 @@ onAuthStateChanged(
           "appRoot"
         )
         ?.classList
-        .add(
-          "hidden"
-        );
+        .add("hidden");
 
 
       document
@@ -4890,9 +3867,7 @@ onAuthStateChanged(
           "authForms"
         )
         ?.classList
-        .remove(
-          "hidden"
-        );
+        .remove("hidden");
 
 
       document
@@ -4900,18 +3875,12 @@ onAuthStateChanged(
           "pendingBox"
         )
         ?.classList
-        .add(
-          "hidden"
-        );
+        .add("hidden");
 
 
-      setAuthMode(
-        false
-      );
-
+      setAuthMode(false);
 
       return;
-
     }
 
 
@@ -4932,5 +3901,4 @@ applyTheme(
 );
 
 saveLocal();
-
 renderAll();
