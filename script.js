@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/fireba
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc, getDocs, collection, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-const firebaseConfig={apiKey:"AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWcchHm1IE",authDomain:"llcttt1-diem-danh.firebaseapp.com",projectId:"llcttt1-diem-danh",storageBucket:"llcttt1-diem-danh.firebasestorage.app",messagingSenderId:"1028180173731",appId:"1:1028180173731:web:c649731f9ccc20acb13016",measurementId:"G-XDNC5S21BN"};
+const firebaseConfig={apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWccHm1IE",authDomain:"llcttt1-diem-danh.firebaseapp.com",projectId:"llcttt1-diem-danh",storageBucket:"llcttt1-diem-danh.firebasestorage.app",messagingSenderId:"1028180173731",appId:"1:1028180173731:web:c649731f9ccc20acb13016",measurementId:"G-XDNC5S21BN"};
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
