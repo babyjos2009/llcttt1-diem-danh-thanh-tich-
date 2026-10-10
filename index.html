@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lớn Lên Trong Chúa Thánh Thần 1 - Điểm danh</title>
 
 <style>
@@ -11,97 +11,76 @@
 body{
   margin:0;
   font-family:Arial,sans-serif;
+  color:#173b35;
   background:linear-gradient(135deg,#eafaf3,#eaf3ff);
-  color:#173b35
 }
 
 header{
   background:linear-gradient(135deg,#168a70,#2d91c7);
-  color:#fff;
-  padding:28px 18px;
-  text-align:center
+  color:white;
+  padding:26px 16px;
+  text-align:center;
 }
 
-h1{
-  margin:0 0 8px;
-  font-size:28px
-}
-
+header h1{margin:0 0 8px;font-size:26px}
 .quote{opacity:.95}
 
-main{
-  max-width:1000px;
-  margin:24px auto;
-  padding:0 16px
+main{max-width:1000px;margin:24px auto;padding:0 14px}
+
+.card{
+  background:white;
+  border-radius:17px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 6px 20px #00000010;
 }
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:disabled{opacity:.65;cursor:wait}
+
+.btn{background:#168a70;color:white}
+.btn.red{background:#c94a4a}
+.btn.gray{background:#64748b}
 
 .tabs{
   display:flex;
-  gap:10px;
+  flex-wrap:wrap;
+  gap:9px;
   margin-bottom:16px;
-  flex-wrap:wrap
 }
 
-.tabs button{
-  border:0;
-  padding:12px 18px;
-  border-radius:12px;
-  background:#fff;
-  cursor:pointer;
-  font-weight:700
-}
-
-.tabs .active{
-  background:#168a70;
-  color:#fff
-}
-
-.card{
-  background:#fff;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 6px 20px #00000012
-}
+.tabs button{background:white}
+.tabs button.active{background:#168a70;color:white}
 
 .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
-  flex-wrap:wrap
+  gap:12px;
+  flex-wrap:wrap;
 }
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:10px 14px;
-  background:#168a70;
-  color:#fff;
-  cursor:pointer;
-  font-weight:700
-}
-
-.btn.red{background:#c94a4a}
-.btn.gray{background:#64748b}
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
 }
 
 .stat{
-  text-align:center;
-  padding:16px;
   background:#f3faf7;
-  border-radius:14px
+  padding:15px;
+  border-radius:14px;
+  text-align:center;
 }
 
-.stat b{
-  display:block;
-  font-size:26px
-}
+.stat b{display:block;font-size:25px;margin-top:5px}
 
 input{
   width:100%;
@@ -109,369 +88,180 @@ input{
   border:1px solid #ccdcd7;
   border-radius:10px;
   font-size:16px;
-  margin:12px 0
+  margin:9px 0;
 }
 
 .row{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
   padding:12px 4px;
   border-bottom:1px solid #eee;
-  gap:12px
 }
 
 .row:last-child{border:0}
+.member-name{font-weight:600}
 
 .badge{
-  border:0;
-  border-radius:10px;
   padding:9px 12px;
-  cursor:pointer
+  border-radius:9px;
 }
+.present{background:#d9f6e9;color:#08714e}
+.absent{background:#ffe1e1;color:#a62a2a}
 
-.present{
-  background:#d9f6e9;
-  color:#08714e
-}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.addbox{display:flex;gap:8px}
+.addbox input{margin:0}
 
-.absent{
-  background:#ffe1e1;
-  color:#a62a2a
-}
-
-.actions{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap
-}
-
-.member-name{font-weight:600}
+.small{font-size:13px;color:#64748b}
 
 .session{
   padding:15px;
   border:1px solid #dcebe6;
   border-radius:14px;
-  margin:10px 0
+  margin:10px 0;
 }
 
-.bar{
-  height:10px;
+.bar,.rank-bar{
   background:#e8eeee;
   border-radius:20px;
-  overflow:hidden
+  overflow:hidden;
 }
-
-.fill{
-  height:100%;
-  background:#168a70
-}
-
-.addbox{
-  display:flex;
-  gap:8px
-}
-
-.addbox input{margin:0}
-
-.small{
-  font-size:13px;
-  color:#64748b
-}
-
-/* THANH THI DUA */
+.bar{height:10px;margin:9px 0}
+.fill{height:100%;background:#168a70}
 
 .competition-nav{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  margin-bottom:16px
+  margin:15px 0;
 }
 
-.month-title{
-  text-align:center;
-  font-size:20px;
-  font-weight:800
-}
+.month-title{text-align:center;font-size:20px;font-weight:800}
 
 .rank-card{
-  border:1px solid #e5ecea;
-  border-radius:16px;
   padding:14px;
   margin:10px 0;
-  background:#fbfefd
+  border:1px solid #e5ecea;
+  background:#fbfefd;
+  border-radius:15px;
 }
 
 .rank-head{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   gap:10px;
-  align-items:center
 }
 
 .rank-name{font-weight:800}
-
-.rank-score{
-  font-size:20px;
-  font-weight:900
-}
-
-.rank-bar{
-  height:18px;
-  background:#edf1f0;
-  border-radius:20px;
-  overflow:hidden;
-  margin:10px 0
-}
-
+.rank-score{font-size:19px;font-weight:900}
+.rank-bar{height:16px;margin:10px 0}
 .rank-fill{
   height:100%;
-  border-radius:20px;
   background:linear-gradient(90deg,#168a70,#2d91c7);
-  transition:width .2s
 }
 
 .score-actions{
   display:flex;
   justify-content:flex-end;
-  align-items:center;
   gap:6px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
 }
 
 .score-btn{
-  border:0;
-  border-radius:9px;
-  padding:8px 10px;
-  cursor:pointer;
-  font-weight:800;
+  padding:8px 11px;
   background:#eef5f2;
-  color:#173b35
+  color:#173b35;
+}
+.score-btn.plus{background:#d9f6e9;color:#08714e}
+.score-btn.minus{background:#ffe1e1;color:#a62a2a}
+
+.prize{font-size:13px;font-weight:800;margin-top:5px}
+.rank-medal{font-size:22px;margin-right:5px}
+
+.login-page{
+  max-width:450px;
+  margin:7vh auto;
+  padding:26px 22px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 10px 35px #00000016;
 }
 
-.score-btn.plus{
-  background:#d9f6e9;
-  color:#08714e
+.login-page h2{color:#168a70;margin:0 0 10px}
+.login-page p{color:#64748b;line-height:1.5}
+.login-page label{display:block;font-weight:bold;margin-top:13px}
+.login-page input{margin:7px 0 0}
+.login-page .btn{width:100%;margin-top:16px}
+
+.error{
+  display:none;
+  margin-top:12px;
+  padding:11px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  border-radius:10px;
+  color:#a42323;
+  background:#fff0f0;
 }
 
-.score-btn.minus{
-  background:#ffe1e1;
-  color:#a62a2a
-}
-
-.prize{
-  font-size:13px;
-  font-weight:800;
-  margin-top:5px
-}
-
-.rank-medal{
-  font-size:22px;
-  min-width:32px
-}
-
-.competition-note{
-  padding:10px;
+#syncStatus{
+  position:fixed;
+  right:12px;
+  bottom:12px;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  max-width:calc(100vw - 24px);
+  padding:9px 11px;
   border-radius:12px;
-  background:#f5faf8;
-  margin-bottom:12px
+  color:white;
+  background:#173b35;
+  box-shadow:0 4px 16px #0002;
+  font-size:12px;
 }
+
+#syncStatus button{padding:7px 10px;background:white;color:#173b35}
 
 @media(max-width:600px){
+  header h1{font-size:21px}
+  main{margin:15px auto}
   .stats{grid-template-columns:1fr}
-
-  .row{
-    align-items:flex-start;
-    flex-direction:column
-  }
-
+  .row{align-items:flex-start;flex-direction:column}
   .addbox{flex-direction:column}
-
   .competition-nav{flex-direction:column}
-
   .competition-nav button{width:100%}
-
   .rank-head{align-items:flex-start}
-
   .score-actions{justify-content:flex-start}
+  .login-page{margin:5vh 13px;padding:22px 16px}
+  #syncStatus{left:10px;right:10px;bottom:10px;justify-content:space-between}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>✝ LỚN LÊN TRONG CHÚA THÁNH THẦN 1</h1>
-  <div class="quote">
-    “Xin Chúa Thánh Thần hướng dẫn chúng con”
-  </div>
-</header>
+<!-- DANG NHAP -->
+<section id="loginPage" class="login-page">
+  <h2>🔐 Đăng nhập quản trị</h2>
+  <p>
+    Đăng nhập tài khoản quản trị Firebase để sử dụng điểm danh
+    và đồng bộ dữ liệu giữa các thiết bị.
+  </p>
 
-<main>
+  <label for="loginEmail">Email</label>
+  <input id="loginEmail" type="email"
+         autocomplete="username"
+         placeholder="Nhập email quản trị">
 
-<div class="tabs">
-  <button class="active" data-tab="attendance">
-    📝 Điểm danh
-  </button>
+  <label for="loginPassword">Mật khẩu</label>
+  <input id="loginPassword" type="password"
+         autocomplete="current-password"
+         placeholder="Nhập mật khẩu">
 
-  <button data-tab="sessions">
-    📊 Thống kê
-  </button>
-
-  <button data-tab="members">
-    👥 Thành viên
-  </button>
-
-  <button data-tab="competition">
-    🏆 Thanh thi đua
-  </button>
-</div>
-
-<section id="attendance">
-  <div class="card top">
-    <div>
-      <b id="sessionTitle"></b>
-      <div id="sessionDate"></div>
-    </div>
-
-    <button class="btn" onclick="createSession()">
-      ＋ Tạo buổi học
-    </button>
-  </div>
-
-  <div class="card stats">
-    <div class="stat">
-      Tổng số
-      <b id="total">0</b>
-    </div>
-
-    <div class="stat">
-      Có mặt
-      <b id="present">0</b>
-    </div>
-
-    <div class="stat">
-      Vắng
-      <b id="absent">0</b>
-    </div>
-  </div>
-
-  <div class="card">
-    <input
-      id="search"
-      placeholder="🔎 Tìm tên..."
-      oninput="render()"
-    >
-
-    <div id="list"></div>
-  </div>
-</section>
-
-<section id="sessions" style="display:none">
-  <div class="card">
-    <h2>📊 Thống kê</h2>
-
-    <div class="stats">
-      <div class="stat">
-        Số buổi
-        <b id="sessionCount">0</b>
-      </div>
-
-      <div class="stat">
-        Số thành viên
-        <b id="memberCount">0</b>
-      </div>
-
-      <div class="stat">
-        Tỷ lệ đi học
-        <b id="average">0%</b>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>📅 Các buổi học</h2>
-    <div id="sessionList"></div>
-  </div>
-</section>
-
-<section id="members" style="display:none">
-  <div class="card">
-    <h2>👥 Quản lý thành viên</h2>
-
-    <p class="small">
-      Thêm, đổi tên hoặc xóa thành viên ngay trên website.
-    </p>
-
-    <div class="addbox">
-      <input
-        id="newMember"
-        placeholder="Nhập tên thành viên..."
-      >
-
-      <button class="btn" onclick="addMember()">
-        ＋ Thêm
-      </button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div id="memberList"></div>
-  </div>
-</section>
-
-<section id="competition" style="display:none">
-  <div class="card">
-    <h2>🏆 Thanh thi đua</h2>
-
-    <div class="competition-note">
-      Bạn tự cộng điểm bằng các nút
-      <b>+5, +10</b>
-      và trừ bằng
-      <b>-5, -10</b>.
-
-      <br>
-
-      Điểm được lưu riêng theo từng tháng.
-    </div>
-
-    <div class="competition-nav">
-      <button
-        class="btn gray"
-        onclick="changeCompetitionMonth(-1)"
-      >
-        ‹ Tháng trước
-      </button>
-
-      <div id="competitionMonth" class="month-title"></div>
-
-      <button
-        class="btn gray"
-        onclick="changeCompetitionMonth(1)"
-      >
-        Tháng sau ›
-      </button>
-    </div>
-
-    <div class="actions">
-      <button
-        class="btn red"
-        onclick="resetCompetitionMonth()"
-      >
-        ↺ Đặt lại điểm tháng này
-      </button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div id="competitionList"></div>
-  </div>
-</section>
-
-</main>
-
-<script src="script.js?v=4"></script>
-
-</body>
-</html>
+  <button id="loginButton" class="btn" onclick="login()">
+    Đăng nhập và đồng bộ
