@@ -2,40 +2,48 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Lớn Lên Trong Chúa Thánh Thần 1</title>
-
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;color:#173b35;background:linear-gradient(135deg,#eafaf3,#eaf3ff)}
-header{background:linear-gradient(135deg,#168a70,#2d91c7);color:#fff;padding:26px 16px;text-align:center}
-header h1{margin:0 0 8px;font-size:26px}
-main{max-width:1000px;margin:24px auto;padding:0 14px}
-.card{background:#fff;border-radius:17px;padding:18px;margin-bottom:16px;box-shadow:0 6px 20px #00000010}
-button{border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}
-.btn{background:#168a70;color:white}.red{background:#c94a4a!important;color:#fff}.gray{background:#64748b;color:#fff}
-.tabs{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:16px}
-.tabs button{background:white}.tabs button.active{background:#168a70;color:white}
+header{background:linear-gradient(135deg,#168a70,#2d91c7);color:white;padding:25px 15px;text-align:center}
+header h1{margin:0 0 8px;font-size:25px}
+main{max-width:1050px;margin:22px auto;padding:0 14px}
+.card{background:white;border-radius:17px;padding:18px;margin-bottom:16px;box-shadow:0 6px 20px #00000010}
+button{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+.btn{background:#168a70;color:white}
+.red{background:#c94a4a!important;color:white}
+.gray{background:#64748b;color:white}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tabs button{background:white}
+.tabs button.active{background:#168a70;color:white}
+input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-size:16px;margin:8px 0}
+label{display:block;font-weight:700;margin-top:12px}
 .top,.row,.rank-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.stat{background:#f3faf7;padding:15px;border-radius:14px;text-align:center}
+.stat{padding:15px;background:#f3faf7;border-radius:13px;text-align:center}
 .stat b{display:block;font-size:25px;margin-top:5px}
-input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-size:16px;margin:9px 0}
-.row{padding:12px 4px;border-bottom:1px solid #eee}.row:last-child{border:0}
+.row{padding:12px 4px;border-bottom:1px solid #eee}
+.row:last-child{border:0}
 .member-name{font-weight:600}
-.badge{padding:9px 12px;border-radius:9px}
-.present{background:#d9f6e9;color:#08714e}.absent{background:#ffe1e1;color:#a62a2a}
 .actions{display:flex;gap:7px;flex-wrap:wrap}
-.addbox{display:flex;gap:8px}.addbox input{margin:0}
+.addbox{display:flex;gap:8px}
+.addbox input{margin:0}
+.badge{padding:9px 12px;border-radius:9px}
+.present{background:#d9f6e9;color:#08714e}
+.absent{background:#ffe1e1;color:#a62a2a}
 .small{font-size:13px;color:#64748b}
 .session{padding:15px;border:1px solid #dcebe6;border-radius:14px;margin:10px 0}
 .bar,.rank-bar{background:#e8eeee;border-radius:20px;overflow:hidden}
-.bar{height:10px;margin:9px 0}.fill{height:100%;background:#168a70}
+.bar{height:10px;margin:9px 0}
+.fill{height:100%;background:#168a70}
 .competition-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:15px 0}
 .month-title{text-align:center;font-size:20px;font-weight:800}
 .rank-card{padding:14px;margin:10px 0;border:1px solid #e5ecea;background:#fbfefd;border-radius:15px}
-.rank-name{font-weight:800}.rank-score{font-size:19px;font-weight:900}
+.rank-name{font-weight:800}
+.rank-score{font-size:19px;font-weight:900}
 .rank-bar{height:16px;margin:10px 0}
 .rank-fill{height:100%;background:linear-gradient(90deg,#168a70,#2d91c7)}
 .score-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap}
@@ -43,35 +51,56 @@ input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-s
 .score-btn.plus{background:#d9f6e9;color:#08714e}
 .score-btn.minus{background:#ffe1e1;color:#a62a2a}
 .prize{font-size:13px;font-weight:800;margin-top:5px}
-.login-page{max-width:450px;margin:7vh auto;padding:26px 22px;background:#fff;border-radius:20px;box-shadow:0 10px 35px #00000016}
-.login-page h2{color:#168a70}.login-page p{color:#64748b;line-height:1.5}
-.login-page label{display:block;font-weight:bold;margin-top:13px}
-.login-page input{margin:7px 0 0}.login-page button{width:100%;margin-top:16px}
+.rank-medal{font-size:22px;margin-right:5px}
+.login-page{max-width:450px;margin:6vh auto;padding:25px 22px;background:white;border-radius:20px;box-shadow:0 10px 35px #00000016}
+.login-page h2{color:#168a70;margin-top:0}
+.login-page p{color:#64748b;line-height:1.5}
+.login-page .full{width:100%;margin-top:12px}
 .error{display:none;margin-top:12px;padding:11px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:10px;color:#a42323;background:#fff0f0}
+.notice{padding:13px;border-radius:12px;background:#f1f8f5;line-height:1.5}
+.user-card{border:1px solid #e5ecea;border-radius:12px;padding:13px;margin:10px 0}
+.user-card p{margin:5px 0}
+.status-pill{display:inline-block;border-radius:8px;padding:4px 8px;font-size:12px;font-weight:bold;background:#eef2f7}
 #syncStatus{position:fixed;right:12px;bottom:12px;z-index:1000;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 24px);padding:9px 11px;border-radius:12px;color:white;background:#173b35;box-shadow:0 4px 16px #0002;font-size:12px}
 #syncStatus button{padding:7px 10px;background:white;color:#173b35}
 @media(max-width:600px){
- header h1{font-size:21px}main{margin:15px auto}.stats{grid-template-columns:1fr}
- .row{align-items:flex-start;flex-direction:column}.addbox{flex-direction:column}
- .competition-nav{flex-direction:column}.competition-nav button{width:100%}
- .rank-head{align-items:flex-start}.score-actions{justify-content:flex-start}
- .login-page{margin:5vh 13px;padding:22px 16px}
+ header h1{font-size:20px}
+ .stats{grid-template-columns:1fr}
+ .row{align-items:flex-start;flex-direction:column}
+ .addbox{flex-direction:column}
+ .competition-nav{flex-direction:column}
+ .competition-nav button{width:100%}
+ .rank-head{align-items:flex-start}
+ .score-actions{justify-content:flex-start}
+ .login-page{margin:5vh 12px;padding:21px 16px}
  #syncStatus{left:10px;right:10px;bottom:10px;justify-content:space-between}
 }
 </style>
 </head>
-
 <body>
 
+<!-- DANG NHAP / DANG KY -->
 <section id="loginPage" class="login-page">
-  <h2>🔐 Đăng nhập quản trị</h2>
-  <p>Đăng nhập bằng tài khoản quản trị Firebase để sử dụng và đồng bộ dữ liệu.</p>
+  <h2>🔐 Đăng nhập</h2>
+  <p>Đăng nhập bằng tài khoản đã được quản trị viên duyệt để vào ứng dụng.</p>
+
   <label for="loginEmail">Email</label>
   <input id="loginEmail" type="email" autocomplete="username" placeholder="Nhập email">
+
   <label for="loginPassword">Mật khẩu</label>
   <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu">
-  <button id="loginButton" class="btn" onclick="login()">Đăng nhập và đồng bộ</button>
+
+  <button id="loginButton" class="btn full" onclick="login()">Đăng nhập</button>
+  <button id="registerButton" class="btn gray full" onclick="registerAccount()">Đăng ký tài khoản — chờ duyệt</button>
   <div id="loginError" class="error"></div>
+</section>
+
+<!-- MAN HINH CHO DUYET / KHOA -->
+<section id="gatePage" class="login-page" style="display:none">
+  <h2 id="gateTitle">⏳ Tài khoản chờ duyệt</h2>
+  <p id="gateMessage"></p>
+  <div class="notice" id="gateDetails"></div>
+  <button class="btn full" onclick="logout()">Đăng xuất</button>
 </section>
 
 <div id="appRoot" style="display:none">
@@ -86,12 +115,13 @@ input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-s
     <button data-tab="sessions">📊 Thống kê</button>
     <button data-tab="members">👥 Thành viên</button>
     <button data-tab="competition">🏆 Thanh thi đua</button>
+    <button id="adminTabButton" data-tab="adminPanel" style="display:none">👑 Quản trị & duyệt</button>
   </div>
 
   <section id="attendance">
     <div class="card top">
       <div><b id="sessionTitle"></b><div id="sessionDate"></div></div>
-      <button class="btn" onclick="createSession()">＋ Tạo buổi học</button>
+      <button id="createSessionButton" class="btn" data-admin-only onclick="createSession()">＋ Tạo buổi học</button>
     </div>
     <div class="card stats">
       <div class="stat">Tổng số<b id="total">0</b></div>
@@ -121,8 +151,8 @@ input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-s
       <h2>👥 Quản lý thành viên</h2>
       <p class="small">Thêm, đổi tên hoặc xóa thành viên.</p>
       <div class="addbox">
-        <input id="newMember" placeholder="Nhập tên thành viên...">
-        <button class="btn" onclick="addMember()">＋ Thêm</button>
+        <input id="newMember" data-admin-only placeholder="Nhập tên thành viên...">
+        <button class="btn" data-admin-only onclick="addMember()">＋ Thêm</button>
       </div>
     </div>
     <div class="card"><div id="memberList"></div></div>
@@ -137,14 +167,32 @@ input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-s
         <div id="competitionMonth" class="month-title"></div>
         <button class="btn gray" onclick="changeCompetitionMonth(1)">Tháng sau ›</button>
       </div>
-      <button class="btn red" onclick="resetCompetitionMonth()">↺ Đặt lại điểm tháng này</button>
+      <button class="btn red" data-admin-only onclick="resetCompetitionMonth()">↺ Đặt lại điểm tháng này</button>
     </div>
     <div class="card"><div id="competitionList"></div></div>
   </section>
 
+  <!-- BANG QUAN TRI -->
+  <section id="adminPanel" style="display:none">
+    <div class="card">
+      <h2>👑 Quản trị tài khoản</h2>
+      <p class="small">Duyệt đăng ký mới, từ chối hoặc khóa tài khoản. Chỉ quản trị viên mới thấy được khu vực này.</p>
+      <button class="btn" onclick="loadAdminUsers()">🔄 Tải danh sách tài khoản</button>
+      <p id="adminMessage" class="small"></p>
+    </div>
+    <div class="card">
+      <h3>⏳ Tài khoản chờ duyệt</h3>
+      <div id="pendingUsers">Bấm “Tải danh sách tài khoản”.</div>
+    </div>
+    <div class="card">
+      <h3>👥 Tài khoản đã duyệt / khóa / từ chối</h3>
+      <div id="managedUsers">Chưa tải danh sách.</div>
+    </div>
+  </section>
+
   <div class="card">
     <button class="btn gray" onclick="exportBackup()">⬇ Sao lưu dữ liệu</button>
-    <p class="small">Nên tải bản sao lưu định kỳ.</p>
+    <p class="small">Sao lưu sẽ tải về một tệp JSON trên thiết bị này.</p>
   </div>
 </main>
 </div>
@@ -161,7 +209,9 @@ input{width:100%;padding:12px;border:1px solid #ccdcd7;border-radius:10px;font-s
 <script>
 "use strict";
 
-/* CẤU HÌNH FIREBASE */
+/* ===============================
+   CAU HINH
+================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyAnpIzNv-YkA_v6WKCGw71bFqIWccHm1IE",
   authDomain: "llcttt1-diem-danh.firebaseapp.com",
@@ -173,24 +223,42 @@ const firebaseConfig = {
 };
 
 const ADMIN_UID = "vBmdB1U85uZ5lhZq026Rnqk4WZP2";
-const STORAGE_KEY = "llcttt1_attendance_v5";
-const COLLECTION = "appData";
-const DOCUMENT = "shared";
+const DATA_KEY = "llcttt1_attendance_v5";
+const DATA_COLLECTION = "appData";
+const DATA_DOCUMENT = "shared";
 
-let auth, db, sharedDoc, unsubscribe = null;
-let cloudReady = false, activeUid = null, syncPromise = null;
-let saveTimer = null, loginBusy = false, data = emptyData();
-let lastCloudSignature = "";
+let auth, db;
+let currentUser = null;
+let isAdminUser = false;
+let cloudReady = false;
+let sharedRef = null;
+let dataUnsubscribe = null;
+let profileUnsubscribe = null;
+let profileListenerUid = null;
+let savingTimer = null;
+let authBusy = false;
+let registerBusy = false;
+let data = emptyData();
 
-const dNow = new Date();
-let competitionMonth = dNow.getFullYear() + "-" +
-  String(dNow.getMonth() + 1).padStart(2, "0");
+const today = new Date();
+let competitionMonth = today.getFullYear() + "-" +
+  String(today.getMonth() + 1).padStart(2, "0");
 
 function emptyData() {
   return { members: [], sessions: [], current: -1, competition: {} };
 }
 
-function normalizeData(input) {
+function stable(value) {
+  if (Array.isArray(value)) return "[" + value.map(stable).join(",") + "]";
+  if (value && typeof value === "object") {
+    return "{" + Object.keys(value).sort().map(k =>
+      JSON.stringify(k) + ":" + stable(value[k])
+    ).join(",") + "}";
+  }
+  return JSON.stringify(value);
+}
+
+function normalize(input) {
   if (!input || typeof input !== "object") return emptyData();
   if (input.payload && typeof input.payload === "object") input = input.payload;
 
@@ -213,17 +281,17 @@ function normalizeData(input) {
     current = sessions.length ? sessions.length - 1 : -1;
   }
 
-  const competition = input.competition &&
-    typeof input.competition === "object" &&
+  const competition =
+    input.competition && typeof input.competition === "object" &&
     !Array.isArray(input.competition)
-      ? input.competition
-      : {};
+      ? input.competition : {};
 
   return { members, sessions, current, competition };
 }
 
-function recoverData(input) {
-  const result = normalizeData(input);
+/* Neu member list mat nhung bang diem van con ten, thu lay lai ten. */
+function recover(input) {
+  const result = normalize(input);
 
   if (!result.members.length) {
     const names = new Set();
@@ -236,114 +304,214 @@ function recoverData(input) {
       }
     });
 
-    if (names.size) {
-      result.members = Array.from(names).sort((a, b) => a.localeCompare(b, "vi"));
-      result.sessions = result.sessions.map(s => ({
-        ...s,
-        attendance: result.members.map((_, i) => Boolean(s.attendance && s.attendance[i]))
-      }));
-    }
+    if (names.size) result.members = Array.from(names).sort((a,b) =>
+      a.localeCompare(b, "vi")
+    );
   }
+
+  result.sessions = result.sessions.map(s => ({
+    ...s,
+    attendance: result.members.map((_, i) =>
+      Boolean(s.attendance && s.attendance[i])
+    )
+  }));
+
+  if (!result.sessions.length) result.current = -1;
   return result;
 }
 
-function richness(value) {
-  const d = recoverData(value);
-  let points = d.members.length * 10 + d.sessions.length * 100;
+function richness(input) {
+  const d = recover(input);
+  let score = d.members.length * 10 + d.sessions.length * 100;
 
   d.sessions.forEach(s => {
-    points += (s.attendance || []).filter(Boolean).length;
+    score += (s.attendance || []).filter(Boolean).length;
   });
 
   Object.values(d.competition).forEach(month => {
     if (month && typeof month === "object") {
-      Object.values(month).forEach(score => {
-        if (Number(score) > 0) points += 3;
+      Object.values(month).forEach(v => {
+        if (Number(v) > 0) score += 2;
       });
     }
   });
 
-  return points;
-}
-
-function signature(value) {
-  if (Array.isArray(value)) return "[" + value.map(signature).join(",") + "]";
-  if (value && typeof value === "object") {
-    return "{" + Object.keys(value).sort()
-      .map(k => JSON.stringify(k) + ":" + signature(value[k])).join(",") + "}";
-  }
-  return JSON.stringify(value);
+  return score;
 }
 
 function readLocal() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? recoverData(JSON.parse(raw)) : emptyData();
+    const raw = localStorage.getItem(DATA_KEY);
+    return raw ? recover(JSON.parse(raw)) : emptyData();
   } catch (e) {
-    console.error("Không đọc được dữ liệu cục bộ:", e);
+    console.error("Không đọc được dữ liệu cục bộ", e);
     return emptyData();
   }
 }
 
-function writeLocal(value) {
-  data = recoverData(value);
+function writeLocal(input) {
+  data = recover(input);
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    localStorage.setItem(DATA_KEY, JSON.stringify(data));
   } catch (e) {
-    console.error("Không lưu được dữ liệu trên trình duyệt:", e);
+    console.error("Không lưu được trên trình duyệt", e);
   }
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, m => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+  })[m]);
 }
 
 function setStatus(message) {
-  const el = document.getElementById("syncText");
-  if (el) el.textContent = message;
+  const node = document.getElementById("syncText");
+  if (node) node.textContent = message;
 }
 
 function showError(message) {
-  const el = document.getElementById("loginError");
-  if (el) {
-    el.textContent = message || "";
-    el.style.display = message ? "block" : "none";
-  }
+  const node = document.getElementById("loginError");
+  if (!node) return;
+  node.textContent = message || "";
+  node.style.display = message ? "block" : "none";
 }
 
 function showLogin(message = "") {
   document.getElementById("loginPage").style.display = "block";
+  document.getElementById("gatePage").style.display = "none";
   document.getElementById("appRoot").style.display = "none";
   showError(message);
 }
 
+function showGate(title, message, detail = "") {
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("appRoot").style.display = "none";
+  document.getElementById("gatePage").style.display = "block";
+  document.getElementById("gateTitle").textContent = title;
+  document.getElementById("gateMessage").textContent = message;
+  document.getElementById("gateDetails").textContent = detail;
+}
+
 function showApp() {
   document.getElementById("loginPage").style.display = "none";
+  document.getElementById("gatePage").style.display = "none";
   document.getElementById("appRoot").style.display = "block";
-  showError("");
+  document.getElementById("adminTabButton").style.display =
+    isAdminUser ? "inline-block" : "none";
+  applyPermissions();
   render();
 }
 
 function explainError(error) {
   const code = error && error.code ? error.code : "";
-  if (code.includes("api-key-not-valid") || code.includes("invalid-api-key")) {
-    return "API key Firebase không hợp lệ. Hãy kiểm tra Web API Key trong Firebase.";
-  }
-  if (code.includes("operation-not-allowed")) {
+
+  if (code.includes("api-key-not-valid") || code.includes("invalid-api-key"))
+    return "API key Firebase không hợp lệ. Kiểm tra cấu hình Web API Key.";
+  if (code.includes("operation-not-allowed"))
     return "Chưa bật đăng nhập Email/Password trong Firebase Authentication.";
-  }
   if (code.includes("invalid-credential") || code.includes("wrong-password") ||
-      code.includes("user-not-found") || code.includes("invalid-login-credentials")) {
+      code.includes("user-not-found") || code.includes("invalid-login-credentials"))
     return "Email hoặc mật khẩu chưa chính xác.";
-  }
-  if (code.includes("permission-denied")) {
-    return "Firestore từ chối quyền. Kiểm tra Rules của appData/shared và UID quản trị.";
-  }
-  if (code.includes("network-request-failed")) {
+  if (code.includes("permission-denied"))
+    return "Firestore từ chối quyền. Kiểm tra lại Firestore Rules được gửi kèm.";
+  if (code.includes("network-request-failed"))
     return "Không kết nối được Firebase. Kiểm tra Internet.";
-  }
-  return error && error.message ? error.message : "Có lỗi xảy ra.";
+  if (code.includes("email-already-in-use"))
+    return "Email này đã có tài khoản. Hãy đăng nhập hoặc nhờ quản trị viên kiểm tra.";
+  if (code.includes("weak-password"))
+    return "Mật khẩu quá yếu. Hãy dùng mật khẩu ít nhất 6 ký tự.";
+  return error && error.message ? error.message : "Có lỗi không xác định.";
 }
 
-/* ĐĂNG NHẬP */
+function stopDataSync() {
+  cloudReady = false;
+  sharedRef = null;
+  if (dataUnsubscribe) {
+    dataUnsubscribe();
+    dataUnsubscribe = null;
+  }
+}
+
+function stopProfileListener() {
+  if (profileUnsubscribe) {
+    profileUnsubscribe();
+    profileUnsubscribe = null;
+  }
+  profileListenerUid = null;
+}
+
+/* ===============================
+   DANG KY TAI KHOAN
+================================ */
+async function registerAccount() {
+  if (registerBusy || authBusy) return;
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  const button = document.getElementById("registerButton");
+
+  if (!email || !password) {
+    showError("Nhập email và mật khẩu trước khi đăng ký.");
+    return;
+  }
+
+  if (password.length < 6) {
+    showError("Mật khẩu phải có ít nhất 6 ký tự.");
+    return;
+  }
+
+  registerBusy = true;
+  button.disabled = true;
+  button.textContent = "Đang tạo tài khoản…";
+  showError("");
+  setStatus("Đang đăng ký…");
+
+  let createdUser = null;
+
+  try {
+    const credential = await auth.createUserWithEmailAndPassword(email, password);
+    createdUser = credential.user;
+
+    await db.collection("users").doc(createdUser.uid).set({
+      email: createdUser.email || email,
+      role: "user",
+      status: "pending",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    currentUser = createdUser;
+    isAdminUser = false;
+    stopDataSync();
+    showGate(
+      "⏳ Tài khoản đang chờ duyệt",
+      "Đăng ký thành công. Quản trị viên cần duyệt tài khoản trước khi bạn vào ứng dụng.",
+      "Email: " + (createdUser.email || email) + " · Trạng thái: pending"
+    );
+    setStatus("Chờ quản trị viên duyệt");
+
+    stopProfileListener();
+    observeUserProfile(createdUser);
+
+  } catch (error) {
+    console.error("Lỗi đăng ký:", error);
+    showError(explainError(error));
+    setStatus("Đăng ký chưa hoàn tất");
+
+    if (createdUser) {
+      try { await auth.signOut(); } catch (_) {}
+    }
+  } finally {
+    registerBusy = false;
+    button.disabled = false;
+    button.textContent = "Đăng ký tài khoản — chờ duyệt";
+  }
+}
+
+/* ===============================
+   DANG NHAP / DANG XUAT
+================================ */
 async function login() {
-  if (loginBusy) return;
+  if (authBusy || registerBusy) return;
 
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
@@ -354,49 +522,35 @@ async function login() {
     return;
   }
 
-  loginBusy = true;
+  authBusy = true;
   button.disabled = true;
   button.textContent = "Đang đăng nhập…";
   showError("");
   setStatus("Đang xác thực tài khoản…");
 
   try {
-    const result = await auth.signInWithEmailAndPassword(email, password);
-
-    if (result.user.uid !== ADMIN_UID) {
-      await auth.signOut();
-      showLogin("Tài khoản này không phải tài khoản quản trị được cấu hình.");
-      setStatus("Không có quyền quản trị");
-      return;
-    }
-
-    await startSync(result.user);
-  } catch (e) {
-    console.error("Lỗi đăng nhập:", e);
-    showLogin(explainError(e));
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    console.error("Lỗi đăng nhập:", error);
+    showError(explainError(error));
     setStatus("Đăng nhập chưa hoàn tất");
   } finally {
-    loginBusy = false;
+    authBusy = false;
     button.disabled = false;
-    button.textContent = "Đăng nhập và đồng bộ";
+    button.textContent = "Đăng nhập";
   }
 }
 
 async function logout() {
-  if (unsubscribe) {
-    unsubscribe();
-    unsubscribe = null;
-  }
-
-  clearTimeout(saveTimer);
-  cloudReady = false;
-  activeUid = null;
-  sharedDoc = null;
+  stopDataSync();
+  stopProfileListener();
+  currentUser = null;
+  isAdminUser = false;
 
   try {
     if (auth) await auth.signOut();
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 
   showLogin("");
@@ -404,145 +558,377 @@ async function logout() {
 }
 
 window.login = login;
+window.registerAccount = registerAccount;
 window.logout = logout;
 
-/* ĐỒNG BỘ FIRESTORE */
+/* ===============================
+   KIEM TRA QUYEN / DUYET
+================================ */
+async function handleAuthenticatedUser(user) {
+  if (!user) return;
+  currentUser = user;
+
+  if (user.uid === ADMIN_UID) {
+    stopProfileListener();
+    isAdminUser = true;
+    await startSync(user);
+    return;
+  }
+
+  isAdminUser = false;
+  const ref = db.collection("users").doc(user.uid);
+
+  if (profileListenerUid === user.uid && profileUnsubscribe) return;
+
+  stopProfileListener();
+  profileListenerUid = user.uid;
+
+  try {
+    const snapshot = await ref.get();
+
+    if (!snapshot.exists) {
+      stopDataSync();
+      showGate(
+        "⚠️ Chưa có hồ sơ tài khoản",
+        "Không tìm thấy hồ sơ Firestore cho tài khoản này.",
+        "Nếu bạn vừa đăng ký, hãy kiểm tra quyền tạo hồ sơ hoặc nhờ quản trị viên hỗ trợ."
+      );
+    } else {
+      await applyProfileStatus(user, snapshot.data() || {});
+    }
+
+    profileUnsubscribe = ref.onSnapshot(
+      async doc => {
+        if (!doc.exists) {
+          stopDataSync();
+          showGate(
+            "⚠️ Chưa có hồ sơ tài khoản",
+            "Hồ sơ tài khoản không còn tồn tại.",
+            "Hãy đăng xuất và liên hệ quản trị viên."
+          );
+          return;
+        }
+        await applyProfileStatus(user, doc.data() || {});
+      },
+      error => {
+        console.error("Không đọc được hồ sơ:", error);
+        showGate(
+          "Không kiểm tra được trạng thái",
+          "Firebase từ chối đọc hồ sơ tài khoản.",
+          explainError(error)
+        );
+      }
+    );
+
+  } catch (error) {
+    console.error("Lỗi kiểm tra hồ sơ:", error);
+    showGate(
+      "Không kiểm tra được trạng thái",
+      "Không thể đọc hồ sơ tài khoản.",
+      explainError(error)
+    );
+  }
+}
+
+async function applyProfileStatus(user, profile) {
+  if (!auth.currentUser || auth.currentUser.uid !== user.uid) return;
+  if (user.uid === ADMIN_UID) return;
+
+  const status = String(profile.status || "pending");
+
+  if (status === "approved") {
+    isAdminUser = false;
+    await startSync(user);
+    return;
+  }
+
+  stopDataSync();
+
+  if (status === "pending") {
+    showGate(
+      "⏳ Tài khoản đang chờ duyệt",
+      "Quản trị viên chưa duyệt tài khoản của bạn.",
+      "Email: " + (profile.email || user.email || "") + " · Trạng thái: pending"
+    );
+  } else if (status === "rejected") {
+    showGate(
+      "❌ Tài khoản bị từ chối",
+      "Quản trị viên đã từ chối yêu cầu đăng ký.",
+      "Nếu cho rằng có nhầm lẫn, hãy liên hệ quản trị viên."
+    );
+  } else if (status === "blocked") {
+    showGate(
+      "🔒 Tài khoản đang bị khóa",
+      "Quản trị viên đã khóa quyền truy cập tài khoản.",
+      "Liên hệ quản trị viên nếu cần mở khóa."
+    );
+  } else {
+    showGate(
+      "⏳ Tài khoản chưa được kích hoạt",
+      "Tài khoản chưa được cấp quyền vào ứng dụng.",
+      "Trạng thái: " + status
+    );
+  }
+
+  setStatus("Trạng thái tài khoản: " + status);
+}
+
 async function startSync(user) {
   if (!user) return;
 
-  if (cloudReady && activeUid === user.uid) {
+  if (cloudReady && currentUser && currentUser.uid === user.uid) {
     showApp();
     return;
   }
 
-  if (syncPromise) return syncPromise;
+  const admin = user.uid === ADMIN_UID;
+  isAdminUser = admin;
+  currentUser = user;
+  setStatus("Đang tải dữ liệu…");
 
-  syncPromise = (async () => {
-    try {
-      if (user.uid !== ADMIN_UID) {
-        await auth.signOut();
-        showLogin("Tài khoản không có quyền quản trị.");
+  try {
+    const ref = db.collection(DATA_COLLECTION).doc(DATA_DOCUMENT);
+    const localData = readLocal();
+    const snapshot = await ref.get();
+
+    let remoteData = emptyData();
+    let remoteSignature = "";
+    let remoteExists = snapshot.exists;
+
+    if (remoteExists) {
+      const doc = snapshot.data() || {};
+      remoteData = recover(doc.payload || doc);
+      remoteSignature = stable(remoteData);
+    }
+
+    if (!remoteExists) {
+      if (!admin) {
+        data = localData;
+        showApp();
+        setStatus("Chưa có dữ liệu chung trên Firestore");
         return;
       }
+      data = localData;
+    } else if (admin && richness(localData) > richness(remoteData)) {
+      data = localData;
+    } else {
+      data = remoteData;
+    }
 
-      setStatus("Đang tải dữ liệu…");
+    writeLocal(data);
+    sharedRef = ref;
+    cloudReady = true;
+    showApp();
 
-      const ref = db.collection(COLLECTION).doc(DOCUMENT);
-      const localData = readLocal();
-      const snap = await ref.get();
+    const chosenSignature = stable(data);
 
-      let remoteData = emptyData();
-      let remoteExists = snap.exists;
-      let remoteSignature = "";
+    /* Chỉ quản trị viên được khởi tạo hoặc cập nhật dữ liệu chung. */
+    if (admin && (!remoteExists || chosenSignature !== remoteSignature)) {
+      await ref.set({
+        payload: data,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
 
-      if (remoteExists) {
-        const doc = snap.data() || {};
-        remoteData = recoverData(doc.payload || doc);
-        remoteSignature = signature(normalizeData(doc.payload || doc));
-      }
+    if (dataUnsubscribe) {
+      dataUnsubscribe();
+      dataUnsubscribe = null;
+    }
 
-      /*
-        Nếu dữ liệu cục bộ đầy đủ hơn đám mây, giữ dữ liệu cục bộ.
-        Không chọn dữ liệu rỗng để ghi đè dữ liệu có nội dung.
-      */
-      if (!remoteExists || richness(localData) > richness(remoteData)) {
-        data = recoverData(localData);
-      } else {
-        data = recoverData(remoteData);
-      }
+    dataUnsubscribe = ref.onSnapshot(
+      snapshotNow => {
+        if (!cloudReady || !snapshotNow.exists) return;
 
-      sharedDoc = ref;
-      activeUid = user.uid;
-      cloudReady = true;
+        const doc = snapshotNow.data() || {};
+        const incoming = recover(doc.payload || doc);
 
-      writeLocal(data);
-      lastCloudSignature = signature(data);
-      showApp();
-
-      if (!remoteExists || signature(data) !== remoteSignature) {
-        await ref.set({
-          payload: data,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        lastCloudSignature = signature(data);
-      }
-
-      if (unsubscribe) unsubscribe();
-
-      unsubscribe = ref.onSnapshot(snapshot => {
-        if (!cloudReady || !snapshot.exists) return;
-        if (saveTimer) return;
-
-        const doc = snapshot.data() || {};
-        const incoming = recoverData(doc.payload || doc);
-        const incomingSignature = signature(incoming);
-
-        if (incomingSignature !== signature(data)) {
+        if (stable(incoming) !== stable(data)) {
+          data = incoming;
           writeLocal(incoming);
           render();
         }
 
-        lastCloudSignature = incomingSignature;
         setStatus("Đã đồng bộ với thiết bị khác ✓");
-      }, error => {
-        console.error("Lỗi theo dõi Firestore:", error);
+      },
+      error => {
+        console.error("Lỗi đồng bộ:", error);
         setStatus("Lỗi đồng bộ Firestore");
-      });
+      }
+    );
 
-      setStatus("Đã đồng bộ với thiết bị khác ✓");
-    } catch (e) {
-      console.error("Lỗi tải dữ liệu:", e);
-      cloudReady = false;
-      showLogin(explainError(e));
-      setStatus("Không thể đồng bộ");
-    }
-  })();
+    setStatus("Đã đồng bộ với thiết bị khác ✓");
 
-  try {
-    await syncPromise;
-  } finally {
-    syncPromise = null;
+  } catch (error) {
+    console.error("Không mở được dữ liệu:", error);
+    cloudReady = false;
+    showGate(
+      "Không mở được ứng dụng",
+      "Firebase không cho đọc dữ liệu hoặc dữ liệu chưa được thiết lập.",
+      explainError(error)
+    );
+    setStatus("Lỗi dữ liệu Firestore");
   }
 }
 
-/* LƯU DỮ LIỆU */
+/* ===============================
+   QUAN TRI TAI KHOAN
+================================ */
+async function loadAdminUsers() {
+  if (!isAdminUser || !currentUser || currentUser.uid !== ADMIN_UID) {
+    alert("Chỉ quản trị viên mới được quản lý tài khoản.");
+    return;
+  }
+
+  const pendingBox = document.getElementById("pendingUsers");
+  const managedBox = document.getElementById("managedUsers");
+  const message = document.getElementById("adminMessage");
+
+  pendingBox.textContent = "Đang tải…";
+  managedBox.textContent = "Đang tải…";
+  message.textContent = "";
+
+  try {
+    const snapshot = await db.collection("users").get();
+    const users = snapshot.docs.map(doc => ({
+      uid: doc.id,
+      ...doc.data()
+    }));
+
+    const pending = users.filter(u => (u.status || "pending") === "pending");
+    const managed = users.filter(u => (u.status || "pending") !== "pending");
+
+    pendingBox.innerHTML = pending.length
+      ? pending.map(renderUserCard).join("")
+      : '<p class="small">Không có tài khoản nào chờ duyệt.</p>';
+
+    managedBox.innerHTML = managed.length
+      ? managed.map(renderUserCard).join("")
+      : '<p class="small">Chưa có tài khoản đã duyệt/khóa/từ chối.</p>';
+
+    message.textContent = "Tổng tài khoản đăng ký: " + users.length;
+  } catch (error) {
+    console.error("Không tải được danh sách người dùng:", error);
+    pendingBox.textContent = "Không tải được danh sách.";
+    managedBox.textContent = "";
+    message.textContent = explainError(error);
+  }
+}
+
+function renderUserCard(user) {
+  const status = String(user.status || "pending");
+  const email = escapeHtml(user.email || "(không có email)");
+  const uid = String(user.uid || "");
+
+  let buttons = "";
+
+  if (status === "pending") {
+    buttons = `
+      <button class="btn" onclick="changeUserStatus('${uid}','approved')">✅ Duyệt</button>
+      <button class="btn red" onclick="changeUserStatus('${uid}','rejected')">❌ Từ chối</button>`;
+  } else if (status === "approved") {
+    buttons = `
+      <button class="btn gray" onclick="changeUserStatus('${uid}','blocked')">🔒 Khóa</button>
+      <button class="btn red" onclick="changeUserStatus('${uid}','rejected')">❌ Từ chối</button>`;
+  } else if (status === "blocked" || status === "rejected") {
+    buttons = `
+      <button class="btn" onclick="changeUserStatus('${uid}','approved')">✅ Mở quyền / Duyệt lại</button>
+      <button class="btn red" onclick="changeUserStatus('${uid}','rejected')">❌ Từ chối</button>`;
+  } else {
+    buttons = `
+      <button class="btn" onclick="changeUserStatus('${uid}','approved')">✅ Duyệt</button>
+      <button class="btn red" onclick="changeUserStatus('${uid}','rejected')">❌ Từ chối</button>`;
+  }
+
+  return `
+    <div class="user-card">
+      <p><b>${email}</b></p>
+      <p class="small">UID: ${escapeHtml(uid)}</p>
+      <p><span class="status-pill">Trạng thái: ${escapeHtml(status)}</span></p>
+      <div class="actions" style="margin-top:10px">${buttons}</div>
+    </div>`;
+}
+
+async function changeUserStatus(uid, status) {
+  if (!isAdminUser || !currentUser || currentUser.uid !== ADMIN_UID) {
+    alert("Chỉ quản trị viên mới được duyệt hoặc khóa tài khoản.");
+    return;
+  }
+
+  if (!uid || uid === ADMIN_UID) {
+    alert("Không thể thay đổi tài khoản quản trị chính.");
+    return;
+  }
+
+  const labels = {
+    approved: "duyệt và cấp quyền",
+    rejected: "từ chối",
+    blocked: "khóa"
+  };
+
+  if (!confirm("Xác nhận " + (labels[status] || "thay đổi trạng thái") + " tài khoản này?")) {
+    return;
+  }
+
+  try {
+    await db.collection("users").doc(uid).update({
+      status,
+      role: "user",
+      reviewedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      reviewedBy: currentUser.uid
+    });
+
+    document.getElementById("adminMessage").textContent =
+      "Đã cập nhật trạng thái tài khoản.";
+    await loadAdminUsers();
+  } catch (error) {
+    console.error("Không cập nhật được trạng thái:", error);
+    document.getElementById("adminMessage").textContent = explainError(error);
+  }
+}
+
+window.loadAdminUsers = loadAdminUsers;
+window.changeUserStatus = changeUserStatus;
+
+/* ===============================
+   LUU DU LIEU
+================================ */
 function save() {
-  data = recoverData(data);
+  if (!isAdminUser) {
+    alert("Chỉ quản trị viên mới được sửa dữ liệu điểm danh.");
+    return;
+  }
+
+  data = recover(data);
   writeLocal(data);
   render();
 
-  if (!cloudReady || !sharedDoc) return;
+  if (!cloudReady || !sharedRef) {
+    setStatus("Đã lưu trên thiết bị này");
+    return;
+  }
 
-  clearTimeout(saveTimer);
+  clearTimeout(savingTimer);
   setStatus("Đang lưu dữ liệu…");
 
-  saveTimer = setTimeout(async () => {
-    const outgoing = recoverData(data);
+  savingTimer = setTimeout(async () => {
+    const outgoing = recover(data);
 
     try {
-      await sharedDoc.set({
+      await sharedRef.set({
         payload: outgoing,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-
-      lastCloudSignature = signature(outgoing);
       setStatus("Đã đồng bộ với thiết bị khác ✓");
-    } catch (e) {
-      console.error("Không lưu được lên Firestore:", e);
-      setStatus("Chưa lưu được lên đám mây");
-    } finally {
-      saveTimer = null;
+    } catch (error) {
+      console.error("Lỗi lưu dữ liệu:", error);
+      setStatus("Không lưu được lên Firestore");
     }
   }, 500);
 }
 
-/* ĐIỂM DANH */
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, m => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
-  })[m]);
-}
-
+/* ===============================
+   DIEM DANH
+================================ */
 function getCurrentSession() {
   return data.current < 0 ? null : data.sessions[data.current] || null;
 }
@@ -553,12 +939,8 @@ function render() {
   if (!session) {
     document.getElementById("sessionTitle").textContent = "Chưa có buổi học";
     document.getElementById("sessionDate").textContent = "Hãy bấm “＋ Tạo buổi học” để bắt đầu.";
-    document.getElementById("list").innerHTML = `
-      <div style="text-align:center;padding:20px 8px">
-        <div style="font-size:40px">📅</div>
-        <h3>Chưa có buổi học nào</h3>
-        <p class="small">Tạo buổi học để bắt đầu điểm danh.</p>
-      </div>`;
+    document.getElementById("list").innerHTML =
+      '<div style="text-align:center;padding:20px 8px"><div style="font-size:40px">📅</div><h3>Chưa có buổi học nào</h3><p class="small">Hãy tạo buổi học để bắt đầu điểm danh.</p></div>';
     document.getElementById("total").textContent = data.members.length;
     document.getElementById("present").textContent = "0";
     document.getElementById("absent").textContent = data.members.length;
@@ -568,7 +950,7 @@ function render() {
       new Date(session.date).toLocaleDateString("vi-VN");
 
     const query = (document.getElementById("search").value || "").toLowerCase();
-    const visible = data.members.map((name, index) => ({name,index}))
+    const visible = data.members.map((name,index) => ({name,index}))
       .filter(item => item.name.toLowerCase().includes(query));
 
     document.getElementById("list").innerHTML = visible.length
@@ -576,36 +958,40 @@ function render() {
         <div class="row">
           <span class="member-name">${item.index+1}. ${escapeHtml(item.name)}</span>
           <button class="badge ${session.attendance[item.index] ? "present":"absent"}"
+            data-admin-only ${isAdminUser ? "" : "disabled"}
             onclick="toggle(${item.index})">
             ${session.attendance[item.index] ? "✓ Có mặt":"✕ Vắng"}
           </button>
         </div>`).join("")
       : "<p>Không tìm thấy thành viên.</p>";
 
-    const presentCount = session.attendance.filter(Boolean).length;
+    const count = session.attendance.filter(Boolean).length;
     document.getElementById("total").textContent = data.members.length;
-    document.getElementById("present").textContent = presentCount;
-    document.getElementById("absent").textContent = data.members.length - presentCount;
+    document.getElementById("present").textContent = count;
+    document.getElementById("absent").textContent = data.members.length - count;
   }
 
   renderSessions();
   renderMembers();
   renderCompetition();
+  applyPermissions();
 }
 
 function createSession() {
+  if (!isAdminUser) return alert("Chỉ quản trị viên mới được tạo buổi học.");
+
   const label = prompt("Nhập tên buổi học:", `Buổi học ${data.sessions.length+1}`);
   if (label === null) return;
   if (!label.trim()) return alert("Tên buổi học không được để trống.");
 
-  const dateInput = prompt("Nhập ngày học dạng DD/MM/YYYY:", new Date().toLocaleDateString("vi-VN"));
-  if (dateInput === null) return;
+  const inputDate = prompt("Nhập ngày học dạng DD/MM/YYYY:", new Date().toLocaleDateString("vi-VN"));
+  if (inputDate === null) return;
 
-  const p = dateInput.trim().split(/[\/\-.]/);
-  if (p.length !== 3) return alert("Ngày phải theo dạng DD/MM/YYYY.");
+  const parts = inputDate.trim().split(/[\/\-.]/);
+  if (parts.length !== 3) return alert("Ngày phải theo dạng DD/MM/YYYY.");
 
-  const day = Number(p[0]), month = Number(p[1]), year = Number(p[2]);
-  const date = new Date(year, month-1, day);
+  const day = Number(parts[0]), month = Number(parts[1]), year = Number(parts[2]);
+  const date = new Date(year,month-1,day);
 
   if (!Number.isFinite(date.getTime()) || date.getDate()!==day ||
       date.getMonth()!==month-1 || date.getFullYear()!==year) {
@@ -617,19 +1003,21 @@ function createSession() {
     date: date.toISOString(),
     attendance: Array(data.members.length).fill(false)
   });
-
   data.current = data.sessions.length-1;
   save();
 }
 
 function toggle(index) {
+  if (!isAdminUser) return alert("Bạn không có quyền sửa điểm danh.");
   const session = getCurrentSession();
-  if (!session || index < 0 || index >= data.members.length) return;
+  if (!session || index<0 || index>=data.members.length) return;
   session.attendance[index] = !session.attendance[index];
   save();
 }
 
-/* THỐNG KÊ */
+/* ===============================
+   THONG KE
+================================ */
 function renderSessions() {
   const box = document.getElementById("sessionList");
   document.getElementById("sessionCount").textContent = data.sessions.length;
@@ -641,22 +1029,23 @@ function renderSessions() {
     return;
   }
 
-  let totalPresent=0, totalCount=0;
+  let totalPresent=0,totalCount=0;
 
   box.innerHTML = data.sessions.map((s,i) => {
-    const presentCount = s.attendance.filter(Boolean).length;
-    totalPresent += presentCount;
+    const present = s.attendance.filter(Boolean).length;
+    totalPresent += present;
     totalCount += s.attendance.length;
-    const percent = s.attendance.length ? Math.round(presentCount/s.attendance.length*100) : 0;
+    const pct = s.attendance.length ? Math.round(present/s.attendance.length*100) : 0;
 
     return `<div class="session">
       <b>${escapeHtml(s.label)}</b>
       <div>${new Date(s.date).toLocaleDateString("vi-VN")}</div>
-      <div>${presentCount}/${s.attendance.length} có mặt (${percent}%)</div>
-      <div class="bar"><div class="fill" style="width:${percent}%"></div></div>
-      <div class="actions">
+      <div>${present}/${s.attendance.length} có mặt (${pct}%)</div>
+      <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+      <div class="actions" style="margin-top:9px">
         <button class="btn" onclick="selectSession(${i})">Mở buổi này</button>
-        <button class="btn red" onclick="deleteSession(${i})">🗑️ Xóa buổi</button>
+        <button class="btn red" data-admin-only ${isAdminUser ? "" : "disabled"}
+          onclick="deleteSession(${i})">🗑️ Xóa buổi</button>
       </div>
     </div>`;
   }).join("");
@@ -666,147 +1055,149 @@ function renderSessions() {
 }
 
 function selectSession(index) {
-  if (index < 0 || index >= data.sessions.length) return;
-  data.current = index;
+  if (index<0 || index>=data.sessions.length) return;
+  data.current=index;
   save();
   showTab("attendance");
 }
 
 function deleteSession(index) {
-  const session = data.sessions[index];
-  if (!session) return;
-  if (!confirm(`Xóa "${session.label}" và toàn bộ điểm danh của buổi này?`)) return;
-
+  if (!isAdminUser) return;
+  const s = data.sessions[index];
+  if (!s || !confirm(`Xóa "${s.label}" và điểm danh của buổi này?`)) return;
   data.sessions.splice(index,1);
   if (!data.sessions.length) data.current=-1;
-  else if (data.current >= index) data.current=Math.max(0,data.current-1);
+  else if (data.current>=index) data.current=Math.max(0,data.current-1);
   save();
 }
 
-/* THÀNH VIÊN */
+/* ===============================
+   THANH VIEN
+================================ */
 function renderMembers() {
   const box = document.getElementById("memberList");
-  box.innerHTML = data.members.length ? data.members.map((name,i) => `
-    <div class="row">
-      <span class="member-name">${i+1}. ${escapeHtml(name)}</span>
-      <div class="actions">
-        <button class="btn gray" onclick="renameMember(${i})">✏️ Đổi tên</button>
-        <button class="btn red" onclick="deleteMember(${i})">🗑️ Xóa</button>
-      </div>
-    </div>`).join("") : "<p>Chưa có thành viên.</p>";
+
+  box.innerHTML = data.members.length
+    ? data.members.map((name,i)=>`
+      <div class="row">
+        <span class="member-name">${i+1}. ${escapeHtml(name)}</span>
+        <div class="actions">
+          <button class="btn gray" data-admin-only ${isAdminUser ? "" : "disabled"}
+            onclick="renameMember(${i})">✏️ Đổi tên</button>
+          <button class="btn red" data-admin-only ${isAdminUser ? "" : "disabled"}
+            onclick="deleteMember(${i})">🗑️ Xóa</button>
+        </div>
+      </div>`).join("")
+    : "<p>Chưa có thành viên.</p>";
 }
 
 function addMember() {
-  const input = document.getElementById("newMember");
-  const name = input.value.trim();
-
+  if (!isAdminUser) return;
+  const input=document.getElementById("newMember");
+  const name=input.value.trim();
   if (!name) return alert("Bạn chưa nhập tên.");
-  if (data.members.some(n => n.toLowerCase()===name.toLowerCase())) {
+  if (data.members.some(n=>n.toLowerCase()===name.toLowerCase()))
     return alert("Tên này đã có trong danh sách.");
-  }
 
   data.members.push(name);
-  data.sessions.forEach(s => s.attendance.push(false));
+  data.sessions.forEach(s=>s.attendance.push(false));
   input.value="";
   save();
 }
 
 function renameMember(index) {
-  const oldName = data.members[index];
-  if (oldName === undefined) return;
-
-  const value = prompt("Đổi tên thành viên:", oldName);
-  if (value === null) return;
-  const name = value.trim();
-
+  if (!isAdminUser) return;
+  const old=data.members[index];
+  if (old===undefined) return;
+  const value=prompt("Đổi tên thành viên:",old);
+  if (value===null) return;
+  const name=value.trim();
   if (!name) return alert("Tên không được để trống.");
-  if (data.members.some((n,i)=>i!==index && n.toLowerCase()===name.toLowerCase())) {
+  if (data.members.some((n,i)=>i!==index&&n.toLowerCase()===name.toLowerCase()))
     return alert("Tên này đã có trong danh sách.");
-  }
 
   data.members[index]=name;
-  Object.values(data.competition).forEach(month => {
-    if (month && Object.prototype.hasOwnProperty.call(month,oldName)) {
-      month[name]=month[oldName];
-      delete month[oldName];
+  Object.values(data.competition).forEach(month=>{
+    if (month && Object.prototype.hasOwnProperty.call(month,old)) {
+      month[name]=month[old];
+      delete month[old];
     }
   });
   save();
 }
 
 function deleteMember(index) {
-  const name = data.members[index];
-  if (name === undefined) return;
-  if (!confirm(`Xóa "${name}" khỏi danh sách?`)) return;
-
+  if (!isAdminUser) return;
+  const name=data.members[index];
+  if (name===undefined || !confirm(`Xóa "${name}" khỏi danh sách?`)) return;
   data.members.splice(index,1);
-  data.sessions.forEach(s => s.attendance.splice(index,1));
-  Object.values(data.competition).forEach(month => {
+  data.sessions.forEach(s=>s.attendance.splice(index,1));
+  Object.values(data.competition).forEach(month=>{
     if (month && typeof month==="object") delete month[name];
   });
   save();
 }
 
-/* THI ĐUA */
+/* ===============================
+   THI DUA
+================================ */
 function formatCompetitionMonth(key) {
-  const [year,month] = key.split("-").map(Number);
+  const [year,month]=key.split("-").map(Number);
   return `THÁNG ${month}/${year}`;
 }
 
 function getScores(key) {
-  if (!data.competition[key] || typeof data.competition[key]!=="object") {
+  if (!data.competition[key] || typeof data.competition[key]!=="object")
     data.competition[key]={};
-  }
-
-  data.members.forEach(name => {
-    if (typeof data.competition[key][name]!=="number") {
+  data.members.forEach(name=>{
+    if (typeof data.competition[key][name]!=="number")
       data.competition[key][name]=0;
-    }
   });
-
   return data.competition[key];
 }
 
 function changeCompetitionMonth(delta) {
-  const [year,month] = competitionMonth.split("-").map(Number);
-  const date = new Date(year,month-1+delta,1);
-  competitionMonth = date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0");
+  const [year,month]=competitionMonth.split("-").map(Number);
+  const date=new Date(year,month-1+delta,1);
+  competitionMonth=date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0");
   renderCompetition();
 }
 
 function adjustScoreByIndex(index,amount) {
-  const name = data.members[index];
-  if (name === undefined) return;
-  const scores = getScores(competitionMonth);
-  scores[name] = Math.max(0,(Number(scores[name])||0)+amount);
+  if (!isAdminUser) return;
+  const name=data.members[index];
+  if (name===undefined) return;
+  const scores=getScores(competitionMonth);
+  scores[name]=Math.max(0,(Number(scores[name])||0)+amount);
   save();
 }
 
 function resetCompetitionMonth() {
+  if (!isAdminUser) return;
   if (!confirm(`Đặt lại điểm ${formatCompetitionMonth(competitionMonth)} về 0?`)) return;
-  const scores = getScores(competitionMonth);
-  data.members.forEach(name => {scores[name]=0;});
+  const scores=getScores(competitionMonth);
+  data.members.forEach(name=>scores[name]=0);
   save();
 }
 
 function getPrize(rank,total) {
-  if (rank===1) return "🏆 Giải Nhất";
-  if (rank===2) return "🥈 Giải Nhì";
-  if (rank===3) return "🥉 Giải Ba";
-  if (total>=4 && rank<=Math.max(4,Math.ceil(total/3))) return "🏅 Khuyến khích";
+  if(rank===1)return "🏆 Giải Nhất";
+  if(rank===2)return "🥈 Giải Nhì";
+  if(rank===3)return "🥉 Giải Ba";
+  if(total>=4&&rank<=Math.max(4,Math.ceil(total/3)))return "🏅 Khuyến khích";
   return "";
 }
 
 function renderCompetition() {
-  const title = document.getElementById("competitionMonth");
-  const box = document.getElementById("competitionList");
-  title.textContent = formatCompetitionMonth(competitionMonth);
+  const title=document.getElementById("competitionMonth");
+  const box=document.getElementById("competitionList");
+  title.textContent=formatCompetitionMonth(competitionMonth);
 
-  const scores = getScores(competitionMonth);
-  const ranked = data.members.map(name=>({name,score:Number(scores[name])||0}))
-    .sort((a,b)=>b.score-a.score || a.name.localeCompare(b.name,"vi"));
+  const scores=getScores(competitionMonth);
+  const ranked=data.members.map(name=>({name,score:Number(scores[name])||0}))
+    .sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name,"vi"));
 
-  if (!ranked.length) {
+  if(!ranked.length){
     box.innerHTML="<p>Chưa có thành viên.</p>";
     return;
   }
@@ -822,90 +1213,114 @@ function renderCompetition() {
 
     return `<div class="rank-card">
       <div class="rank-head">
-        <div><span class="rank-medal">${medal}</span><span class="rank-name">${escapeHtml(item.name)}</span>
-        ${prize?`<div class="prize">${prize}</div>`:""}</div>
+        <div>
+          <span class="rank-medal">${medal}</span>
+          <span class="rank-name">${escapeHtml(item.name)}</span>
+          ${prize?`<div class="prize">${prize}</div>`:""}
+        </div>
         <div class="rank-score">${item.score} điểm</div>
       </div>
       <div class="rank-bar"><div class="rank-fill" style="width:${width}%"></div></div>
       <div class="score-actions">
-        <button class="score-btn minus" onclick="adjustScoreByIndex(${index},-10)">−10</button>
-        <button class="score-btn minus" onclick="adjustScoreByIndex(${index},-5)">−5</button>
-        <button class="score-btn plus" onclick="adjustScoreByIndex(${index},5)">+5</button>
-        <button class="score-btn plus" onclick="adjustScoreByIndex(${index},10)">+10</button>
+        <button class="score-btn minus" data-admin-only ${isAdminUser ? "" : "disabled"} onclick="adjustScoreByIndex(${index},-10)">−10</button>
+        <button class="score-btn minus" data-admin-only ${isAdminUser ? "" : "disabled"} onclick="adjustScoreByIndex(${index},-5)">−5</button>
+        <button class="score-btn plus" data-admin-only ${isAdminUser ? "" : "disabled"} onclick="adjustScoreByIndex(${index},5)">+5</button>
+        <button class="score-btn plus" data-admin-only ${isAdminUser ? "" : "disabled"} onclick="adjustScoreByIndex(${index},10)">+10</button>
       </div>
     </div>`;
   }).join("");
 }
 
-/* SAO LƯU */
+/* ===============================
+   SAO LUU
+================================ */
 function exportBackup() {
-  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const blob=new Blob([JSON.stringify(recover(data),null,2)],{type:"application/json;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
   a.href=url;
   a.download="sao-luu-diem-danh-llcttt1.json";
   a.click();
-  URL.revokeObjectURL(url);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
-/* TABS */
+/* ===============================
+   TABS / QUYEN
+================================ */
+function applyPermissions() {
+  document.querySelectorAll("[data-admin-only]").forEach(el=>{
+    el.disabled=!isAdminUser;
+  });
+
+  document.getElementById("adminTabButton").style.display =
+    isAdminUser ? "inline-block" : "none";
+}
+
 function showTab(tab) {
+  if (tab==="adminPanel" && !isAdminUser) {
+    alert("Chỉ quản trị viên mới được mở khu vực này.");
+    return;
+  }
+
   document.querySelectorAll(".tabs button").forEach(button=>{
     button.classList.toggle("active",button.dataset.tab===tab);
   });
 
-  ["attendance","sessions","members","competition"].forEach(id=>{
+  ["attendance","sessions","members","competition","adminPanel"].forEach(id=>{
     document.getElementById(id).style.display=id===tab?"block":"none";
   });
 
   render();
+
+  if (tab==="adminPanel") loadAdminUsers();
 }
 
 document.querySelectorAll(".tabs button").forEach(button=>{
   button.addEventListener("click",()=>showTab(button.dataset.tab));
 });
 
-/* KHỞI ĐỘNG FIREBASE */
 document.getElementById("loginPassword").addEventListener("keydown",e=>{
-  if (e.key==="Enter") login();
+  if(e.key==="Enter")login();
 });
 document.getElementById("loginEmail").addEventListener("keydown",e=>{
-  if (e.key==="Enter") document.getElementById("loginPassword").focus();
+  if(e.key==="Enter")document.getElementById("loginPassword").focus();
 });
 
+/* ===============================
+   KHOI TAO FIREBASE
+================================ */
 try {
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
   auth=firebase.auth();
   db=firebase.firestore();
 
   auth.onAuthStateChanged(user=>{
     if (!user) {
-      cloudReady=false;
-      activeUid=null;
-      if (!loginBusy) {
-        document.getElementById("loginPage").style.display="block";
-        document.getElementById("appRoot").style.display="none";
-        setStatus("Chưa đăng nhập");
-      }
+      if (authBusy || registerBusy) return;
+      stopDataSync();
+      stopProfileListener();
+      currentUser=null;
+      isAdminUser=false;
+      showLogin("");
+      setStatus("Chưa đăng nhập");
       return;
     }
 
-    if (user.uid!==ADMIN_UID) {
-      auth.signOut().finally(()=>{
-        showLogin("Tài khoản này không phải tài khoản quản trị.");
-        setStatus("Không có quyền quản trị");
-      });
-      return;
-    }
+    currentUser=user;
 
-    startSync(user);
+    if (registerBusy) return;
+
+    handleAuthenticatedUser(user).catch(error=>{
+      console.error("Lỗi kiểm tra quyền tài khoản:",error);
+      showGate("Lỗi tài khoản","Không kiểm tra được quyền truy cập.",explainError(error));
+    });
   });
-} catch(e) {
-  console.error("Lỗi khởi động Firebase:",e);
-  showLogin(explainError(e));
-  setStatus("Lỗi khởi động Firebase");
+} catch(error) {
+  console.error("Lỗi khởi tạo Firebase:",error);
+  showLogin(explainError(error));
+  setStatus("Lỗi Firebase");
 }
 </script>
-
 </body>
 </html>
